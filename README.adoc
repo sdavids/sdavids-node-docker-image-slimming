@@ -94,6 +94,30 @@ The clean script will have more impact once there are more dependencies.
 Webpack will have more impact once there are more source files to bundle.
 ====
 
+=== Directory Structure
+
+[source,shell]
+----
+/node  [dr-x node node ]
+├──    [-r-- node node ] bundle.cjs
+└──    [dr-x node node ] node_modules
+  ├──  [dr-x node node ]   accepts
+  │ ├─ [-r-- node node ]     index.js
+  │ └─ [-r-- node node ]     package.json
+  ├──  [dr-x node node ]   array-flatten
+  │ ├─ [-r-- node node ]     array-flatten.js
+  │ └─ [-r-- node node ]     package.json
+  ├──  [dr-x node node ]   body-parser
+  │ ├─ [-r-- node node ]     index.js
+  │ ├─ [dr-x node node ]     lib
+  │ └─ [-r-- node node ]     package.json
+  ...
+----
+
+=== Layers
+
+image::src/docs/asciidoc/images/layers.gif[]
+
 == Development Environment Setup
 
 Install {docker-install-url}[Docker].
