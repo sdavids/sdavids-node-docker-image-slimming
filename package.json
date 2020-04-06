@@ -1,0 +1,39 @@
+{
+  "name": "sdavids-node-docker-image-slimming",
+  "description": "node docker image slimming",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "contributors": [
+    "Sebastian Davids <sdavids@gmx.de>"
+  ],
+  "homepage": "https://github.com/sdavids/sdavids-node-docker-image-slimming",
+  "bugs": "https://github.com/sdavids/sdavids-node-docker-image-slimming/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sdavids/sdavids-node-docker-image-slimming.git"
+  },
+  "keywords": [
+    "express"
+  ],
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "docker:build": "scripts/docker-build.sh",
+    "docker:rm": "scripts/docker-rm.sh",
+    "docker:run": "scripts/docker-run.sh",
+    "docker:sh": "scripts/docker-sh.sh",
+    "start": "cross-env NODE_ENV=production node --experimental-modules src/js/server.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon --inspect --watch src/js --experimental-modules src/js/server.js"
+  },
+  "engines": {
+    "node": ">= 12.15.0",
+    "npm": ">= 6.13.4"
+  },
+  "dependencies": {
+    "express": "~4.17.1"
+  },
+  "devDependencies": {
+    "cross-env": "~7.0.2",
+    "nodemon": "~2.0.2"
+  }
+}

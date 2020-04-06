@@ -1,0 +1,141 @@
+= Node Docker Image Slimming
+Sebastian Davids
+// Metadata:
+:description: node docker image slimming
+// Settings:
+:sectnums:
+:sectanchors:
+:sectlinks:
+:toc:
+// Refs:
+:uri-contributor-covenant: https://www.contributor-covenant.org
+:uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
+:node-version: 13.12.0
+:docker-install-url: https://docs.docker.com/install/
+:nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
+
+ifdef::env-browser[:outfilesuffix: .adoc]
+
+ifdef::env-github,env-gitlab[]
+:outfilesuffix: .adoc
+:note-caption: :information_source:
+:badges:
+endif::[]
+
+ifdef::badges[]
+image:https://img.shields.io/github/license/sdavids/sdavids-node-docker-image-slimming[Apache License, Version 2.0,link={uri-apache-license}]
+image:https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg[Contributor Covenant, Version 2.0,link={uri-contributor-covenant}]
+endif::[]
+
+
+== Results
+
+link:Dockerfile[]
+
+[%header,cols="4,>2,>2,>2"]
+|===
+
+|Stage
+|Layers
+|Size (MB)
+|Difference (MB)
+
+|initial
+|14
+|947.90
+|
+
+|===
+
+== Development Environment Setup
+
+Install {docker-install-url}[Docker].
+
+Install {nvm-install-url}[NVM].
+
+Afterwards, execute the following in the project root:
+
+[source,shell,subs="attributes"]
+----
+$ nvm install {node-version}
+$ nvm install-latest-npm
+$ nvm alias default node
+$ nvm use
+----
+
+== Build Tasks
+
+=== start
+
+Runs the app.
+
+[source,shell]
+----
+$ npm start
+----
+
+=> `http://localhost:3000`
+
+=== start:dev
+
+Runs the the app; restarting on file changes.
+
+[source,shell]
+----
+$ npm start:dev
+----
+
+=> `http://localhost:3000`
+
+=== docker:build
+
+Builds the app's image.
+
+[source,shell]
+----
+$ npm run docker:build
+----
+
+=== docker:rm
+
+Removes the app's container.
+
+[source,shell]
+----
+$ npm run docker:rm
+----
+
+=== docker:run
+
+Runs the app in a container.
+
+[source,shell]
+----
+$ npm run docker:run
+----
+
+=> `http://localhost:3000`
+
+=== docker:sh
+
+Enters a shell into a running app container.
+
+[source,shell]
+----
+$ npm run docker:sh
+----
+
+== License
+
+Apache License, Version 2.0 (link:LICENSE[] or {uri-apache-license}).
+
+=== Contribution
+
+See link:CONTRIBUTING{outfilesuffix}[].
+
+== Code of Conduct
+
+We abide by the {uri-contributor-covenant}[Contributor Covenant, Version 2.0] and ask that you do as
+well.
+
+For more information, please see link:CODE_OF_CONDUCT{outfilesuffix}[].

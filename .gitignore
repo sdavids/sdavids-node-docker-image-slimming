@@ -1,0 +1,31 @@
+### Linux ###
+*.swp
+
+### OSX ###
+.DS_Store
+
+### Windows ###
+Thumbs.db
+
+### IntelliJ ###
+.idea/
+out/
+
+### Eclipse ###
+.settings/
+.classpath
+.project
+bin/
+
+### Code ###
+.vscode/
+
+### Yarn ###
+yarn.lock
+yarn-debug.log*
+yarn-error.log*
+
+### NodeJS ###
+node_modules/
+dist/
+npm-debug.log
