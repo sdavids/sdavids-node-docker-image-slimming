@@ -53,41 +53,102 @@ RUN npm run build -s \
     && chmod 400 /opt/app/dist/bundle.cjs
 
 
+### Harden ###
+
+FROM alpine:3.11.5 as hardened
+
+ARG uid=1001
+ARG user=node
+ARG home="${user}"
+
+ENV APP_USER="${user}"
+ENV APP_DIR="${home}"
+
+SHELL ["/bin/sh", "-o", "pipefail", "-c"]
+
+RUN apk add --no-cache \
+       tini \
+    && addgroup -g "${uid}" "${user}" \
+    && adduser -g "${user}" -u "${uid}" -G "${user}" -s /sbin/false -S -D -H "${user}" \
+    && mkdir "${home}" \
+    && chown "${user}:${user}" -R "${home}" \
+    && chmod 500 "${home}" \
+    && find /sbin /usr/sbin \
+       ! -type d -a ! -name apk -a ! -name ln ! -name tini \
+       -delete \
+    && find / -xdev -type d -perm +0002 -exec chmod o-w {} + \
+	  && find / -xdev -type f -perm +0002 -exec chmod o-w {} + \
+	  && chmod 777 /tmp/ \
+    && chown "${user}:root" /tmp/ \
+    && sed -i -r "/^(${user}|root|nobody)/!d" /etc/group \
+    && sed -i -r "/^(${user}|root|nobody)/!d" /etc/passwd \
+    && sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd \
+    && find /bin /etc /lib /sbin /usr -xdev -type f -regex '.*-$' -exec rm -f {} + \
+    && find /bin /etc /lib /sbin /usr -xdev -type d \
+       -exec chown root:root {} \; \
+       -exec chmod 0755 {} \; \
+    && find /bin /etc /lib /sbin /usr -xdev -type f -a \( -perm +4000 -o -perm +2000 \) -delete \
+    && find /bin /etc /lib /sbin /usr -xdev \( \
+         -name hexdump -o \
+         -name chgrp -o \
+         -name ln -o \
+         -name od -o \
+         -name strings -o \
+         -name su \
+         -name sudo \
+       \) -delete \
+    && rm -fr /var/spool/cron \
+              /etc/crontabs \
+              /etc/periodic \
+              /etc/init.d \
+              /lib/rc \
+              /etc/conf.d \
+              /etc/inittab \
+              /etc/runlevels \
+              /etc/rc.conf \
+              /etc/logrotate.d \
+              /etc/sysctl* \
+              /etc/modprobe.d \
+              /etc/modules \
+              /etc/mdev.conf \
+              /etc/acpi \
+              /root \
+              /etc/fstab \
+              /usr/bin/wget \
+    && find / -type f -iname '*apk*' -xdev -delete \
+    && find / -type d -iname '*apk*' -print0 -xdev | xargs -0 rm -r -- \
+    && find /bin /etc /lib /sbin /usr -xdev -type l -exec test ! -e {} \; -delete \
+    && mkdir -p "/${home}/node_modules" \
+    && chown "${user}:${user}" "/${home}/node_modules" \
+    && chmod 500 "/${home}/node_modules" \
+    && rm -rf /bin/chown /bin/chmod
+
+
 ### Final ###
 
-FROM alpine:3.11.5
+FROM hardened
 
 ARG git_commit
 ARG port=3000
-ARG uid=1001
-ARG user=node
-
-RUN apk --no-cache add \
-      tini \
-    && addgroup -g "${uid}" "${user}" \
-    && adduser -g "${user}" -u "${uid}" -G "${user}" -s /sbin/false -S -D -H "${user}" \
-    && mkdir -p /opt/app/node_modules \
-    && chown "${user}:${user}" /opt/app/node_modules \
-    && chmod 500 /opt/app/node_modules
 
 COPY --from=installer /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 COPY --from=installer /usr/local/bin/node /usr/bin/
 
-COPY --chown="${user}" --from=installer /opt/app/node_modules /opt/app/node_modules
-COPY --chown="${user}" --from=bundler /opt/app/dist/bundle.cjs /opt/app/
-
-WORKDIR /opt/app/
-
-USER "${user}"
+COPY --chown="${APP_USER}" --from=installer /opt/app/node_modules "/${APP_DIR}/node_modules"
+COPY --chown="${APP_USER}" --from=bundler /opt/app/dist/bundle.cjs "/${APP_DIR}/"
 
 ENV NODE_ENV=production
 ENV PORT="${port}"
+
+WORKDIR ${APP_DIR}
+
+USER "${APP_USER}"
 
 EXPOSE "${port}"
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
-CMD ["node", "/opt/app/bundle.cjs"]
+CMD ["node", "bundle.cjs"]
 
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.revision="${git_commit}" \
