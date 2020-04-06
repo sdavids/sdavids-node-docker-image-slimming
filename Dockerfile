@@ -28,6 +28,7 @@ ADD https://github.com/krallin/tini/releases/download/v0.18.0/tini /sbin/tini
 
 RUN chmod +x /sbin/tini
 
+COPY --chown="${user}" scripts/node_modules-clean.sh /opt/app/scripts/
 COPY --chown="${user}" package.json package-lock.json /opt/app/
 COPY --chown="${user}" src/js /opt/app/src/js
 
@@ -35,7 +36,9 @@ WORKDIR /opt/app/
 
 USER "${user}"
 
-RUN npm ci --production --no-optional --audit-level=high --silent
+RUN npm ci --production --no-optional --audit-level=high --silent \
+    && scripts/node_modules-clean.sh \
+    && find /opt/app/node_modules/ -type d -depth -exec rmdir -p --ignore-fail-on-non-empty {} \;
 
 ENV NODE_ENV=production
 ENV PORT="${port}"

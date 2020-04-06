@@ -50,7 +50,17 @@ link:Dockerfile[]
 |945.60
 |-2.30
 
+|node_modules clean script
+|15
+|944.90
+|-0.70
+
 |===
+
+[NOTE]
+====
+The clean script will have more impact once there are more dependencies.
+====
 
 == Development Environment Setup
 
