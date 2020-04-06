@@ -16,6 +16,22 @@
 
 # https://docs.docker.com/engine/reference/builder/
 
+### Installer ###
+
+FROM node:13.12.0-alpine3.11 AS installer
+
+WORKDIR /opt/app/
+
+COPY scripts/node_modules-clean.sh scripts/
+COPY package.json package-lock.json ./
+
+RUN npm ci --production --no-optional --audit-level=high --silent \
+    && scripts/node_modules-clean.sh \
+    && find node_modules/ -type d -depth -exec rmdir -p --ignore-fail-on-non-empty {} \; \
+    && find node_modules/ -type d -exec chmod 500 {} + \
+    && find node_modules/ -type f -exec chmod 400 {} +
+
+
 ### Final ###
 
 FROM node:13.12.0-alpine3.11
@@ -25,19 +41,18 @@ ARG port=3000
 ARG user=node
 
 RUN apk --no-cache add \
-      tini
+      tini \
+    && mkdir -p /opt/app/node_modules \
+    && chown "${user}:${user}" /opt/app/node_modules \
+    && chmod 500 /opt/app/node_modules
 
-COPY --chown="${user}" scripts/node_modules-clean.sh /opt/app/scripts/
-COPY --chown="${user}" package.json package-lock.json /opt/app/
+COPY --chown="${user}" --from=installer /opt/app/node_modules /opt/app/node_modules
+COPY --chown="${user}" --from=installer /opt/app/package.json /opt/app/package-lock.json /opt/app/
 COPY --chown="${user}" src/js /opt/app/src/js
 
 WORKDIR /opt/app/
 
 USER "${user}"
-
-RUN npm ci --production --no-optional --audit-level=high --silent \
-    && scripts/node_modules-clean.sh \
-    && find /opt/app/node_modules/ -type d -depth -exec rmdir -p --ignore-fail-on-non-empty {} \;
 
 ENV NODE_ENV=production
 ENV PORT="${port}"

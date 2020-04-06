@@ -60,6 +60,11 @@ link:Dockerfile[]
 |116.10
 |-828.80
 
+|multi-stage build
+|8
+|115.50
+|-0.60
+
 |===
 
 [NOTE]
