@@ -20,6 +20,10 @@
 
 FROM node:13.12.0-alpine3.11 AS installer
 
+RUN apk --no-cache add \
+      upx \
+    && upx /usr/local/bin/node
+
 WORKDIR /opt/app/
 
 COPY scripts/node_modules-clean.sh scripts/
@@ -43,12 +47,14 @@ ARG user=node
 
 RUN apk --no-cache add \
       tini \
-      nodejs \
     && addgroup -g "${uid}" "${user}" \
     && adduser -g "${user}" -u "${uid}" -G "${user}" -s /sbin/false -S -D -H "${user}" \
     && mkdir -p /opt/app/node_modules \
     && chown "${user}:${user}" /opt/app/node_modules \
     && chmod 500 /opt/app/node_modules
+
+COPY --from=installer /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
+COPY --from=installer /usr/local/bin/node /usr/bin/
 
 COPY --chown="${user}" --from=installer /opt/app/node_modules /opt/app/node_modules
 COPY --chown="${user}" --from=installer /opt/app/package.json /opt/app/package-lock.json /opt/app/
