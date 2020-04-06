@@ -45,6 +45,11 @@ link:Dockerfile[]
 |947.90
 |
 
+| npm ci --production --no-optional
+|14
+|945.60
+|-2.30
+
 |===
 
 == Development Environment Setup

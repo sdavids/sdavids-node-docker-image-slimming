@@ -35,7 +35,7 @@ WORKDIR /opt/app/
 
 USER "${user}"
 
-RUN npm i --audit-level=high --silent
+RUN npm ci --production --no-optional --audit-level=high --silent
 
 ENV NODE_ENV=production
 ENV PORT="${port}"
