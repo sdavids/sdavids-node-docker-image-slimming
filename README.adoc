@@ -45,42 +45,42 @@ link:Dockerfile[]
 |947.90
 |
 
-| npm ci --production --no-optional
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/d861f69f5df0edc6bef5bfeefdc14dc75d15904a[npm ci --production --no-optional]
 |14
 |945.60
 |-2.30
 
-|node_modules clean script
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/64c4d969653429d8de7c53fa9f431e2bb09c3602[node_modules clean script]
 |15
 |944.90
 |-0.70
 
-|node alpine
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/5dca92add2b014615ebf69ad8935cb8de2d28d35[node alpine]
 |9
 |116.10
 |-828.80
 
-|multi-stage build
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/448e239d678fb2a454702a6b94d88d9b274c7893[multi-stage build]
 |8
 |115.50
 |-0.60
 
-|alpine
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/55a8ef45ee4f64b15b175883f68a0c946da65149[alpine]
 |5
 |38.47
 |-76.93
 
-|upx
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/58b7f8d9bda7a27cbfaac416de9e2c369fc2d3d4[upx]
 |7
 |35.52
 |-2.95
 
-|webpack
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/877ee7f4e70a74aa25e3f9741bd7a2884995bf04[webpack]
 |6
 |35.48
 |-0.04
 
-|harden
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/9b228b4a65bfb81746332967f313ead5ede2d25f[harden]
 |6
 |35.45
 |-0.03
