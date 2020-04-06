@@ -75,11 +75,18 @@ link:Dockerfile[]
 |35.52
 |-2.95
 
+|webpack
+|6
+|35.48
+|-0.04
+
 |===
 
 [NOTE]
 ====
 The clean script will have more impact once there are more dependencies.
+
+Webpack will have more impact once there are more source files to bundle.
 ====
 
 == Development Environment Setup
@@ -99,6 +106,17 @@ $ nvm use
 ----
 
 == Build Tasks
+
+=== build
+
+Builds the app bundle.
+
+[source,shell]
+----
+$ npm run build
+----
+
+=> `dist/bundle.cjs`
 
 === start
 

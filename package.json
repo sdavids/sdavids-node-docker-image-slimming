@@ -18,6 +18,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "webpack --config webpack.config.cjs && mv dist/bundle.js dist/bundle.cjs",
     "docker:build": "scripts/docker-build.sh",
     "docker:rm": "scripts/docker-rm.sh",
     "docker:run": "scripts/docker-run.sh",
@@ -34,6 +35,10 @@
   },
   "devDependencies": {
     "cross-env": "~7.0.2",
-    "nodemon": "~2.0.2"
-  }
+    "nodemon": "~2.0.2",
+    "webpack": "~4.42.0",
+    "webpack-cli": "~3.3.11",
+    "webpack-node-externals": "~1.7.2"
+  },
+  "sideEffects": false
 }

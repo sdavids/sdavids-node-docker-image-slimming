@@ -36,6 +36,23 @@ RUN npm ci --production --no-optional --audit-level=high --silent \
     && find node_modules/ -type f -exec chmod 400 {} +
 
 
+### Bundler ###
+
+FROM node:13.12.0-alpine3.11 AS bundler
+
+WORKDIR /opt/app/
+
+COPY webpack.config.cjs ./
+COPY package.json package-lock.json ./
+
+RUN npm ci --no-optional --audit-level=high --silent
+
+COPY src/js src/js
+
+RUN npm run build -s \
+    && chmod 400 /opt/app/dist/bundle.cjs
+
+
 ### Final ###
 
 FROM alpine:3.11.5
@@ -57,8 +74,7 @@ COPY --from=installer /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 COPY --from=installer /usr/local/bin/node /usr/bin/
 
 COPY --chown="${user}" --from=installer /opt/app/node_modules /opt/app/node_modules
-COPY --chown="${user}" --from=installer /opt/app/package.json /opt/app/package-lock.json /opt/app/
-COPY --chown="${user}" src/js /opt/app/src/js
+COPY --chown="${user}" --from=bundler /opt/app/dist/bundle.cjs /opt/app/
 
 WORKDIR /opt/app/
 
@@ -71,7 +87,7 @@ EXPOSE "${port}"
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
-CMD ["node", "--experimental-modules", "/opt/app/src/js/server.js"]
+CMD ["node", "/opt/app/bundle.cjs"]
 
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.revision="${git_commit}" \
