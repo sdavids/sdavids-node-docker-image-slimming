@@ -34,14 +34,18 @@ RUN npm ci --production --no-optional --audit-level=high --silent \
 
 ### Final ###
 
-FROM node:13.12.0-alpine3.11
+FROM alpine:3.11.5
 
 ARG git_commit
 ARG port=3000
+ARG uid=1001
 ARG user=node
 
 RUN apk --no-cache add \
       tini \
+      nodejs \
+    && addgroup -g "${uid}" "${user}" \
+    && adduser -g "${user}" -u "${uid}" -G "${user}" -s /sbin/false -S -D -H "${user}" \
     && mkdir -p /opt/app/node_modules \
     && chown "${user}:${user}" /opt/app/node_modules \
     && chmod 500 /opt/app/node_modules
