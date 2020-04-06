@@ -55,6 +55,11 @@ link:Dockerfile[]
 |944.90
 |-0.70
 
+|node alpine
+|9
+|116.10
+|-828.80
+
 |===
 
 [NOTE]

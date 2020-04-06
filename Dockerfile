@@ -18,15 +18,14 @@
 
 ### Final ###
 
-FROM node:13.12.0
+FROM node:13.12.0-alpine3.11
 
 ARG git_commit
 ARG port=3000
 ARG user=node
 
-ADD https://github.com/krallin/tini/releases/download/v0.18.0/tini /sbin/tini
-
-RUN chmod +x /sbin/tini
+RUN apk --no-cache add \
+      tini
 
 COPY --chown="${user}" scripts/node_modules-clean.sh /opt/app/scripts/
 COPY --chown="${user}" package.json package-lock.json /opt/app/
