@@ -17,15 +17,42 @@
 'use strict';
 
 import express from 'express';
+import http from 'http';
 
-const exit = (signal, code) => process.on(signal, (_) => process.exit(code));
+['uncaughtException', 'unhandledRejection'].forEach((signal) =>
+    process.on(
+        signal, (err) => {
+          console.error(err);
+          process.exit(1);
+        }));
+['SIGINT', 'SIGTERM'].forEach((signal) =>
+    process.on(signal, (_) =>
+        process.exit(0)));
 
-['uncaughtException', 'unhandledRejection'].forEach((signal) => exit(signal, 1));
-['SIGINT', 'SIGTERM'].forEach((signal) => exit(signal, 0));
+const port = process.env.PORT || 3000;
 
 const app = express();
-const port = process.env.PORT || 3000;
+app.set('port', port);
 
 app.get('/', (_, res) => res.set('Content-Type', 'text/plain').send('42'));
 
-app.listen(port, () => console.log(`listening on http://localhost:${port}`));
+const server = http.createServer(app);
+server.listen(port);
+
+server.once('listening',
+    () => console.log(`listening on http://localhost:${port}`));
+
+server.on('error', (err) => {
+  if (err.syscall === 'listen') {
+    switch (err.code) {
+      case 'EACCES':
+        console.error('Port requires elevated privileges');
+        process.exit(1);
+      case 'EADDRINUSE':
+        console.error('Port is already in use');
+        process.exit(1);
+    }
+  }
+
+  console.error(err);
+});
