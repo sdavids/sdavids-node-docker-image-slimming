@@ -29,3 +29,9 @@ yarn-error.log*
 node_modules/
 dist/
 npm-debug.log
+
+### Certificates ###
+*.cer
+*.crt
+*.key
+*.pem

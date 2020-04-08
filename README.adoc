@@ -19,6 +19,7 @@ ifdef::env-browser[:outfilesuffix: .adoc]
 ifdef::env-github,env-gitlab[]
 :outfilesuffix: .adoc
 :note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
 :badges:
 endif::[]
 
@@ -189,7 +190,7 @@ $ npm run docker:rm
 
 === docker:run
 
-Runs the app in a container.
+Runs the app in a container exposing an HTTP port.
 
 [source,shell]
 ----
@@ -197,6 +198,22 @@ $ npm run docker:run
 ----
 
 => `http://localhost:3000`
+
+=== docker:run:secure
+
+Runs the app in a container exposing an HTTPS port.
+
+[source,shell]
+----
+$ npm run docker:run:secure
+----
+
+=> `https://localhost:3000`
+
+[IMPORTANT]
+====
+You need to create the necessary private key and certificate via <<cert_self_signed>>.
+====
 
 === docker:sh
 
@@ -206,6 +223,31 @@ Enters a shell into a running app container.
 ----
 $ npm run docker:sh
 ----
+
+[[cert_self_signed]]
+=== cert:self-signed
+
+Creates a private key and a self-signed certificate via https://www.openssl.org/docs/man1.0.2/man1/openssl-req.html[openssl].
+
+[source,shell]
+----
+$ npm run cert:self-signed
+----
+
+=> `docker/app/cert.pem` and `docker/app/key.pem`
+
+[NOTE]
+====
+The generated certificate is valid for 10 days.
+====
+
+==== MacOS
+
+You need to add the created certificate to _Keychain Access_.
+
+Add it to your "login" keychain and set _Secure Sockets Layer (SSL)_ to "Always Trust":
+
+image::src/docs/asciidoc/images/self-signed-macos.png[]
 
 == License
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 #
 # Copyright (c) 2020, Sebastian Davids
 #
@@ -14,31 +16,22 @@
 # limitations under the License.
 #
 
-# https://docs.docker.com/compose/compose-file/
+set -eu
 
-version: "3.7"
+readonly port="${1:-3000}"
 
-secrets:
-  app_cert_file:
-    file: ./docker/app/cert.pem
-  app_key_file:
-    file: ./docker/app/key.pem
+readonly group="sdavids"
+readonly name="sdavids-node-docker-image-slimming"
 
-services:
-  app:
-    build:
-      context: .
-      args:
-        git_commit: "${git_commit:-}"
-    ports:
-      - "${APP_PORT:-3000}:3000/tcp"
-    read_only: true
-    security_opt:
-      - no-new-privileges
-    cap_drop:
-      - ALL
-    secrets:
-      - source: app_cert_file
-        target: cert.pem
-      - source: app_key_file
-        target: key.pem
+readonly container_name="${group}/${name}"
+
+docker run \
+  --interactive \
+  --rm \
+  --read-only \
+  --security-opt=no-new-privileges \
+  --cap-drop=all \
+  --publish "${port}:3000/tcp" \
+  --mount "type=bind,source=$(pwd)/docker/app,target=/run/secrets" \
+  --name "${name}" \
+  "${container_name}"

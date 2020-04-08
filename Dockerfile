@@ -133,6 +133,9 @@ FROM hardened
 ARG git_commit
 ARG port=3000
 
+ARG cert_path=/run/secrets/cert.pem
+ARG key_path=/run/secrets/key.pem
+
 COPY --from=installer /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 COPY --from=installer /usr/local/bin/node /usr/bin/
 
@@ -141,6 +144,9 @@ COPY --chown="${APP_USER}" --from=bundler /opt/app/dist/bundle.cjs "/${APP_DIR}/
 
 ENV NODE_ENV=production
 ENV PORT="${port}"
+
+ENV CERT_PATH=${cert_path}
+ENV KEY_PATH=${key_path}
 
 WORKDIR ${APP_DIR}
 

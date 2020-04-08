@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 #
 # Copyright (c) 2020, Sebastian Davids
 #
@@ -14,31 +16,23 @@
 # limitations under the License.
 #
 
-# https://docs.docker.com/compose/compose-file/
+# script needs to be invoked from project root directory
 
-version: "3.7"
+set -eu
 
-secrets:
-  app_cert_file:
-    file: ./docker/app/cert.pem
-  app_key_file:
-    file: ./docker/app/key.pem
+readonly days="${1:-10}"
 
-services:
-  app:
-    build:
-      context: .
-      args:
-        git_commit: "${git_commit:-}"
-    ports:
-      - "${APP_PORT:-3000}:3000/tcp"
-    read_only: true
-    security_opt:
-      - no-new-privileges
-    cap_drop:
-      - ALL
-    secrets:
-      - source: app_cert_file
-        target: cert.pem
-      - source: app_key_file
-        target: key.pem
+mkdir -p docker/app
+
+openssl req \
+    -newkey rsa:2048 \
+    -x509 \
+    -nodes \
+    -keyout docker/app/key.pem \
+    -new \
+    -out docker/app/cert.pem \
+    -subj '/CN=localhost' \
+    -extensions EXT -config <( \
+       printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth") \
+    -sha256 \
+    -days "${days}"

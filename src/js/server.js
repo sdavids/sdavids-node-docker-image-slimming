@@ -18,6 +18,8 @@
 
 import express from 'express';
 import http from 'http';
+import https from 'https';
+import fs from 'fs';
 
 ['uncaughtException', 'unhandledRejection'].forEach((signal) =>
     process.on(
@@ -30,17 +32,34 @@ import http from 'http';
         process.exit(0)));
 
 const port = process.env.PORT || 3000;
+const keyPath = process.env.KEY_PATH;
+const certPath = process.env.CERT_PATH;
+
+let secure = keyPath && certPath;
+if (secure) {
+  secure = fs.existsSync(certPath) && fs.existsSync(keyPath);
+}
 
 const app = express();
 app.set('port', port);
 
 app.get('/', (_, res) => res.set('Content-Type', 'text/plain').send('42'));
 
-const server = http.createServer(app);
+let server;
+if (secure) {
+  const serverOpts = {
+    cert: fs.readFileSync(certPath),
+    key: fs.readFileSync(keyPath),
+  };
+  server = https.createServer(serverOpts, app);
+} else {
+  server = http.createServer(app);
+}
+
 server.listen(port);
 
 server.once('listening',
-    () => console.log(`listening on http://localhost:${port}`));
+    () => console.log(`listening on http${secure ? 's' : ''}://localhost:${port}`));
 
 server.on('error', (err) => {
   if (err.syscall === 'listen') {

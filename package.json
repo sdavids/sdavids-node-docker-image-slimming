@@ -19,9 +19,11 @@
   "type": "module",
   "scripts": {
     "build": "webpack --config webpack.config.cjs && mv dist/bundle.js dist/bundle.cjs",
+    "cert:self-signed": "scripts/cert-self-signed.sh",
     "docker:build": "scripts/docker-build.sh",
     "docker:rm": "scripts/docker-rm.sh",
     "docker:run": "scripts/docker-run.sh",
+    "docker:run:secure": "scripts/docker-run-secure.sh",
     "docker:sh": "scripts/docker-sh.sh",
     "start": "cross-env NODE_ENV=production node --experimental-modules src/js/server.js",
     "start:dev": "cross-env NODE_ENV=development nodemon --inspect --watch src/js --experimental-modules src/js/server.js"
