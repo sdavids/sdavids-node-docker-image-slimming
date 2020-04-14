@@ -48,6 +48,8 @@ app.disable('x-powered-by');
 
 app.get('/', (_, res) => res.set('Content-Type', 'text/plain').send('42'));
 
+app.get('/-/live', (_, res) => res.json({status: 'ok'}));
+
 let server;
 if (secure) {
   const serverOpts = {

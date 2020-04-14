@@ -21,6 +21,7 @@
     "build": "webpack --config webpack.config.cjs && mv dist/bundle.js dist/bundle.cjs",
     "cert:self-signed": "scripts/cert-self-signed.sh",
     "docker:build": "scripts/docker-build.sh",
+    "docker:health": "scripts/docker-health.sh",
     "docker:rm": "scripts/docker-rm.sh",
     "docker:run": "scripts/docker-run.sh",
     "docker:run:secure": "scripts/docker-run-secure.sh",

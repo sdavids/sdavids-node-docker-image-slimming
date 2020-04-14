@@ -50,7 +50,8 @@ RUN npm ci --no-optional --audit-level=high --silent
 COPY src/js src/js
 
 RUN npm run build -s \
-    && chmod 400 /opt/app/dist/bundle.cjs
+    && cp src/js/healthcheck.mjs /opt/app/dist/ \
+    && chmod 400 /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs
 
 
 ### Harden ###
@@ -140,7 +141,7 @@ COPY --from=installer /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 COPY --from=installer /usr/local/bin/node /usr/bin/
 
 COPY --chown="${APP_USER}" --from=installer /opt/app/node_modules "/${APP_DIR}/node_modules"
-COPY --chown="${APP_USER}" --from=bundler /opt/app/dist/bundle.cjs "/${APP_DIR}/"
+COPY --chown="${APP_USER}" --from=bundler /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs "/${APP_DIR}/"
 
 ENV NODE_ENV=production
 ENV PORT="${port}"
@@ -157,6 +158,9 @@ EXPOSE "${port}"
 ENTRYPOINT ["/sbin/tini", "--"]
 
 CMD ["node", "bundle.cjs"]
+
+HEALTHCHECK --interval=5s --timeout=5s --start-period=5s \
+    CMD node --experimental-modules --no-warnings "/${APP_DIR}/healthcheck.mjs"
 
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.revision="${git_commit}" \

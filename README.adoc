@@ -101,6 +101,7 @@ Webpack will have more impact once there are more source files to bundle.
 ----
 /node  [dr-x node node ]
 ├──    [-r-- node node ] bundle.cjs
+├──    [-r-- node node ] healthcheck.mjs
 └──    [dr-x node node ] node_modules
   ├──  [dr-x node node ]   accepts
   │ ├─ [-r-- node node ]     index.js
@@ -177,6 +178,15 @@ Builds the app's image.
 [source,shell]
 ----
 $ npm run docker:build
+----
+
+=== docker:health
+
+Displays the health of the app.
+
+[source,shell]
+----
+$ npm run docker:health
 ----
 
 === docker:rm
