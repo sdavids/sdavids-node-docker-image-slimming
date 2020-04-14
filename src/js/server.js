@@ -22,14 +22,14 @@ import https from 'https';
 import fs from 'fs';
 
 ['uncaughtException', 'unhandledRejection'].forEach((signal) =>
-    process.on(
-        signal, (err) => {
-          console.error(err);
-          process.exit(1);
-        }));
+  process.on(
+      signal, (err) => {
+        console.error(err);
+        process.exit(1);
+      }));
 ['SIGINT', 'SIGTERM'].forEach((signal) =>
-    process.on(signal, (_) =>
-        process.exit(0)));
+  process.on(signal, (_) =>
+    process.exit(0)));
 
 const port = process.env.PORT || 3000;
 const keyPath = process.env.KEY_PATH;
