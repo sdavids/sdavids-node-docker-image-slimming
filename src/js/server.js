@@ -43,6 +43,9 @@ if (secure) {
 const app = express();
 app.set('port', port);
 
+// https://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
+app.disable('x-powered-by');
+
 app.get('/', (_, res) => res.set('Content-Type', 'text/plain').send('42'));
 
 let server;
