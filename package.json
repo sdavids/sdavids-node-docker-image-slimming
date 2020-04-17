@@ -20,6 +20,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.cjs && mv dist/bundle.js dist/bundle.cjs",
     "cert:self-signed": "scripts/cert-self-signed.sh",
+    "clean:node": "rm -rf node_modules package-lock.json",
     "docker:build": "scripts/docker-build.sh",
     "docker:health": "scripts/docker-health.sh",
     "docker:rm": "scripts/docker-rm.sh",

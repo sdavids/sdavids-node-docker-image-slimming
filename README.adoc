@@ -259,6 +259,15 @@ Add it to your "login" keychain and set _Secure Sockets Layer (SSL)_ to "Always 
 
 image::src/docs/asciidoc/images/self-signed-macos.png[]
 
+=== clean:node
+
+Delete `node_modules/` and `package-lock.json`.
+
+[source,shell]
+----
+$ npm run clean:node
+----
+
 == License
 
 Apache License, Version 2.0 (link:LICENSE[] or {uri-apache-license}).
