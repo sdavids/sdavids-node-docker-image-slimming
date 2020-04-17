@@ -18,7 +18,7 @@
 
 ### Installer ###
 
-FROM node:13.12.0-alpine3.11 AS installer
+FROM node:13.13.0-alpine3.11 AS installer
 
 RUN apk --no-cache add \
       upx \
@@ -38,7 +38,7 @@ RUN npm ci --production --no-optional --audit-level=high --silent \
 
 ### Bundler ###
 
-FROM node:13.12.0-alpine3.11 AS bundler
+FROM node:13.13.0-alpine3.11 AS bundler
 
 WORKDIR /opt/app/
 

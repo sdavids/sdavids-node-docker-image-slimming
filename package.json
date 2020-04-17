@@ -30,7 +30,7 @@
     "start:dev": "cross-env NODE_ENV=development nodemon --inspect --watch src/js --experimental-modules src/js/server.js"
   },
   "engines": {
-    "node": ">= 12.15.0",
+    "node": ">= 13.13.0",
     "npm": ">= 6.13.4"
   },
   "dependencies": {
