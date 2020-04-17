@@ -32,6 +32,6 @@ docker run \
   --security-opt=no-new-privileges \
   --cap-drop=all \
   --publish "${port}:3000/tcp" \
-  --mount "type=bind,source=$(pwd)/docker/app,target=/run/secrets" \
+  --mount "type=bind,source=$(pwd)/docker/app,target=/run/secrets,readonly" \
   --name "${name}" \
   "${container_name}"
