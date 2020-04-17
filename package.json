@@ -22,6 +22,7 @@
     "cert:self-signed": "scripts/cert-self-signed.sh",
     "clean:node": "rm -rf node_modules package-lock.json",
     "docker:build": "scripts/docker-build.sh",
+    "docker:clean": "scripts/docker-clean.sh",
     "docker:health": "scripts/docker-health.sh",
     "docker:rm": "scripts/docker-rm.sh",
     "docker:run": "scripts/docker-run.sh",

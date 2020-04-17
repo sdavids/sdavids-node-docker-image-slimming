@@ -35,6 +35,9 @@ RUN npm ci --production --no-optional --audit-level=high --silent \
     && find node_modules/ -type d -exec chmod 500 {} + \
     && find node_modules/ -type f -exec chmod 400 {} +
 
+LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
+      io.sdavids.image.type="builder"
+
 
 ### Bundler ###
 
@@ -52,6 +55,9 @@ COPY src/js src/js
 RUN npm run build -s \
     && cp src/js/healthcheck.mjs /opt/app/dist/ \
     && chmod 400 /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs
+
+LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
+      io.sdavids.image.type="builder"
 
 
 ### Harden ###
@@ -126,6 +132,9 @@ RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/
     && chmod 500 "/${home}/node_modules" \
     && rm -rf /bin/chown /bin/chmod
 
+LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
+      io.sdavids.image.type="builder"
+
 
 ### Final ###
 
@@ -171,4 +180,6 @@ LABEL org.opencontainers.image.revision="${git_commit}" \
       org.opencontainers.image.description="node docker image slimming" \
       org.opencontainers.image.source="https://github.com/sdavids/sdavids-node-docker-image-slimming.git" \
       org.opencontainers.image.url="https://github.com/sdavids/sdavids-node-docker-image-slimming" \
-      org.opencontainers.image.documentation="https://github.com/sdavids/sdavids-node-docker-image-slimming"
+      org.opencontainers.image.documentation="https://github.com/sdavids/sdavids-node-docker-image-slimming" \
+      io.sdavids.image.group="sdavids-node-docker-image-slimming" \
+      io.sdavids.image.type="production"
