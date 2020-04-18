@@ -270,7 +270,7 @@ image::src/docs/asciidoc/images/self-signed-macos.png[]
 
 === clean:node
 
-Delete `node_modules/` and `package-lock.json`.
+Deletes `node_modules/` and `package-lock.json`.
 
 [source,shell]
 ----
