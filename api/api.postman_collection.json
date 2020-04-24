@@ -1,0 +1,48 @@
+{
+  "info": {
+    "name": "sdavids-node-docker-image-slimming REST API",
+    "description": "A simple endpoint in nodejs with express.\n\nContact Support:\n Name: Sebastian Davids\n Email: sdavids@gmx.de",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "The Answer",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "The answer to the ultimate question of life, the universe and everything.",
+        "header": [],
+        "method": "GET",
+        "url": {
+          "host": ["{{Host}}"],
+          "path": [],
+          "port": "{{Port}}",
+          "protocol": "{{Protocol}}",
+          "raw": "{{Protocol}}://{{Host}}:{{Port}}/"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Liveness Probe",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "Liveness Probe",
+        "header": [],
+        "method": "GET",
+        "url": {
+          "host": ["{{Host}}"],
+          "path": ["-", "live"],
+          "port": "{{Port}}",
+          "protocol": "{{Protocol}}",
+          "raw": "{{Protocol}}://{{Host}}:{{Port}}/-/live"
+        }
+      },
+      "response": []
+    }
+  ],
+  "protocolProfileBehavior": {}
+}
