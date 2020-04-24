@@ -1,0 +1,64 @@
+# https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md
+
+openapi: 3.0.3
+
+info:
+  title: sdavids-node-docker-image-slimming REST API
+  version: 0.0.1
+  description: A simple endpoint in nodejs with express.
+  license:
+    name: Apache-2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+  contact:
+    name: Sebastian Davids
+    email: sdavids@gmx.de
+
+tags:
+  - name: API
+  - name: Management
+
+paths:
+  /:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                answer:
+                  value: 42
+      summary: The Answer
+      description: 'The answer to the ultimate question of life, the universe and everything.'
+      operationId: getTheAnswer
+      tags:
+        - API
+  /-/live:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+              examples:
+                ok:
+                  value:
+                    status: ok
+      summary: Liveness Probe
+      description: Liveness Probe
+      operationId: getLivenessProbe
+      tags:
+        - Management
+
+servers:
+  - url: 'http://localhost:3000'
+    description: local
+  - url: 'https://localhost:3000'
+    description: local secure
