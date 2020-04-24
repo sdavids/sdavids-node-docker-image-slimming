@@ -7,3 +7,5 @@
 * whitespace=tab-in-indent,trailing-space,tabwidth=2
 
 package-lock.json -diff linguist-generated
+
+*.paw binary
