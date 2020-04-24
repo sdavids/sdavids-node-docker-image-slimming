@@ -170,6 +170,14 @@ Import:
 
 - https://blog.postman.com/self-signed-ssl-certificate-troubleshooting/[Troubleshooting Self-signed SSL Certificate Issues and More in Postman]
 
+==== Paw
+
+Install https://paw.cloud[Paw].
+
+Open:
+
+- link:api/api.paw[Paw Project]
+
 == Build Tasks
 
 === build
