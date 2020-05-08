@@ -18,7 +18,7 @@
 
 ### Installer ###
 
-FROM node:14.0.0-alpine3.11 AS installer
+FROM node:14.2.0-alpine3.11 AS installer
 
 RUN apk --no-cache add \
       upx \
@@ -41,7 +41,7 @@ LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
 
 ### Bundler ###
 
-FROM node:14.0.0-alpine3.11 AS bundler
+FROM node:14.2.0-alpine3.11 AS bundler
 
 WORKDIR /opt/app/
 
