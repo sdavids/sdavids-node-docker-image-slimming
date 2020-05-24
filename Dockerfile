@@ -66,10 +66,10 @@ FROM alpine:3.11.6 as hardened
 
 ARG uid=1001
 ARG user=node
-ARG home="${user}"
+ARG app_dir="${user}"
 
 ENV APP_USER="${user}"
-ENV APP_DIR="${home}"
+ENV APP_DIR="${app_dir}"
 
 SHELL ["/bin/sh", "-o", "pipefail", "-c"]
 
@@ -79,9 +79,9 @@ RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/
        tini \
     && addgroup -g "${uid}" "${user}" \
     && adduser -g "${user}" -u "${uid}" -G "${user}" -s /sbin/false -S -D -H "${user}" \
-    && mkdir "${home}" \
-    && chown "${user}:${user}" -R "${home}" \
-    && chmod 500 "${home}" \
+    && mkdir "${app_dir}" \
+    && chown "${user}:${user}" -R "${app_dir}" \
+    && chmod 500 "${app_dir}" \
     && find /sbin /usr/sbin \
        ! -type d -a ! -name apk -a ! -name ln ! -name tini \
        -delete \
@@ -127,9 +127,9 @@ RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/
     && find / -type f -iname '*apk*' -xdev -delete \
     && find / -type d -iname '*apk*' -print0 -xdev | xargs -0 rm -r -- \
     && find /bin /etc /lib /sbin /usr -xdev -type l -exec test ! -e {} \; -delete \
-    && mkdir -p "/${home}/node_modules" \
-    && chown "${user}:${user}" "/${home}/node_modules" \
-    && chmod 500 "/${home}/node_modules" \
+    && mkdir -p "/${app_dir}/node_modules" \
+    && chown "${user}:${user}" "/${app_dir}/node_modules" \
+    && chmod 500 "/${app_dir}/node_modules" \
     && rm -rf /bin/chown /bin/chmod
 
 LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
@@ -140,6 +140,9 @@ LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
 
 FROM hardened
 
+ARG user=node
+ARG app_dir="${user}"
+
 ARG git_commit
 ARG port=3000
 
@@ -149,8 +152,8 @@ ARG key_path=/run/secrets/key.pem
 COPY --from=installer /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 COPY --from=installer /usr/local/bin/node /usr/bin/
 
-COPY --chown="${APP_USER}" --from=installer /opt/app/node_modules "/${APP_DIR}/node_modules"
-COPY --chown="${APP_USER}" --from=bundler /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs "/${APP_DIR}/"
+COPY --chown="${user}" --from=installer /opt/app/node_modules "/${app_dir}/node_modules"
+COPY --chown="${user}" --from=bundler /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs "/${app_dir}/"
 
 ENV NODE_ENV=production
 ENV PORT="${port}"
@@ -158,9 +161,9 @@ ENV PORT="${port}"
 ENV CERT_PATH=${cert_path}
 ENV KEY_PATH=${key_path}
 
-WORKDIR ${APP_DIR}
+WORKDIR ${app_dir}
 
-USER "${APP_USER}"
+USER "${user}"
 
 EXPOSE "${port}"
 
@@ -169,7 +172,7 @@ ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["node", "bundle.cjs"]
 
 HEALTHCHECK --interval=5s --timeout=5s --start-period=5s \
-    CMD node --experimental-modules --no-warnings "/${APP_DIR}/healthcheck.mjs"
+    CMD node --experimental-modules --no-warnings "/${app_dir}/healthcheck.mjs"
 
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.revision="${git_commit}" \
