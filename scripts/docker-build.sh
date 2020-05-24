@@ -32,6 +32,7 @@ readonly container_name="${group}/${name}"
 readonly commit="$(git rev-parse --verify --short HEAD)"
 
 docker build \
+  --compress \
   --tag "${container_name}:latest" \
   --tag "${container_name}:${tag}" \
   --build-arg "git_commit=${commit}" \
