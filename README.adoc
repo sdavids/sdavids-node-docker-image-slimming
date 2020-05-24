@@ -10,7 +10,7 @@ Sebastian Davids
 // Refs:
 :uri-contributor-covenant: https://www.contributor-covenant.org
 :uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
-:node-version: 14.2.0
+:node-version: 14.3.0
 :docker-install-url: https://docs.docker.com/install/
 :nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
 
