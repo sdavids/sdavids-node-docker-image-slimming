@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2020, Sebastian Davids
+# Copyright (c) 2020-2022, Sebastian Davids
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 
 ### Installer ###
 
-FROM node:14.3.0-alpine3.11 AS installer
+FROM node:14.18.3-alpine3.15 AS installer
 
 RUN apk --no-cache add \
       upx \
@@ -41,7 +41,7 @@ LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
 
 ### Bundler ###
 
-FROM node:14.3.0-alpine3.11 AS bundler
+FROM node:14.18.3-alpine3.15 AS bundler
 
 WORKDIR /opt/app/
 
