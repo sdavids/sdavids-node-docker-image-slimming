@@ -20,9 +20,7 @@
 
 FROM node:14.18.3-alpine3.15 AS installer
 
-RUN apk --no-cache add \
-      upx \
-    && upx /usr/local/bin/node
+RUN if [[ "$(uname -m)" = "aarch64" ]] ; then true ; else apk --no-cache add upx && upx /usr/local/bin/node ; fi
 
 WORKDIR /opt/app/
 

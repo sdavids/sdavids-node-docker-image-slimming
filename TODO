@@ -1,0 +1,7 @@
+= sdavids-node-docker-image-slimming
+
+== UPX
+
+- https://github.com/upx/upx/issues/441
+  https://gitlab.alpinelinux.org/alpine/aports/-/issues/12194
+  upx does not work correctly on aarch64
