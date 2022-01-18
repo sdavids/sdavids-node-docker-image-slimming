@@ -54,7 +54,7 @@ Set text file encoding to `UTF-8` and line delimiters to `Unix`:
 
 Install and enable the following extensions:
 
-* https://github.com/asciidoctor/asciidoctor-vscode[AsciiDoc]
+* https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode[AsciiDoc]
 
 https://code.visualstudio.com/docs/getstarted/settings[User and Workspace Settings]
 
