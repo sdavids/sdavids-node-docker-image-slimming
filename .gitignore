@@ -27,6 +27,10 @@ yarn.lock
 yarn-debug.log*
 yarn-error.log*
 
+### pnPM ###
+pnpm-lock.yaml
+pnpm-debug.log
+
 ### NodeJS ###
 node_modules/
 dist/
