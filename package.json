@@ -36,6 +36,7 @@
     "lint:fix": "npx eslint --fix .",
     "prettier": "npx prettier --write '.'",
     "start": "cross-env NODE_ENV=production node --experimental-modules src/js/server.js",
+    "start:build": "cross-env NODE_ENV=production node dist/bundle.cjs",
     "start:dev": "cross-env NODE_ENV=development nodemon --inspect --watch src/js --experimental-modules src/js/server.js"
   },
   "engines": {
