@@ -24,7 +24,7 @@ Install and enable the following plugins:
 * https://plugins.jetbrains.com/plugin/7391-asciidoc[AsciiDoc]
 * https://plugins.jetbrains.com/plugin/8527-google-java-format[google-java-format]
 
-https://www.jetbrains.com/help/idea/settings-code-style.html#scheme[Import] the following code style
+https://www.jetbrains.com/help/idea/settings-code-style.html#scheme[Import] and enable the following code style
 scheme:
 
 * https://raw.githubusercontent.com/google/styleguide/gh-pages/intellij-java-google-style.xml
