@@ -244,6 +244,24 @@ Displays the health of the app.
 $ npm run docker:health
 ----
 
+=== docker:inspect
+
+Displays the Docker information of the app's container.
+
+[source,shell]
+----
+$ npm run docker:inspect
+----
+
+=== docker:logs
+
+Displays the logs of the app's container.
+
+[source,shell]
+----
+$ npm run docker:logs
+----
+
 === docker:rm
 
 Removes the app's container.

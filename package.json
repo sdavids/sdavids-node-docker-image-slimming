@@ -24,6 +24,8 @@
     "docker:build": "scripts/docker-build.sh",
     "docker:clean": "scripts/docker-clean.sh",
     "docker:health": "scripts/docker-health.sh",
+    "docker:inspect": "scripts/docker-inspect.sh",
+    "docker:logs": "scripts/docker-logs.sh",
     "docker:rm": "scripts/docker-rm.sh",
     "docker:run": "scripts/docker-run.sh",
     "docker:run:secure": "scripts/docker-run-secure.sh",
