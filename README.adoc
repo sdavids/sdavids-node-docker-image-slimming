@@ -144,7 +144,6 @@ Afterwards, execute the following in the project root:
 ----
 $ nvm install {node-version}
 $ nvm install-latest-npm
-$ nvm alias default node
 $ nvm use
 ----
 
