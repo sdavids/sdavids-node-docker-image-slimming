@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-'use strict';
-
 import express from 'express';
+import fs from 'fs';
 import http from 'http';
 import https from 'https';
-import fs from 'fs';
 
 ['uncaughtException', 'unhandledRejection'].forEach((signal) =>
   process.on(signal, (err) => {
@@ -28,7 +26,7 @@ import fs from 'fs';
   })
 );
 ['SIGINT', 'SIGTERM'].forEach((signal) =>
-  process.on(signal, (_) => process.exit(0))
+  process.on(signal, () => process.exit(0))
 );
 
 const port = process.env.PORT || 3000;
@@ -50,6 +48,7 @@ app.get('/', (_, res) => res.set('Content-Type', 'text/plain').send('42'));
 
 app.get('/-/live', (_, res) => res.json({ status: 'ok' }));
 
+// eslint-disable-next-line init-declarations
 let server;
 if (secure) {
   const serverOpts = {
@@ -73,9 +72,13 @@ server.on('error', (err) => {
       case 'EACCES':
         console.error('Port requires elevated privileges');
         process.exit(1);
+        break;
       case 'EADDRINUSE':
         console.error('Port is already in use');
         process.exit(1);
+        break;
+      default:
+      // just log
     }
   }
 

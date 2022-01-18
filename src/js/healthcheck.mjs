@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-'use strict';
-
 import http from 'http';
 
 ['uncaughtException', 'unhandledRejection'].forEach((signal) =>
@@ -25,7 +23,7 @@ import http from 'http';
   })
 );
 ['SIGINT', 'SIGTERM'].forEach((signal) =>
-  process.on(signal, (_) => process.exit(0))
+  process.on(signal, () => process.exit(0))
 );
 
 const port = parseInt(process.env.PORT || '3000');
@@ -54,17 +52,13 @@ if (isNaN(timeout) || timeout < 0) {
 // https://nodejs.org/api/http.html#http_http_request_options_callback
 const options = {
   path: '/-/live',
-  port: port,
-  protocol: protocol,
-  timeout: timeout,
+  port,
+  protocol,
+  timeout,
 };
 
 const request = http.request(options, (res) => {
   process.exit(res.statusCode === 200 ? 0 : 1);
 });
 
-request
-  .on('error', function (_) {
-    process.exit(1);
-  })
-  .end();
+request.on('error', () => process.exit(1)).end();
