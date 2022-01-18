@@ -1,11 +1,14 @@
 = Coding Style
+
 // Metadata:
 :description: coding style
+
 // Settings:
 :sectnums:
 :sectanchors:
 :sectlinks:
 :toc:
+
 // Refs:
 
 

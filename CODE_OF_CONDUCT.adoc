@@ -1,10 +1,13 @@
 = Contributor Covenant Code of Conduct
+
 // Metadata:
 :description: contributor covenant code of conduct
+
 // Settings:
 :sectanchors:
 :sectlinks:
 :toc:
+
 // Refs:
 
 

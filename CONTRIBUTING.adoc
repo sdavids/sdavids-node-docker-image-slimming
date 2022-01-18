@@ -1,11 +1,14 @@
 = Contributing
+
 // Metadata:
 :description: contributing
+
 // Settings:
 :sectnums:
 :sectanchors:
 :sectlinks:
 :toc:
+
 // Refs:
 :uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
 :uri-conventional-commits: https://www.conventionalcommits.org/en/v1.0.0/

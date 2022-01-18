@@ -1,10 +1,13 @@
 = Changelog
+
 // Metadata:
 :description: changelog
+
 // Settings:
 :sectanchors:
 :sectlinks:
 :toc:
+
 // Refs:
 
 

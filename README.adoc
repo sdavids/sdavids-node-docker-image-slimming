@@ -1,12 +1,15 @@
 = Node Docker Image Slimming
 Sebastian Davids
+
 // Metadata:
 :description: node docker image slimming
+
 // Settings:
 :sectnums:
 :sectanchors:
 :sectlinks:
 :toc: macro
+
 // Refs:
 :uri-contributor-covenant: https://www.contributor-covenant.org
 :uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
