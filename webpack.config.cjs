@@ -4,7 +4,7 @@ const nodeExternals = require('webpack-node-externals');
 // https://webpack.js.org/configuration/#options
 module.exports = {
   mode: 'production',
-  target: 'node',
+  target: 'node14',
   externals: nodeExternals(),
   entry: path.resolve(__dirname, 'src/js/server.js'),
   output: {
