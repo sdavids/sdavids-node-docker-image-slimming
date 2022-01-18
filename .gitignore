@@ -13,12 +13,6 @@ Thumbs.db
 .idea/
 out/
 
-### Eclipse ###
-.settings/
-.classpath
-.project
-bin/
-
 ### Code ###
 .vscode/
 

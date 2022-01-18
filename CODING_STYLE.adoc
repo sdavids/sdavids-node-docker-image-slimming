@@ -34,22 +34,6 @@ Set text file encoding to `UTF-8` and line delimiters to `Unix and macOS (\n)`:
 * https://www.jetbrains.com/help/idea/settings-file-encodings.html[File Encodings]
 * https://www.jetbrains.com/help/idea/settings-code-style.html#line-separators[Line Separators]
 
-=== Eclipse
-
-Install and enable the following plugins:
-
-* https://marketplace.eclipse.org/content/asciidoctor-editor[Asciidoctor Editor]
-
-https://help.eclipse.org/index.jsp?topic=%2Forg.eclipse.jdt.doc.user%2Freference%2Fpreferences%2Fjava%2Fcodestyle%2Fref-preferences-formatter.htm[Import]
-the following code formatter preferences:
-
-* https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml
-
-Set text file encoding to `UTF-8` and line delimiters to `Unix`:
-
-* https://help.eclipse.org/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Freference%2Fref-9.htm[Text file encoding]
-* https://help.eclipse.org/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Freference%2Fref-9.htm[New text file line delimiter]
-
 === Visual Studio Code
 
 Install and enable the following extensions:
