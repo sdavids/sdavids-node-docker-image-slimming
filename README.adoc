@@ -29,7 +29,7 @@ endif::[]
 
 ifdef::badges[]
 image:https://img.shields.io/github/license/sdavids/sdavids-node-docker-image-slimming[Apache License, Version 2.0,link={uri-apache-license}]
-image:https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg[Contributor Covenant, Version 2.0,link={uri-contributor-covenant}]
+image:https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg[Contributor Covenant, Version 2.1,link={uri-contributor-covenant}]
 
 image:https://img.shields.io/osslifecycle/sdavids/sdavids-node-docker-image-slimming[OSS Lifecycle]
 image:https://img.shields.io/maintenance/yes/2020[Maintenance]
@@ -333,7 +333,7 @@ See link:CONTRIBUTING{outfilesuffix}[].
 
 == Code of Conduct
 
-We abide by the {uri-contributor-covenant}[Contributor Covenant, Version 2.0] and ask that you do as
+We abide by the {uri-contributor-covenant}[Contributor Covenant, Version 2.1] and ask that you do as
 well.
 
 For more information, please see link:CODE_OF_CONDUCT{outfilesuffix}[].
