@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, Sebastian Davids
+ * Copyright (c) 2020-2022, Sebastian Davids
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,14 +22,14 @@ import https from 'https';
 import fs from 'fs';
 
 ['uncaughtException', 'unhandledRejection'].forEach((signal) =>
-  process.on(
-      signal, (err) => {
-        console.error(err);
-        process.exit(1);
-      }));
+  process.on(signal, (err) => {
+    console.error(err);
+    process.exit(1);
+  })
+);
 ['SIGINT', 'SIGTERM'].forEach((signal) =>
-  process.on(signal, (_) =>
-    process.exit(0)));
+  process.on(signal, (_) => process.exit(0))
+);
 
 const port = process.env.PORT || 3000;
 const keyPath = process.env.KEY_PATH;
@@ -48,7 +48,7 @@ app.disable('x-powered-by');
 
 app.get('/', (_, res) => res.set('Content-Type', 'text/plain').send('42'));
 
-app.get('/-/live', (_, res) => res.json({status: 'ok'}));
+app.get('/-/live', (_, res) => res.json({ status: 'ok' }));
 
 let server;
 if (secure) {
@@ -63,8 +63,9 @@ if (secure) {
 
 server.listen(port);
 
-server.once('listening',
-    () => console.log(`listening on http${secure ? 's' : ''}://localhost:${port}`));
+server.once('listening', () =>
+  console.log(`listening on http${secure ? 's' : ''}://localhost:${port}`)
+);
 
 server.on('error', (err) => {
   if (err.syscall === 'listen') {

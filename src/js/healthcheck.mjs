@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, Sebastian Davids
+ * Copyright (c) 2020-2022, Sebastian Davids
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,14 +19,14 @@
 import http from 'http';
 
 ['uncaughtException', 'unhandledRejection'].forEach((signal) =>
-  process.on(
-      signal, (err) => {
-        console.error(err);
-        process.exit(1);
-      }));
+  process.on(signal, (err) => {
+    console.error(err);
+    process.exit(1);
+  })
+);
 ['SIGINT', 'SIGTERM'].forEach((signal) =>
-  process.on(signal, (_) =>
-    process.exit(0)));
+  process.on(signal, (_) => process.exit(0))
+);
 
 const port = parseInt(process.env.PORT || '3000');
 if (isNaN(port) || port < 1 || port > 65535) {
@@ -37,7 +37,7 @@ if (isNaN(port) || port < 1 || port > 65535) {
 
 let protocol = process.env.PROTOCOL || 'http';
 if (!(protocol === 'http' || protocol === 'https')) {
-  const message = 'PROTOCOL needs to be either \'http\' or \'https\'';
+  const message = "PROTOCOL needs to be either 'http' or 'https'";
   console.error(message);
   throw new Error(message);
 }
@@ -45,7 +45,8 @@ protocol += ':';
 
 const timeout = parseInt(process.env.TIMEOUT_MS || '2000');
 if (isNaN(timeout) || timeout < 0) {
-  const message = 'TIMEOUT_MS needs to be a number greater or equal to 0 (timeout disabled)';
+  const message =
+    'TIMEOUT_MS needs to be a number greater or equal to 0 (timeout disabled)';
   console.error(message);
   throw new RangeError(message);
 }
@@ -62,6 +63,8 @@ const request = http.request(options, (res) => {
   process.exit(res.statusCode === 200 ? 0 : 1);
 });
 
-request.on('error', function(_) {
-  process.exit(1);
-}).end();
+request
+  .on('error', function (_) {
+    process.exit(1);
+  })
+  .end();
