@@ -58,7 +58,7 @@
     "prettier": "2.5.1",
     "webpack": "4.46.0",
     "webpack-cli": "3.3.11",
-    "webpack-node-externals": "1.7.2"
+    "webpack-node-externals": "3.0.0"
   },
   "sideEffects": false
 }
