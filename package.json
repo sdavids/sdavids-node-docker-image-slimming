@@ -32,6 +32,8 @@
     "docker:run": "scripts/docker-run.sh",
     "docker:run:secure": "scripts/docker-run-secure.sh",
     "docker:sh": "scripts/docker-sh.sh",
+    "lint": "npx eslint .",
+    "lint:fix": "npx eslint --fix .",
     "prettier": "npx prettier --write '.'",
     "start": "cross-env NODE_ENV=production node --experimental-modules src/js/server.js",
     "start:dev": "cross-env NODE_ENV=development nodemon --inspect --watch src/js --experimental-modules src/js/server.js"
@@ -45,6 +47,9 @@
   },
   "devDependencies": {
     "cross-env": "7.0.3",
+    "eslint": "8.7.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-json": "3.1.0",
     "husky": "7.0.4",
     "is-ci": "3.0.1",
     "lint-staged": "12.1.7",
