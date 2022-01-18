@@ -18,7 +18,7 @@
 
 ### Installer ###
 
-FROM node:14.18.3-alpine3.15 AS installer
+FROM node:16.13.2-alpine3.15 AS installer
 
 RUN if [[ "$(uname -m)" = "aarch64" ]] ; then true ; else apk --no-cache add upx && upx /usr/local/bin/node ; fi
 
@@ -39,7 +39,7 @@ LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
 
 ### Bundler ###
 
-FROM node:14.18.3-alpine3.15 AS bundler
+FROM node:16.13.2-alpine3.15 AS bundler
 
 WORKDIR /opt/app/
 
