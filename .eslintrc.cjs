@@ -3,7 +3,7 @@
 module.exports = {
   env: {
     node: true,
-    es2021: true,
+    es2017: true,
   },
   parserOptions: {
     sourceType: 'module',
