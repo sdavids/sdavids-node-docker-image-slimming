@@ -8,6 +8,7 @@
 :sectanchors:
 :sectlinks:
 :toc:
+:hide-uri-scheme:
 
 // Refs:
 

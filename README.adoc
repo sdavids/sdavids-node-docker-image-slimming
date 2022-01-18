@@ -9,6 +9,7 @@ Sebastian Davids
 :sectanchors:
 :sectlinks:
 :toc: macro
+:hide-uri-scheme:
 
 // Refs:
 :uri-contributor-covenant: https://www.contributor-covenant.org
