@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 #
-# Copyright (c) 2020, Sebastian Davids
+# Copyright (c) 2020-2022, Sebastian Davids
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ readonly container_name="${group}/${name}"
 
 readonly commit="$(git rev-parse --verify --short HEAD)"
 
-docker build \
+docker buildx build \
   --compress \
   --tag "${container_name}:latest" \
   --tag "${container_name}:${tag}" \
