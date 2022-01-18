@@ -22,6 +22,12 @@ bin/
 ### Code ###
 .vscode/
 
+### NodeJS ###
+node_modules/
+
+### npm ###
+npm-debug.log
+
 ### Yarn ###
 yarn.lock
 yarn-debug.log*
@@ -31,10 +37,8 @@ yarn-error.log*
 pnpm-lock.yaml
 pnpm-debug.log
 
-### NodeJS ###
-node_modules/
+### Build ###
 dist/
-npm-debug.log
 
 ### Certificates ###
 *.cer
