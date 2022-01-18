@@ -148,6 +148,13 @@ $ nvm alias default node
 $ nvm use
 ----
 
+Create `~/.huskyrc` to ensure Git UI tools can execute `node`:
+
+[source,shell]
+----
+$ printf "%s[ -s "${NVM_DIR}/nvm.sh" ] && source "${NVM_DIR}/nvm.sh"" > "${HOME}/.huskyrc"
+----
+
 === API Tools
 
 The usage of the API tools mentioned below is optional.
