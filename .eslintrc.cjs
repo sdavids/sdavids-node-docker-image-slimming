@@ -7,9 +7,6 @@ module.exports = {
   },
   parserOptions: {
     sourceType: 'module',
-    ecmaFeatures: {
-      impliedStrict: true,
-    },
   },
   extends: ['eslint:all', 'plugin:json/recommended', 'prettier'],
   rules: {
