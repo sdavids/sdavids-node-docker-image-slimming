@@ -1,1 +1,4 @@
-_
+# https://git-scm.com/docs/gitignore
+
+### husky ###
+_/
