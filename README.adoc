@@ -20,7 +20,7 @@ Sebastian Davids
 
 ifdef::env-browser[:outfilesuffix: .adoc]
 
-ifdef::env-github,env-gitlab[]
+ifdef::env-github[]
 :outfilesuffix: .adoc
 :note-caption: :information_source:
 :important-caption: :heavy_exclamation_mark:
