@@ -9,6 +9,8 @@
 :sectlinks:
 :toc:
 :hide-uri-scheme:
+:source-highlighter: rouge
+:rouge-style: github
 
 // Refs:
 :uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
