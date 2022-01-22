@@ -10,28 +10,28 @@
 Thumbs.db
 
 ### Jetbrains IDEs ###
-.idea/
+/.idea/
 
 ### Code ###
-.vscode/
+/.vscode/
 
 ### NodeJS ###
-node_modules/
+/node_modules/
 
 ### npm ###
-npm-debug.log
+/npm-debug.log
 
 ### Yarn ###
-yarn.lock
-yarn-debug.log*
-yarn-error.log*
+/yarn.lock
+/yarn-debug.log*
+/yarn-error.log*
 
 ### pnPM ###
-pnpm-lock.yaml
-pnpm-debug.log
+/pnpm-lock.yaml
+/pnpm-debug.log
 
 ### Build ###
-dist/
+/dist/
 
 ### Certificates ###
 *.cer
