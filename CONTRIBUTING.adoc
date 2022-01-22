@@ -17,9 +17,11 @@
 
 == Contributor License Agreement
 
-*Project License:* Apache License, Version 2.0 (link:LICENSE[] or {uri-apache-license})
+*Project License:* Apache License, Version 2.0 (link:LICENSE[] or
+{uri-apache-license})
 
-- You will only submit contributions where you have authored 100% of the content.
+- You will only submit contributions where you have authored 100% of the
+content.
 - You will only submit contributions to which you have the necessary rights.
 This means that if you are employed you have received the necessary permissions
 from your employer to make the contributions.
@@ -27,7 +29,8 @@ from your employer to make the contributions.
 
 == Code of Conduct
 
-All contributors are expected to follow our link:CODE_OF_CONDUCT{outfilesuffix}[Code of Conduct].
+All contributors are expected to follow our
+link:CODE_OF_CONDUCT{outfilesuffix}[Code of Conduct].
 
 == Developing Features and Fixing Bugs
 
