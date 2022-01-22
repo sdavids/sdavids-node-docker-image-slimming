@@ -2,7 +2,6 @@
 
 *.swp
 .DS_Store
-.classpath
 .dockerignore
 .editorconfig
 .gitattributes
@@ -12,8 +11,6 @@
 .mailmap
 .npmrc
 .nvmrc
-.project
-.settings/
 .vscode/
 AUTHORS
 CHANGELOG.adoc
@@ -32,11 +29,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log
 api/
-bin/
 docker-compose.yaml
 docker/
 node_modules/
-out/
 scripts/
 src/docs/
 !scripts/node_modules-clean.sh
