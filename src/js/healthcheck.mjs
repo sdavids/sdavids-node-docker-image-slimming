@@ -51,7 +51,7 @@ if (isNaN(timeout) || timeout < 0) {
 
 // https://nodejs.org/api/http.html#http_http_request_options_callback
 const options = {
-  path: '/-/live',
+  path: '/-/health/liveness',
   port,
   protocol,
   timeout,

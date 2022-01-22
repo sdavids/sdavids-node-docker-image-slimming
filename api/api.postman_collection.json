@@ -38,7 +38,7 @@
           "path": ["-", "live"],
           "port": "{{Port}}",
           "protocol": "{{Protocol}}",
-          "raw": "{{Protocol}}://{{Host}}:{{Port}}/-/live"
+          "raw": "{{Protocol}}://{{Host}}:{{Port}}/-/health/liveness"
         }
       },
       "response": []

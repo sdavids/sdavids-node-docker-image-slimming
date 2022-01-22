@@ -46,7 +46,7 @@ app.disable('x-powered-by');
 
 app.get('/', (_, res) => res.set('Content-Type', 'text/plain').send('42'));
 
-app.get('/-/live', (_, res) => res.json({ status: 'ok' }));
+app.get('/-/health/liveness', (_, res) => res.json({ status: 'ok' }));
 
 // eslint-disable-next-line init-declarations
 let server;

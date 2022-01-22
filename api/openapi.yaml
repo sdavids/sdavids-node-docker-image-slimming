@@ -35,7 +35,7 @@ paths:
       operationId: getTheAnswer
       tags:
         - API
-  /-/live:
+  /-/health/liveness:
     get:
       responses:
         '200':
