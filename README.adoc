@@ -28,8 +28,8 @@ ifdef::env-github[]
 endif::[]
 
 ifdef::badges[]
-image:https://img.shields.io/github/license/sdavids/sdavids-node-docker-image-slimming[Apache License, Version 2.0,link={uri-apache-license}]
-image:https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg[Contributor Covenant, Version 2.1,link={uri-contributor-covenant}]
+image:https://img.shields.io/github/license/sdavids/sdavids-node-docker-image-slimming[Apache License,Version 2.0,link={uri-apache-license}]
+image:https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg[Contributor Covenant,Version 2.1,link={uri-contributor-covenant}]
 image:https://img.shields.io/osslifecycle/sdavids/sdavids-node-docker-image-slimming[OSS Lifecycle]
 image:https://img.shields.io/maintenance/yes/2022[Maintenance]
 image:https://img.shields.io/github/last-commit/sdavids/sdavids-node-docker-image-slimming[GitHub last commit]
@@ -310,9 +310,9 @@ $ npm run docker:run:secure
 
 [IMPORTANT]
 ====
-You need to create the necessary private key and certificate via <<cert_self_signed>>.
+You need to create the necessary private key and certificate via
+<<cert_self_signed>>.
 ====
-
 
 ==== docker:sh
 
@@ -382,7 +382,8 @@ $ npm run clean:node
 [[cert_self_signed]]
 ==== cert:self-signed
 
-Creates a private key and a self-signed certificate via https://www.openssl.org/docs/man1.0.2/man1/openssl-req.html[openssl].
+Creates a private key and a self-signed certificate via
+https://www.openssl.org/docs/man1.0.2/man1/openssl-req.html[openssl].
 
 [source,shell]
 ----
@@ -400,7 +401,8 @@ The generated certificate is valid for 10 days.
 
 You need to add the created certificate to _Keychain Access_.
 
-Add it to your "login" keychain and set _Secure Sockets Layer (SSL)_ to "Always Trust":
+Add it to your "login" keychain and set _Secure Sockets Layer (SSL)_ to "Always
+Trust":
 
 image::src/docs/asciidoc/images/self-signed-macos.png[]
 
@@ -414,7 +416,7 @@ See link:CONTRIBUTING{outfilesuffix}[].
 
 == Code of Conduct
 
-We abide by the {uri-contributor-covenant}[Contributor Covenant, Version 2.1] and ask that you do as
-well.
+We abide by the {uri-contributor-covenant}[Contributor Covenant, Version 2.1]
+and ask that you do as well.
 
 For more information, please see link:CODE_OF_CONDUCT{outfilesuffix}[].

@@ -13,7 +13,8 @@
 // Refs:
 
 
-We use the https://github.com/google/styleguide[Google Style] for all code, except:
+We use the https://github.com/google/styleguide[Google Style] for all code,
+except:
 
 JavaScript:: https://prettier.io[prettier]
 
@@ -27,8 +28,8 @@ Install and enable the following plugins:
 * https://plugins.jetbrains.com/plugin/10456-prettier[prettier]
 * https://plugins.jetbrains.com/plugin/8527-google-java-format[google-java-format]
 
-https://www.jetbrains.com/help/idea/settings-code-style.html#scheme[Import] and enable the following code style
-scheme:
+https://www.jetbrains.com/help/idea/settings-code-style.html#scheme[Import] and
+enable the following code style scheme:
 
 * https://raw.githubusercontent.com/google/styleguide/gh-pages/intellij-java-google-style.xml
 
