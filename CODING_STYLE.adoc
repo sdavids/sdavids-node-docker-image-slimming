@@ -1,4 +1,5 @@
 = Coding Style
+Sebastian Davids <sdavids@gmx.de>
 
 // Metadata:
 :description: coding style

@@ -1,5 +1,5 @@
 = Node Docker Image Slimming
-Sebastian Davids
+Sebastian Davids <sdavids@gmx.de>
 
 // Metadata:
 :description: node docker image slimming

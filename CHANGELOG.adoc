@@ -1,4 +1,5 @@
 = Changelog
+Sebastian Davids <sdavids@gmx.de>
 
 // Metadata:
 :description: changelog
