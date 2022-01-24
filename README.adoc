@@ -165,7 +165,7 @@ Install https://stoplight.io/studio/[Stoplight Studio].
 
 Add:
 
-- link:api/openapi.yaml[OpenAPI 3 Description]
+* link:api/openapi.yaml[OpenAPI 3 Description]
 
 ==== Postman
 
@@ -173,13 +173,13 @@ Install https://www.postman.com/downloads/[Postman].
 
 Import:
 
-- link:api/api.postman_collection.json[Postman Collection]
-- link:api/local.postman_environment.json[Postman 'local' Environment]
-- link:api/local-secure.postman_environment.json[Postman 'local secure' Environment]
+* link:api/api.postman_collection.json[Postman Collection]
+* link:api/local.postman_environment.json[Postman 'local' Environment]
+* link:api/local-secure.postman_environment.json[Postman 'local secure' Environment]
 
 ===== FAQ
 
-- https://blog.postman.com/self-signed-ssl-certificate-troubleshooting/[Troubleshooting Self-signed SSL Certificate Issues and More in Postman]
+* https://blog.postman.com/self-signed-ssl-certificate-troubleshooting/[Troubleshooting Self-signed SSL Certificate Issues and More in Postman]
 
 ==== Paw
 
@@ -187,7 +187,7 @@ Install https://paw.cloud[Paw].
 
 Open:
 
-- link:api/api.paw[Paw Project]
+* link:api/api.paw[Paw Project]
 
 == Build Tasks
 

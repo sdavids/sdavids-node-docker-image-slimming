@@ -22,12 +22,12 @@
 *Project License:* Apache License, Version 2.0 (link:LICENSE[] or
 {uri-apache-license})
 
-- You will only submit contributions where you have authored 100% of the
+* You will only submit contributions where you have authored 100% of the
 content.
-- You will only submit contributions to which you have the necessary rights.
+* You will only submit contributions to which you have the necessary rights.
 This means that if you are employed you have received the necessary permissions
 from your employer to make the contributions.
-- Whatever content you contribute will be provided under the project license.
+* Whatever content you contribute will be provided under the project license.
 
 == Code of Conduct
 
@@ -51,9 +51,9 @@ Branch names should adhere to the following pattern:
 
 We use the following tokens:
 
-- *feat*: A feature
-- *fix*: A bug fix branch
-- *chore*: A cleanup branch
+* *feat*: A feature
+* *fix*: A bug fix branch
+* *chore*: A cleanup branch
 
 Examples:
 
@@ -68,16 +68,16 @@ As a general rule, the style and formatting of commit messages should follow the
 
 We use the following types:
 
-- *feat*: A new feature
-- *fix*: A bug fix
-- *chore*: Changes that affect the build system or external dependencies, CI
+* *feat*: A new feature
+* *fix*: A bug fix
+* *chore*: Changes that affect the build system or external dependencies, CI
 configuration files and scripts
-- *docs*: Documentation only changes
-- *refactor*: A code change that neither fixes a bug nor adds a feature
-- *style*: Changes that do not affect the meaning of the code (white-space,
+* *docs*: Documentation only changes
+* *refactor*: A code change that neither fixes a bug nor adds a feature
+* *style*: Changes that do not affect the meaning of the code (white-space,
 formatting, missing semicolons, etc.)
-- *test*: Adding missing tests or correcting existing tests
-- *revert*: Reverts a previous commit
+* *test*: Adding missing tests or correcting existing tests
+* *revert*: Reverts a previous commit
 
 Because of the noise it generates on the issue, please do _not_ mention the
 issue number in the message.
