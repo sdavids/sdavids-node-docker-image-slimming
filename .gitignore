@@ -11,6 +11,7 @@ Thumbs.db
 
 ### Jetbrains IDEs ###
 /.idea/
+/jffi*.dylib
 
 ### Code ###
 /.vscode/
