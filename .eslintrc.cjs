@@ -20,6 +20,7 @@ module.exports = {
     radix: 'off',
   },
   ignorePatterns: ['dist/*'],
+  reportUnusedDisableDirectives: true,
   overrides: [
     {
       files: ['*.js', '*.cjs', '*.mjs'],
