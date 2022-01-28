@@ -16,6 +16,7 @@ Sebastian Davids <sdavids@gmx.de>
 // Refs:
 :uri-contributor-covenant: https://www.contributor-covenant.org
 :uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
+:uri-google-style: https://github.com/google/gts
 :node-version: 16.13.2
 :docker-install-url: https://docs.docker.com/install/
 :nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
@@ -32,6 +33,7 @@ endif::[]
 ifdef::badges[]
 image:https://img.shields.io/github/license/sdavids/sdavids-node-docker-image-slimming[Apache License,Version 2.0,link={uri-apache-license}]
 image:https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg[Contributor Covenant,Version 2.1,link={uri-contributor-covenant}]
+image:https://img.shields.io/badge/code%20style-google-blueviolet.svg[Code Style: Google,link={uri-google-style}]
 image:https://img.shields.io/osslifecycle/sdavids/sdavids-node-docker-image-slimming[OSS Lifecycle]
 image:https://img.shields.io/maintenance/yes/2022[Maintenance]
 image:https://img.shields.io/github/last-commit/sdavids/sdavids-node-docker-image-slimming[GitHub last commit]
