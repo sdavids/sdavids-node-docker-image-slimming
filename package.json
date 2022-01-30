@@ -21,7 +21,7 @@
     "prepare": "npx is-ci || npx husky install",
     "build": "webpack --config webpack.config.cjs --node-env=production && mv dist/bundle.js dist/bundle.cjs",
     "cert:self-signed": "scripts/cert-self-signed.sh",
-    "clean": "rm -rf dist",
+    "clean": "scripts/clean.sh",
     "clean:node": "rm -rf node_modules package-lock.json",
     "docker:build": "scripts/docker-build.sh",
     "docker:clean": "scripts/docker-clean.sh",
