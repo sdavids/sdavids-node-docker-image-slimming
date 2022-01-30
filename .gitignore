@@ -31,6 +31,9 @@ Thumbs.db
 /pnpm-lock.yaml
 /pnpm-debug.log
 
+### ESLint ###
+/.eslintcache
+
 ### Build ###
 /dist/
 

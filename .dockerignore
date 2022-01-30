@@ -4,6 +4,7 @@
 .DS_Store
 .dockerignore
 .editorconfig
+.eslintcache
 .gitattributes
 .github/
 .gitignore
