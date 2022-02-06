@@ -105,5 +105,4 @@ Please mention all issues in the request's body, possibly using
 https://help.github.com/articles/closing-issues-via-commit-messages/[closing keywords]
 like `closes`, `fixes` (for bugs only), or `resolves`.
 
-To enforce the <<Branching Strategy>> pull requests from `master` will be
-closed.
+To enforce the <<Branching Strategy>> pull requests from `main` will be closed.
