@@ -76,7 +76,7 @@ SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/main" > /etc/apk/repositories \
     && echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/community" >> /etc/apk/repositories \
     && apk add --no-cache \
-       tini \
+       tini=0.19.0-r0 \
     && addgroup -g ${uid} ${user} \
     && adduser -g ${user} -u ${uid} -G ${user} -s /sbin/false -S -D -H ${user} \
     && mkdir ${app_dir} \
