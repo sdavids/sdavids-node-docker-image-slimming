@@ -20,6 +20,8 @@
 
 FROM node:16.13.2-alpine3.15 AS installer
 
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+
 RUN if [ "$(uname -m)" = "aarch64" ] ; then true ; else apk --no-cache add upx && upx /usr/local/bin/node ; fi
 
 WORKDIR /opt/app/
@@ -69,7 +71,7 @@ ARG app_dir=${user}
 ENV APP_USER=${user}
 ENV APP_DIR=${app_dir}
 
-SHELL ["/bin/sh", "-o", "pipefail", "-c"]
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
 RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/main" > /etc/apk/repositories \
     && echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/community" >> /etc/apk/repositories \
