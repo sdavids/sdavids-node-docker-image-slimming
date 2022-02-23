@@ -8,3 +8,7 @@ Sebastian Davids <sdavids@gmx.de>
 https://gitlab.alpinelinux.org/alpine/aports/-/issues/12194
 +
 upx does not work correctly on aarch64
+
+== Node Docker Image
+
+* https://github.com/nodejs/docker-node/issues/1650

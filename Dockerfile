@@ -20,6 +20,12 @@
 
 FROM node:16.14.0-alpine3.15 AS installer
 
+# workaround for https://github.com/nodejs/docker-node/issues/1650
+RUN mv /usr/local/lib/node_modules /usr/local/lib/node_modules.tmp \
+    && mv /usr/local/lib/node_modules.tmp /usr/local/lib/node_modules \
+    && npm i --silent --global npm@8.5.1
+# RUN npm i --silent --global npm@8.5.1
+
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
 RUN if [ "$(uname -m)" = "aarch64" ] ; then true ; else apk --no-cache add upx=3.96-r1 && upx /usr/local/bin/node ; fi
@@ -42,6 +48,12 @@ LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
 ### Bundler ###
 
 FROM node:16.14.0-alpine3.15 AS bundler
+
+# workaround for https://github.com/nodejs/docker-node/issues/1650
+RUN mv /usr/local/lib/node_modules /usr/local/lib/node_modules.tmp \
+    && mv /usr/local/lib/node_modules.tmp /usr/local/lib/node_modules \
+    && npm i --silent --global npm@8.5.1
+# RUN npm i --silent --global npm@8.5.1
 
 WORKDIR /opt/app/
 
