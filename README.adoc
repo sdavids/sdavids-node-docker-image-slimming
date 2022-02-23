@@ -405,8 +405,8 @@ The generated certificate is valid for 10 days.
 
 You need to add the created certificate to _Keychain Access_.
 
-Add it to your "login" keychain and set _Secure Sockets Layer (SSL)_ to "Always
-Trust":
+Add `docker/app/cert.pem` to your "login" keychain and set
+_Secure Sockets Layer (SSL)_ to "Always Trust":
 
 image::src/docs/asciidoc/images/self-signed-macos.png[]
 
