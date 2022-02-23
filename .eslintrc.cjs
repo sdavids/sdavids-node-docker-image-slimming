@@ -1,9 +1,10 @@
 // https://eslint.org/docs/user-guide/configuring
 
 module.exports = {
+  root: true,
   env: {
     node: true,
-    es2021: true,
+    es2022: true,
   },
   parserOptions: {
     sourceType: 'module',
