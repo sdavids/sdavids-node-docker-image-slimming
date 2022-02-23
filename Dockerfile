@@ -64,10 +64,10 @@ FROM alpine:3.11.6 as hardened
 
 ARG uid=1001
 ARG user=node
-ARG app_dir="${user}"
+ARG app_dir=${user}
 
-ENV APP_USER="${user}"
-ENV APP_DIR="${app_dir}"
+ENV APP_USER=${user}
+ENV APP_DIR=${app_dir}
 
 SHELL ["/bin/sh", "-o", "pipefail", "-c"]
 
@@ -75,18 +75,18 @@ RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/
     && echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/community" >> /etc/apk/repositories \
     && apk add --no-cache \
        tini \
-    && addgroup -g "${uid}" "${user}" \
-    && adduser -g "${user}" -u "${uid}" -G "${user}" -s /sbin/false -S -D -H "${user}" \
-    && mkdir "${app_dir}" \
-    && chown "${user}:${user}" -R "${app_dir}" \
-    && chmod 500 "${app_dir}" \
+    && addgroup -g ${uid} ${user} \
+    && adduser -g ${user} -u ${uid} -G ${user} -s /sbin/false -S -D -H ${user} \
+    && mkdir ${app_dir} \
+    && chown ${user}:${user} -R ${app_dir} \
+    && chmod 500 ${app_dir} \
     && find /sbin /usr/sbin \
        ! -type d -a ! -name apk -a ! -name ln ! -name tini \
        -delete \
     && find / -xdev -type d -perm +0002 -exec chmod o-w {} + \
 	  && find / -xdev -type f -perm +0002 -exec chmod o-w {} + \
 	  && chmod 777 /tmp/ \
-    && chown "${user}:root" /tmp/ \
+    && chown ${user}:root /tmp/ \
     && sed -i -r "/^(${user}|root|nobody)/!d" /etc/group \
     && sed -i -r "/^(${user}|root|nobody)/!d" /etc/passwd \
     && sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd \
@@ -125,9 +125,9 @@ RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/
     && find / -type f -iname '*apk*' -xdev -delete \
     && find / -type d -iname '*apk*' -print0 -xdev | xargs -0 rm -r -- \
     && find /bin /etc /lib /sbin /usr -xdev -type l -exec test ! -e {} \; -delete \
-    && mkdir -p "/${app_dir}/node_modules" \
-    && chown "${user}:${user}" "/${app_dir}/node_modules" \
-    && chmod 500 "/${app_dir}/node_modules" \
+    && mkdir -p /${app_dir}/node_modules \
+    && chown ${user}:${user} /${app_dir}/node_modules \
+    && chmod 500 /${app_dir}/node_modules \
     && rm -rf /bin/chown /bin/chmod
 
 LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
@@ -139,7 +139,7 @@ LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
 FROM hardened
 
 ARG user=node
-ARG app_dir="${user}"
+ARG app_dir=${user}
 
 ARG git_commit
 ARG port=3000
@@ -150,30 +150,30 @@ ARG key_path=/run/secrets/key.pem
 COPY --from=installer /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 COPY --from=installer /usr/local/bin/node /usr/bin/
 
-COPY --chown="${user}" --from=installer /opt/app/node_modules "/${app_dir}/node_modules"
-COPY --chown="${user}" --from=bundler /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs "/${app_dir}/"
+COPY --chown=${user} --from=installer /opt/app/node_modules /${app_dir}/node_modules
+COPY --chown=${user} --from=bundler /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs /${app_dir}/
 
 ENV NODE_ENV=production
-ENV PORT="${port}"
+ENV PORT=${port}
 
 ENV CERT_PATH=${cert_path}
 ENV KEY_PATH=${key_path}
 
 WORKDIR ${app_dir}
 
-USER "${user}"
+USER ${user}
 
-EXPOSE "${port}"
+EXPOSE ${port}
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
 CMD ["node", "bundle.cjs"]
 
 HEALTHCHECK --interval=5s --timeout=5s --start-period=5s \
-    CMD node --experimental-modules --no-warnings "/${app_dir}/healthcheck.mjs"
+    CMD node --experimental-modules --no-warnings /${app_dir}/healthcheck.mjs
 
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
-LABEL org.opencontainers.image.revision="${git_commit}" \
+LABEL org.opencontainers.image.revision=${git_commit} \
       org.opencontainers.image.licenses="Apache-2.0" \
       org.opencontainers.image.vendor="Sebastian Davids" \
       org.opencontainers.image.authors="Sebastian Davids <sdavids@gmx.de>" \
