@@ -22,7 +22,7 @@ FROM node:16.13.2-alpine3.15 AS installer
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
-RUN if [ "$(uname -m)" = "aarch64" ] ; then true ; else apk --no-cache add upx && upx /usr/local/bin/node ; fi
+RUN if [ "$(uname -m)" = "aarch64" ] ; then true ; else apk --no-cache add upx=3.96-r1 && upx /usr/local/bin/node ; fi
 
 WORKDIR /opt/app/
 
