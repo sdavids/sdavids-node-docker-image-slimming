@@ -62,7 +62,7 @@ LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
 
 ### Harden ###
 
-FROM alpine:3.11.6 as hardened
+FROM alpine:3.15.0 as hardened
 
 ARG uid=1001
 ARG user=node
