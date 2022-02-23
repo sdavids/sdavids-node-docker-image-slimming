@@ -44,7 +44,7 @@
     "npm": ">= 8.5.1"
   },
   "dependencies": {
-    "express": "4.17.2"
+    "express": "4.17.3"
   },
   "devDependencies": {
     "cross-env": "7.0.3",
