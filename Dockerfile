@@ -18,7 +18,7 @@
 
 ### Installer ###
 
-FROM node:16.13.2-alpine3.15 AS installer
+FROM node:16.14.0-alpine3.15 AS installer
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
@@ -41,7 +41,7 @@ LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
 
 ### Bundler ###
 
-FROM node:16.13.2-alpine3.15 AS bundler
+FROM node:16.14.0-alpine3.15 AS bundler
 
 WORKDIR /opt/app/
 
