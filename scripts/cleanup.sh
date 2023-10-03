@@ -22,6 +22,7 @@ set -eu
 
 git clean -fdx \
   -e .idea \
+  -e .fleet \
   -e .vscode \
   .
 git remote prune origin
