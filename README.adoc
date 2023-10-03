@@ -17,7 +17,6 @@ Sebastian Davids <sdavids@gmx.de>
 :uri-contributor-covenant: https://www.contributor-covenant.org
 :uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
 :uri-google-style: https://github.com/google/gts
-:node-version: 16.14.0
 :docker-install-url: https://docs.docker.com/install/
 :nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
 
@@ -137,24 +136,36 @@ image::src/docs/asciidoc/images/layers.gif[]
 
 == Development Environment Setup
 
+=== Docker
+
 Install {docker-install-url}[Docker].
+
+=== NVM
 
 Install {nvm-install-url}[NVM].
 
 Afterwards, execute the following in the project root:
 
-[source,shell,subs="attributes"]
+[source,shell]
 ----
-$ nvm install {node-version}
-$ nvm install-latest-npm
 $ nvm use
 ----
 
+=== husky
+
 Create `~/.huskyrc` to ensure Git UI tools can execute `node`:
 
-[source,shell]
+[source]
 ----
-$ printf "%s[ -s "${NVM_DIR}/nvm.sh" ] && source "${NVM_DIR}/nvm.sh"" > "${HOME}/.huskyrc"
+export NVM_DIR="${HOME}/.nvm"
+
+if [[ -f "${NVM_DIR}/nvm.sh" ]]; then
+  source "${NVM_DIR}/nvm.sh"
+
+  if [[ -f ".nvmrc" ]]; then
+    nvm use
+  fi
+fi
 ----
 
 === API Tools
