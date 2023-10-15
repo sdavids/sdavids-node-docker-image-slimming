@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 #
-# Copyright (c) 2022, Sebastian Davids
+# Copyright (c) 2022-2023, Sebastian Davids
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 
 set -eu
 
-readonly base_dir="$PWD"
+readonly base_dir="${PWD}"
 
 readonly build_dir="${base_dir}/dist"
 readonly eslint_cache_file="${base_dir}/.eslintcache"

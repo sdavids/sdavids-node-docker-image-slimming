@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 #
-# Copyright (c) 2020, Sebastian Davids
+# Copyright (c) 2020-2023, Sebastian Davids
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 
 set -eu
 
-readonly group="sdavids-node-docker-image-slimming"
+readonly group='sdavids-node-docker-image-slimming'
 
 readonly label="io.sdavids.image.group=${group}"
 
@@ -27,4 +27,3 @@ docker container prune --force --filter="label=${label}"
 docker volume prune --force --filter="label=${label}"
 
 docker image prune --force --filter="label=${label}" --all
-

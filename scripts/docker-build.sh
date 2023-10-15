@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 #
-# Copyright (c) 2020-2022, Sebastian Davids
+# Copyright (c) 2020-2023, Sebastian Davids
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ readonly tag="${1:-local}"
 
 readonly port=3000
 
-readonly group="sdavids"
-readonly name="sdavids-node-docker-image-slimming"
+readonly group='sdavids'
+readonly name='sdavids-node-docker-image-slimming'
 
 readonly container_name="${group}/${name}"
 
