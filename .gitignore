@@ -43,3 +43,6 @@ Thumbs.db
 *.crt
 *.key
 *.pem
+
+### direnv ###
+.env
