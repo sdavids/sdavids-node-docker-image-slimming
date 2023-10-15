@@ -43,7 +43,8 @@ See link:CODING_STYLE{outfilesuffix}[].
 
 === Branching Strategy
 
-By default, development happens in branches, which are merged via pull requests.
+We are using the https://docs.github.com/en/get-started/quickstart/github-flow[GitHub Flow],
+where development happens in branches, which are merged via pull requests.
 Special cases, like fixing problems with the CI pipeline, are of course exempt
 from this guideline.
 
@@ -91,8 +92,17 @@ Examples:
  docs: add license
  style: format
 
-Note: There is no requirement for all commits to match the branch token, i.e. a
-`doc: add license` commit is OK on a `users/chowe/fix/issue-13` branch.
+[NOTE]
+====
+There is no requirement for all commits to match the branch token, i.e. a
+`docs: add license` commit is OK on a `users/chowe/fix/issue-13` branch.
+====
+
+[IMPORTANT]
+====
+Add `[skip-ci]` to the commit message when the
+https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs[CI pipeline should not run].
+====
 
 === Pull Requests
 
