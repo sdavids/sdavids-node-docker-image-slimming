@@ -29,7 +29,7 @@ readonly name="sdavids-node-docker-image-slimming"
 
 readonly container_name="${group}/${name}"
 
-readonly commit="$(git rev-parse --verify --short HEAD)"
+commit="$(git rev-parse --verify --short HEAD)"
 
 docker buildx build \
   --no-cache \

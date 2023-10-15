@@ -20,7 +20,7 @@ set -eu
 
 readonly name="sdavids-node-docker-image-slimming"
 
-readonly exists="$(docker ps --all --quiet --filter="name=${name}")"
+exists="$(docker ps --all --quiet --filter="name=${name}")"
 
 if [ -n "${exists}" ]; then
   docker stop "${name}" && docker rm --force --volumes "${name}"

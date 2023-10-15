@@ -20,6 +20,6 @@
 
 set -eu
 
-if [[ ! -d "node_modules" ]]; then npm install --ignore-scripts=false; fi
+if [ ! -d "node_modules" ]; then npm install --ignore-scripts=false; fi
 
 npm outdated --long
