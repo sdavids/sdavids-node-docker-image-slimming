@@ -25,7 +25,21 @@ git clean -fdx \
   -e .fleet \
   -e .vscode \
   .
-git remote prune origin
+
+origin_url="$(git remote get-url origin 2> /dev/null || echo '')"
+if [ -n "${origin_url}" ]; then
+  set +e
+  git ls-remote --exit-code --heads origin refs/heads/main > /dev/null 2> /dev/null
+  remote_exits=$?
+  set -e
+
+  if [ ${remote_exits} -eq 0 ]; then
+    git remote prune origin
+  else
+    git remote remove origin
+  fi
+fi
+
 git repack
 git prune-packed
 git reflog expire --expire=1.month.ago
