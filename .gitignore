@@ -44,5 +44,5 @@ Thumbs.db
 *.key
 *.pem
 
-### direnv ###
+### environment files ###
 .env
