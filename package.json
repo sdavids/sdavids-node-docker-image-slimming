@@ -18,7 +18,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prepare": "npx is-ci || npx husky install",
+    "prepare": "npx --no is-ci || npx husky install",
     "build": "webpack --config webpack.config.cjs --node-env=production && mv dist/bundle.js dist/bundle.cjs",
     "cert:self-signed": "scripts/cert-self-signed.sh",
     "clean": "scripts/clean.sh",
@@ -32,9 +32,9 @@
     "docker:run": "scripts/docker-run.sh",
     "docker:run:secure": "scripts/docker-run-secure.sh",
     "docker:sh": "scripts/docker-sh.sh",
-    "lint": "npx eslint --cache .",
-    "lint:fix": "npx eslint --cache --fix .",
-    "prettier": "npx prettier --write '.'",
+    "lint": "npx --no eslint --cache .",
+    "lint:fix": "npx --no eslint --cache --fix .",
+    "prettier": "npx --no prettier . --write",
     "start": "cross-env NODE_ENV=production node --experimental-modules src/js/server.js",
     "start:build": "cross-env NODE_ENV=production node dist/bundle.cjs",
     "start:dev": "cross-env NODE_ENV=development nodemon --inspect --watch src/js --experimental-modules src/js/server.js"
