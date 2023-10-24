@@ -42,5 +42,5 @@ fi
 
 git repack
 git prune-packed
-git reflog expire --expire=1.month.ago
+git reflog expire --expire=1.month.ago --expire-unreachable=now --all
 git gc --aggressive
