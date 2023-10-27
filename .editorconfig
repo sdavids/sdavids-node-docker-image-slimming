@@ -10,8 +10,9 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 2
 
-[*.{adoc,js,cjs,mjs,json,yaml}]
+[*.{adoc,js,cjs,mjs,json,sh,yaml}]
 max_line_length = 80
 
 [*.md]
 trim_trailing_whitespace = false
+max_line_length = 80
