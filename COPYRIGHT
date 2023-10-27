@@ -13,5 +13,6 @@ Some files include explicit copyright notices and/or license notices.
 For full authorship information, see the version control history.
 
 Except as otherwise noted (below and/or in individual files),
-_sdavids-node-docker-image-slimming_ is licensed under the Apache License,
-Version 2.0 <LICENSE> or <http://www.apache.org/licenses/LICENSE-2.0>.
+_sdavids-node-docker-image-slimming_ is licensed under the
+[Apache License, Version 2.0](LICENSE-APACHE) or
+<http://www.apache.org/licenses/LICENSE-2.0>.

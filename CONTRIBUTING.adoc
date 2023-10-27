@@ -43,7 +43,8 @@ See link:CODING_STYLE{outfilesuffix}[].
 
 === Branching Strategy
 
-We are using the https://docs.github.com/en/get-started/quickstart/github-flow[GitHub Flow],
+We are using the
+https://docs.github.com/en/get-started/quickstart/github-flow[GitHub Flow],
 where development happens in branches, which are merged via pull requests.
 Special cases, like fixing problems with the CI pipeline, are of course exempt
 from this guideline.

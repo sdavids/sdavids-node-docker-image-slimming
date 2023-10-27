@@ -42,6 +42,20 @@ endif::[]
 
 toc::[]
 
+== License
+
+Apache License, Version 2.0 (link:LICENSE[] or {uri-apache-license}).
+
+=== Contribution
+
+See link:CONTRIBUTING{outfilesuffix}[].
+
+== Code of Conduct
+
+We abide by the {uri-contributor-covenant}[Contributor Covenant, Version 2.1]
+and ask that you do as well.
+
+For more information, please see link:CODE_OF_CONDUCT{outfilesuffix}[].
 
 == Results
 
@@ -421,18 +435,3 @@ Add `docker/app/cert.pem` to your "login" keychain and set
 _Secure Sockets Layer (SSL)_ to "Always Trust":
 
 image::src/docs/asciidoc/images/self-signed-macos.png[]
-
-== License
-
-Apache License, Version 2.0 (link:LICENSE[] or {uri-apache-license}).
-
-=== Contribution
-
-See link:CONTRIBUTING{outfilesuffix}[].
-
-== Code of Conduct
-
-We abide by the {uri-contributor-covenant}[Contributor Covenant, Version 2.1]
-and ask that you do as well.
-
-For more information, please see link:CODE_OF_CONDUCT{outfilesuffix}[].
