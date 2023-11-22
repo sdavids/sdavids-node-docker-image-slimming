@@ -1,42 +1,28 @@
 # https://git-scm.com/docs/gitignore
 
-### Linux ###
-*.swp
+### Temporary ###
+*~
 
-### OSX ###
+### vim ###
+*.sw[a-p]
+
+### Git ###
+*.orig
+
+### Mac ###
 .DS_Store
 
 ### Windows ###
 Thumbs.db
+desktop.ini
 
-### Jetbrains IDEs ###
-/.idea/
-/.fleet/
-/jffi*.dylib
+### Jetbrains ###
+.idea/
+.fleet/
+jffi*.dylib
 
-### Code ###
-/.vscode/
-
-### NodeJS ###
-/node_modules/
-
-### npm ###
-/npm-debug.log
-
-### Yarn ###
-/yarn.lock
-/yarn-debug.log*
-/yarn-error.log*
-
-### pnPM ###
-/pnpm-lock.yaml
-/pnpm-debug.log
-
-### ESLint ###
-/.eslintcache
-
-### Build ###
-/dist/
+### Visual Studio Code ###
+.vscode/
 
 ### Certificates ###
 *.cer
@@ -46,3 +32,15 @@ Thumbs.db
 
 ### environment files ###
 .env
+
+### direnv files ###
+.envrc
+
+### NodeJS ###
+/node_modules/
+
+### ESLint ###
+/.eslintcache
+
+### Build ###
+/dist/
