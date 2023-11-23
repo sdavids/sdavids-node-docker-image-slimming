@@ -40,7 +40,7 @@ if [ -n "${origin_url}" ]; then
   fi
 fi
 
-git repack
+git repack -d
 git prune-packed
-git reflog expire --expire=1.month.ago --expire-unreachable=now --all
+git reflog expire --expire=1.month.ago --expire-unreachable=now
 git gc --aggressive
