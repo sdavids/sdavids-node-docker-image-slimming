@@ -37,10 +37,10 @@ jffi*.dylib
 .envrc
 
 ### NodeJS ###
-/node_modules/
+node_modules/
 
 ### ESLint ###
-/.eslintcache
+.eslintcache
 
 ### Build ###
-/dist/
+dist/
