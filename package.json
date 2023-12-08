@@ -18,7 +18,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prepare": "npx --no is-ci || npx husky install",
+    "prepare": "scripts/prepare.sh",
     "build": "webpack --config webpack.config.cjs --node-env=production && mv dist/bundle.js dist/bundle.cjs",
     "cert:self-signed": "scripts/cert-self-signed.sh",
     "clean": "scripts/clean.sh",
