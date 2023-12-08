@@ -5,6 +5,7 @@
 .dockerignore
 .editorconfig
 .eslintcache
+.fleet/
 .gitattributes
 .github/
 .gitignore
