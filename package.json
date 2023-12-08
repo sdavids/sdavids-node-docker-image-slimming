@@ -18,6 +18,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "preinstall": "scripts/preinstall.sh",
     "prepare": "scripts/prepare.sh",
     "build": "webpack --config webpack.config.cjs --node-env=production && mv dist/bundle.js dist/bundle.cjs",
     "cert:self-signed": "scripts/cert-self-signed.sh",
