@@ -16,6 +16,13 @@
 # limitations under the License.
 #
 
+# _shellcheck needs to be in $PATH
+# https://www.shellcheck.net
+#   Mac:
+#     brew install shellcheck
+#   Linux:
+#     sudo apt-get install shellcheck
+
 set -eu
 
 readonly base_dir="${1:-$PWD}"

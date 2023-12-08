@@ -182,6 +182,22 @@ if [ -f "${NVM_DIR}/nvm.sh" ]; then
 fi
 ----
 
+=== shellcheck
+
+==== Linux
+
+[source,shell]
+----
+$ sudo apt-get install shellcheck
+----
+
+==== Mac
+
+[source,shell]
+----
+$ brew install shellcheck
+----
+
 === API Tools
 
 The usage of the API tools mentioned below is optional.

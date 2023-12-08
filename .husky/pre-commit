@@ -30,3 +30,5 @@
 yamllint --strict -c .yamllint.yaml .github api *.yaml
 
 npx --no lint-staged >&2
+
+scripts/shellscript-check.sh .
