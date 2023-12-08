@@ -6,11 +6,12 @@
 # https://git-scm.com/docs/gitattributes#__code_whitespace_code
 * whitespace=tab-in-indent,trailing-space,tabwidth=2
 
-package-lock.json -diff linguist-generated=true
-
 *.adoc linguist-documentation
-*.gif binary -eol -whitespace
 *.md diff=markdown linguist-documentation
+*.sh diff=bash
+
+*.gif binary -eol -whitespace
 *.paw binary -eol -whitespace
 *.png binary -eol -whitespace
-*.sh diff=bash
+
+package-lock.json -diff linguist-generated=true
