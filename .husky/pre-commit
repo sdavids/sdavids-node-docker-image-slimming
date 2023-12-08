@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 
+# shellcheck shell=sh
+
 #
-# Copyright (c) 2022, Sebastian Davids
+# Copyright (c) 2022-2023, Sebastian Davids
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,6 +18,15 @@
 # limitations under the License.
 #
 
-. "$(dirname "$0")/_/husky.sh"
+# yamllint needs to be in $PATH
+# https://yamllint.readthedocs.io/en/stable/
+#   Mac:
+#     brew install yamllint
+#   Linux:
+#     sudo apt-get install yamllint
+
+. "$(dirname -- "$0")/_/husky.sh"
+
+yamllint --strict -c .yamllint.yaml .github api *.yaml
 
 npx --no lint-staged >&2

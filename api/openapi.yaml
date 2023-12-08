@@ -31,7 +31,9 @@ paths:
                 answer:
                   value: 42
       summary: The Answer
-      description: 'The answer to the ultimate question of life, the universe and everything.'
+      description: >-
+        The answer to the ultimate question of life, the universe and
+        everything.
       operationId: getTheAnswer
       tags:
         - API
