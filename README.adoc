@@ -198,6 +198,22 @@ $ sudo apt-get install shellcheck
 $ brew install shellcheck
 ----
 
+=== yamllint
+
+==== Linux
+
+[source,shell]
+----
+$ sudo apt-get install yamllint
+----
+
+==== Mac
+
+[source,shell]
+----
+$ brew install yamllint
+----
+
 === API Tools
 
 The usage of the API tools mentioned below is optional.
