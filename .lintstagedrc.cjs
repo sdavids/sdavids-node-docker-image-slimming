@@ -2,5 +2,5 @@
 
 module.exports = {
   '*.{js,cjs,mjs,json}': ['eslint', 'prettier --check'],
-  '*.yaml': ['prettier --check'],
+  '*.yaml': ['prettier --check', 'yamllint --strict'],
 };
