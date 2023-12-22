@@ -1,3 +1,4 @@
+---
 #
 # Copyright (c) 2020-2022, Sebastian Davids
 #
@@ -29,9 +30,9 @@ services:
     build:
       context: .
       args:
-        git_commit: '${git_commit:-}'
+        git_commit: ${git_commit:-}
     ports:
-      - '${APP_PORT:-3000}:3000/tcp'
+      - ${APP_PORT:-3000}:3000/tcp
     read_only: true
     security_opt:
       - no-new-privileges

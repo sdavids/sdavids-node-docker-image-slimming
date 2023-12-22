@@ -1,3 +1,4 @@
+---
 # https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md
 
 openapi: 3.0.3
@@ -8,7 +9,7 @@ info:
   description: A simple endpoint in nodejs with express.
   license:
     name: Apache-2.0
-    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+    url: https://www.apache.org/licenses/LICENSE-2.0
   contact:
     name: Sebastian Davids
     email: sdavids@gmx.de
@@ -60,7 +61,7 @@ paths:
         - Management
 
 servers:
-  - url: 'http://localhost:3000'
+  - url: http://localhost:3000
     description: local
-  - url: 'https://localhost:3000'
+  - url: https://localhost:3000
     description: local secure
