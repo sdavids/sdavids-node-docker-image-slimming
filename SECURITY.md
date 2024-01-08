@@ -19,13 +19,13 @@ You can use my public keys to send me an encrypted and/or signed message.
 ### age
 
 ```shell
-$ curl https://sdavids.de/sdavids.age | age -R - input.txt > output.txt.age
+$ curl https://sdavids.de/sdavids.age | age -R - in.txt > out.txt.age
 ```
 
 ### SSH
 
 ```shell
-$ curl https://sdavids.de/sdavids.keys | age -R - input.txt > output.txt.age
+$ curl https://sdavids.de/sdavids.keys | age -R - in.txt > out.txt.ssh.age
 ```
 
 ### GPG
