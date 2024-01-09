@@ -18,7 +18,7 @@
 
 # script needs to be invoked from project root directory
 
-set -eu
+set -Eeu -o pipefail
 
 readonly days="${1:-10}"
 
