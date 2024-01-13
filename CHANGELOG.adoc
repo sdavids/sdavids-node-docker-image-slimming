@@ -1,17 +1,16 @@
 = Changelog
 Sebastian Davids <sdavids@gmx.de>
-
 // Metadata:
 :description: changelog
-
 // Settings:
 :sectanchors:
 :sectlinks:
-:toc:
+:toc: macro
+:toc-placement!:
+:hide-uri-scheme:
 :hide-uri-scheme:
 
-// Refs:
-
+toc::[]
 
 All notable changes to this project will be documented in this file.
 
@@ -19,4 +18,4 @@ The format is based on https://keepachangelog.com/en/1.0.0/[Keep a Changelog]
 and this project adheres to
 https://semver.org/spec/v2.0.0.html[Semantic Versioning].
 
-## [Unreleased]
+== [Unreleased]

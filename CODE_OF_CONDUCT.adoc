@@ -1,16 +1,16 @@
 = Contributor Covenant Code of Conduct
-
 // Metadata:
 :description: contributor covenant code of conduct
-
 // Settings:
 :sectanchors:
 :sectlinks:
-:toc:
+:toc: macro
+:toc-placement!:
 :hide-uri-scheme:
-
 // Refs:
 :contact-method: sdavids@gmx.de
+
+toc::[]
 
 == Our Pledge
 

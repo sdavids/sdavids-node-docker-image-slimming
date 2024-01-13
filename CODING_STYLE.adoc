@@ -1,18 +1,16 @@
 = Coding Style
 Sebastian Davids <sdavids@gmx.de>
-
 // Metadata:
 :description: coding style
-
 // Settings:
 :sectnums:
 :sectanchors:
 :sectlinks:
-:toc:
+:toc: macro
+:toc-placement!:
 :hide-uri-scheme:
 
-// Refs:
-
+toc::[]
 
 We use the https://github.com/google/styleguide[Google Style] for all code,
 except:

@@ -1,18 +1,17 @@
 = Node Docker Image Slimming
 Sebastian Davids <sdavids@gmx.de>
-
 // Metadata:
 :description: node docker image slimming
-
 // Settings:
 :sectnums:
 :sectanchors:
 :sectlinks:
 :toc: macro
+:toclevels: 3
+:toc-placement!:
 :hide-uri-scheme:
 :source-highlighter: rouge
 :rouge-style: github
-
 // Refs:
 :uri-contributor-covenant: https://www.contributor-covenant.org
 :uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
