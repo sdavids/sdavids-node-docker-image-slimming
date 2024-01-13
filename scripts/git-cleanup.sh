@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 #
-# Copyright (c) 2022-2023, Sebastian Davids
+# Copyright (c) 2022-2024, Sebastian Davids
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,13 +16,14 @@
 # limitations under the License.
 #
 
-# script needs to be invoked from the project root directory
+# script needs to be invoked from the project's root directory
 
 set -eu
 
 git clean -fdx \
-  -e .idea \
   -e .fleet \
+  -e .idea \
+  -e .settings \
   -e .vscode \
   .
 
