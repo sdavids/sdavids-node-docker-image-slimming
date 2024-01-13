@@ -13,12 +13,12 @@
 .DS_Store
 
 ### Windows ###
-Thumbs.db
 desktop.ini
+Thumbs.db
 
 ### Jetbrains ###
-.idea/
 .fleet/
+.idea/
 jffi*.dylib
 
 ### Visual Studio Code ###
