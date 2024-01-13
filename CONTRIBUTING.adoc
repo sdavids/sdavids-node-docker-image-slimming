@@ -101,7 +101,7 @@ There is no requirement for all commits to match the branch token, i.e. a
 
 [IMPORTANT]
 ====
-Add `[skip-ci]` to the commit message when the
+Add `[no ci]` to the commit message when the
 https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs[CI pipeline should not run].
 ====
 
