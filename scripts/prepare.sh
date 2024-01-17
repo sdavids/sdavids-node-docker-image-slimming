@@ -20,8 +20,8 @@
 
 set -eu
 
-if npx --no is-ci ; then
+if npx --yes --quiet is-ci ; then
   exit 0
 fi
 
-npx --no husky install .husky
+npx --yes --quiet husky install .husky

@@ -33,9 +33,10 @@
     "docker:run": "scripts/docker-run.sh",
     "docker:run:secure": "scripts/docker-run-secure.sh",
     "docker:sh": "scripts/docker-sh.sh",
-    "lint": "npx --no eslint --cache .",
-    "lint:fix": "npx --no eslint --cache --fix .",
-    "prettier": "npx --no prettier . --write",
+    "format": "npx prettier . --cache --write",
+    "format:check": "npx prettier . --cache --check",
+    "lint": "npx eslint --cache .",
+    "lint:fix": "npx eslint --cache --fix .",
     "start": "cross-env NODE_ENV=production node --experimental-modules src/js/server.js",
     "start:build": "cross-env NODE_ENV=production node dist/bundle.cjs",
     "start:dev": "cross-env NODE_ENV=development nodemon --inspect --watch src/js --experimental-modules src/js/server.js"
