@@ -25,7 +25,7 @@
     "clean": "scripts/clean.sh",
     "clean:node": "rm -rf node_modules package-lock.json",
     "docker:build": "scripts/docker-build.sh",
-    "docker:clean": "scripts/docker-clean.sh",
+    "docker:cleanup": "scripts/docker-cleanup.sh",
     "docker:health": "scripts/docker-health.sh",
     "docker:inspect": "scripts/docker-inspect.sh",
     "docker:logs": "scripts/docker-logs.sh",
