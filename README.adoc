@@ -51,8 +51,7 @@ See link:CONTRIBUTING{outfilesuffix}[].
 
 == Code of Conduct
 
-We abide by the {uri-contributor-covenant}[Contributor Covenant, Version 2.1]
-and ask that you do as well.
+We abide by the {uri-contributor-covenant}[Contributor Covenant, Version 2.1] and ask that you do as well.
 
 For more information, please see link:CODE_OF_CONDUCT{outfilesuffix}[].
 
@@ -157,7 +156,7 @@ Install {docker-install-url}[Docker].
 
 Install {nvm-install-url}[NVM].
 
-Afterwards, execute the following in the project root:
+Afterward, execute the following in the project root:
 
 [source,shell]
 ----
@@ -380,8 +379,7 @@ $ npm run docker:run:secure
 
 [IMPORTANT]
 ====
-You need to create the necessary private key and certificate via
-<<cert_self_signed>>.
+You need to create the necessary private key and certificate via <<cert_self_signed>>.
 ====
 
 ==== docker:sh
@@ -452,8 +450,7 @@ $ npm run clean:node
 [[cert_self_signed]]
 ==== cert:self-signed
 
-Creates a private key and a self-signed certificate via
-https://www.openssl.org/docs/man1.0.2/man1/openssl-req.html[openssl].
+Creates a private key and a self-signed certificate via https://www.openssl.org/docs/man1.0.2/man1/openssl-req.html[openssl].
 
 [source,shell]
 ----
@@ -471,7 +468,6 @@ The generated certificate is valid for 10 days.
 
 You need to add the created certificate to _Keychain Access_.
 
-Add `docker/app/cert.pem` to your "login" keychain and set
-_Secure Sockets Layer (SSL)_ to "Always Trust":
+Add `docker/app/cert.pem` to your "login" keychain and set _Secure Sockets Layer (SSL)_ to "Always Trust":
 
 image::src/docs/asciidoc/images/self-signed-macos.png[]

@@ -24,20 +24,16 @@ toc::[]
 
 == Contributor License Agreement
 
-*Project License:* Apache License, Version 2.0 (link:LICENSE[] or
-{uri-apache-license})
+*Project License:* Apache License, Version 2.0 (link:LICENSE[] or {uri-apache-license})
 
-* You will only submit contributions where you have authored 100% of the
-content.
+* You will only submit contributions where you have authored 100% of the content.
 * You will only submit contributions to which you have the necessary rights.
-This means that if you are employed you have received the necessary permissions
-from your employer to make the contributions.
-* Whatever content you contribute will be provided under the project license.
+This means that if you are employed you have received the necessary permissions from your employer to make the contributions.
+* Whatever content you contribute will be provided under both project licenses.
 
 == Code of Conduct
 
-All contributors are expected to follow our
-link:CODE_OF_CONDUCT{outfilesuffix}[Code of Conduct].
+All contributors are expected to follow our link:CODE_OF_CONDUCT{outfilesuffix}[Code of Conduct].
 
 == Developing Features and Fixing Bugs
 
@@ -47,14 +43,10 @@ See link:CODING_STYLE{outfilesuffix}[].
 
 === Branching Strategy
 
-We are using the
-https://docs.github.com/en/get-started/quickstart/github-flow[GitHub Flow],
-where development happens in branches, which are merged via pull requests.
-Special cases, like fixing problems with the CI pipeline, are of course exempt
-from this guideline.
+We are using the https://docs.github.com/en/get-started/quickstart/github-flow[GitHub Flow], where development happens in branches, which are merged via pull requests.
+Special cases, like fixing problems with the CI pipeline, are of course exempt from this guideline.
 
-Branch names should adhere to the following pattern:
-`users/username/token/branch-name-by-hyphen`.
+Branch names should adhere to the following pattern: `users/username/token/branch-name-by-hyphen`.
 
 We use the following tokens:
 
@@ -70,24 +62,20 @@ Examples:
 
 === Commits
 
-As a general rule, the style and formatting of commit messages should follow the
-{uri-conventional-commits}[Conventional Commits] guidelines.
+As a general rule, the style and formatting of commit messages should follow the {uri-conventional-commits}[Conventional Commits] guidelines.
 
 We use the following types:
 
 * *feat*: A new feature
 * *fix*: A bug fix
-* *chore*: Changes that affect the build system or external dependencies, CI
-configuration files and scripts
+* *chore*: Changes that affect the build system or external dependencies, CI configuration files and scripts
 * *docs*: Documentation only changes
 * *refactor*: A code change that neither fixes a bug nor adds a feature
-* *style*: Changes that do not affect the meaning of the code (white-space,
-formatting, missing semicolons, etc.)
+* *style*: Changes that do not affect the meaning of the code (white-space, formatting, missing semicolons, etc.)
 * *test*: Adding missing tests or correcting existing tests
 * *revert*: Reverts a previous commit
 
-Because of the noise it generates on the issue, please do _not_ mention the
-issue number in the message.
+Because of the noise it generates on the issue, please do _not_ mention the issue number in the message.
 
 Try to fit the summary within the soft 50-character limit.
 
@@ -99,25 +87,19 @@ Examples:
 
 [NOTE]
 ====
-There is no requirement for all commits to match the branch token, i.e. a
-`docs: add license` commit is OK on a `users/chowe/fix/issue-13` branch.
+There is no requirement for all commits to match the branch token, i.e. a `docs: add license` commit is OK on a `users/chowe/fix/issue-13` branch.
 ====
 
 [IMPORTANT]
 ====
-Add `[no ci]` to the commit message when the
-https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs[CI pipeline should not run].
+Add `[no ci]` to the commit message when the https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs[CI pipeline should not run].
 ====
 
 === Pull Requests
 
-Pull requests are used to discuss a concrete solution, not the motivation nor
-requirements for it.
+Pull requests are used to discuss a concrete solution, not the motivation nor requirements for it.
 As such there should be at least one issue a pull request relates to.
-At the same time it should be focused, so it should usually not relate to more
-than one issue (although that can occasionally happen).
-Please mention all issues in the request's body, possibly using
-https://help.github.com/articles/closing-issues-via-commit-messages/[closing keywords]
-like `closes`, `fixes` (for bugs only), or `resolves`.
+At the same time it should be focused, so it should usually not relate to more than one issue (although that can occasionally happen).
+Please mention all issues in the request's body, possibly using https://help.github.com/articles/closing-issues-via-commit-messages/[closing keywords] like `closes`, `fixes` (for bugs only), or `resolves`.
 
 To enforce the <<Branching Strategy>> pull requests from `main` will be closed.
