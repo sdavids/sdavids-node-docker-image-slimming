@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-# script needs to be invoked from project root directory
+# script needs to be invoked from project's root directory
 
 set -Eeu -o pipefail
 
