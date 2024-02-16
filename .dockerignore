@@ -37,3 +37,5 @@ node_modules/
 scripts/
 src/docs/
 !scripts/node_modules-clean.sh
+!scripts/preinstall.sh
+!scripts/prepare.sh

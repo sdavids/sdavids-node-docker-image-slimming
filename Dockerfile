@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 #
-# Copyright (c) 2020-2023, Sebastian Davids
+# Copyright (c) 2020-2024, Sebastian Davids
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ RUN if [ "$(uname -m)" = "aarch64" ] ; then true ; else apk --no-cache add upx=3
 
 WORKDIR /opt/app/
 
-COPY scripts/node_modules-clean.sh scripts/
+COPY scripts/node_modules-clean.sh scripts/preinstall.sh scripts/prepare.sh scripts/
 COPY package.json package-lock.json ./
 
 RUN npm ci --production --no-optional --audit-level=high --silent \
@@ -59,6 +59,7 @@ RUN mv /usr/local/lib/node_modules /usr/local/lib/node_modules.tmp \
 
 WORKDIR /opt/app/
 
+COPY scripts/preinstall.sh scripts/prepare.sh scripts/
 COPY webpack.config.cjs ./
 COPY package.json package-lock.json ./
 
