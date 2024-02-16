@@ -24,6 +24,7 @@ readonly days="${1:-10}"
 
 mkdir -p docker/app
 
+# https://developer.chrome.com/blog/chrome-58-deprecations/#remove_support_for_commonname_matching_in_certificates
 openssl req \
     -newkey rsa:2048 \
     -x509 \
@@ -33,6 +34,6 @@ openssl req \
     -out docker/app/cert.pem \
     -subj '/CN=localhost' \
     -extensions EXT -config <( \
-       printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth") \
+       printf "[dn]\nCN=localhost\n[req]\ndistinguished_name=dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth") \
     -sha256 \
     -days "${days}"
