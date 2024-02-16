@@ -148,11 +148,13 @@ image::src/docs/asciidoc/images/layers.gif[]
 
 == Development Environment Setup
 
-=== Docker
+=== Installation
+
+==== Docker
 
 Install {docker-install-url}[Docker].
 
-=== NVM
+==== NVM
 
 Install {nvm-install-url}[NVM].
 
@@ -163,7 +165,7 @@ Afterward, execute the following in the project root:
 $ nvm use
 ----
 
-=== husky
+==== husky
 
 Create `~/.huskyrc` to ensure Git UI tools can execute `node`:
 
@@ -180,43 +182,43 @@ if [ -f "${NVM_DIR}/nvm.sh" ]; then
 fi
 ----
 
-=== shellcheck
+==== shellcheck
 
-==== Linux
+===== Linux
 
 [source,shell]
 ----
 $ sudo apt-get install shellcheck
 ----
 
-==== Mac
+===== Mac
 
 [source,shell]
 ----
 $ brew install shellcheck
 ----
 
-=== yamllint
+==== yamllint
 
-==== Linux
+===== Linux
 
 [source,shell]
 ----
 $ sudo apt-get install yamllint
 ----
 
-==== Mac
+===== Mac
 
 [source,shell]
 ----
 $ brew install yamllint
 ----
 
-=== API Tools
+==== API Tools
 
 The usage of the API tools mentioned below is optional.
 
-==== Stoplight Studio
+===== Stoplight Studio
 
 Install https://stoplight.io/studio/[Stoplight Studio].
 
@@ -224,7 +226,7 @@ Add:
 
 * link:api/openapi.yaml[OpenAPI 3 Description]
 
-==== Postman
+===== Postman
 
 Install https://www.postman.com/downloads/[Postman].
 
@@ -234,11 +236,11 @@ Import:
 * link:api/local.postman_environment.json[Postman 'local' Environment]
 * link:api/local-secure.postman_environment.json[Postman 'local secure' Environment]
 
-===== FAQ
+====== FAQ
 
 * https://blog.postman.com/self-signed-ssl-certificate-troubleshooting/[Troubleshooting Self-signed SSL Certificate Issues and More in Postman]
 
-==== RapidAPI
+===== RapidAPI
 
 Install https://paw.cloud[RapidAPI].
 
@@ -308,7 +310,7 @@ $ npm run clean
 
 === Code Quality
 
-=== format
+==== format
 
 Format files with https://prettier.io[prettier].
 
@@ -317,7 +319,7 @@ Format files with https://prettier.io[prettier].
 $ npm run format
 ----
 
-=== format:checks
+==== format:checks
 
 Checks the formatting of the files with https://prettier.io[prettier].
 
