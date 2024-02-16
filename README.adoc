@@ -409,7 +409,7 @@ Find problems via https://eslint.org[ESLint].
 
 [source,shell]
 ----
-$ npm run eslint
+$ npm run lint
 ----
 
 ==== lint:fix
@@ -418,7 +418,7 @@ Fix problems via https://eslint.org[ESLint].
 
 [source,shell]
 ----
-$ npm run eslint:fix
+$ npm run lint:fix
 ----
 
 === Docker
