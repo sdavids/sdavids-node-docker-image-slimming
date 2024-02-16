@@ -187,7 +187,7 @@ ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["node", "bundle.cjs"]
 
 HEALTHCHECK --interval=5s --timeout=5s --start-period=5s \
-    CMD node --experimental-modules --no-warnings /${app_dir}/healthcheck.mjs
+    CMD node --experimental-modules --no-warnings ${APP_DIR}/healthcheck.mjs
 
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.revision=${git_commit} \

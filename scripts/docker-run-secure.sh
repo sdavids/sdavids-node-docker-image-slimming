@@ -25,12 +25,15 @@ readonly name='sdavids-node-docker-image-slimming'
 
 readonly container_name="${group}/${name}"
 
+# https://nodejs.org/docs/latest/api/cli.html#node_tls_reject_unauthorizedvalue
 docker run \
   --interactive \
   --rm \
   --read-only \
   --security-opt=no-new-privileges \
   --cap-drop=all \
+  --env PROTOCOL=https \
+  --env NODE_TLS_REJECT_UNAUTHORIZED='0' \
   --publish "${port}:3000/tcp" \
   --mount "type=bind,source=${PWD}/docker/app,target=/run/secrets,readonly" \
   --name "${name}" \

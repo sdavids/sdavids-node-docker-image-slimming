@@ -15,6 +15,7 @@
  */
 
 import http from 'http';
+import https from 'https';
 
 ['uncaughtException', 'unhandledRejection'].forEach((signal) =>
   process.on(signal, (err) => {
@@ -57,7 +58,9 @@ const options = {
   timeout,
 };
 
-const request = http.request(options, (res) => {
+const client = protocol === 'https:' ? https : http;
+
+const request = client.request(options, (res) => {
   process.exit(res.statusCode === 200 ? 0 : 100);
 });
 
