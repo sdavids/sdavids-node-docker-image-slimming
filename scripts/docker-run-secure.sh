@@ -27,6 +27,7 @@ readonly container_name="${group}/${name}"
 
 # https://nodejs.org/docs/latest/api/cli.html#node_tls_reject_unauthorizedvalue
 docker run \
+  --init \
   --interactive \
   --rm \
   --read-only \

@@ -78,17 +78,13 @@ ENV APP_DIR=${app_dir}
 # https://github.com/hadolint/hadolint/wiki/DL4006
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
-RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/main" > /etc/apk/repositories \
-    && echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/community" >> /etc/apk/repositories \
-    && apk add --no-cache \
-       tini=0.19.0-r2 \
-    && addgroup -g ${uid} ${user} \
+RUN addgroup -g ${uid} ${user} \
     && adduser -g ${user} -u ${uid} -G ${user} -s /sbin/false -S -D -H ${user} \
     && mkdir -p ${app_dir} \
     && chown ${user}:${user} -R ${app_dir} \
     && chmod 500 ${app_dir} \
     && find /sbin /usr/sbin \
-       ! -type d -a ! -name apk -a ! -name ln ! -name tini \
+       ! -type d -a ! -name apk -a ! -name ln \
        -delete \
     && find / -xdev -type d -perm +0002 -exec chmod o-w {} + \
 	  && find / -xdev -type f -perm +0002 -exec chmod o-w {} + \
@@ -171,8 +167,6 @@ WORKDIR ${app_dir}
 USER ${user}
 
 EXPOSE ${port}
-
-ENTRYPOINT ["/sbin/tini", "--"]
 
 CMD ["node", "bundle.cjs"]
 

@@ -26,6 +26,7 @@ readonly name='sdavids-node-docker-image-slimming'
 readonly container_name="${group}/${name}"
 
 docker run \
+  --init \
   --interactive \
   --rm \
   --read-only \
