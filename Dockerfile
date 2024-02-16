@@ -20,17 +20,13 @@
 
 ### Installer ###
 
-FROM node:16.14.0-alpine3.15 AS installer
+# https://hub.docker.com/_/node
+FROM node:20.11.1-alpine3.19 AS installer
 
-# workaround for https://github.com/nodejs/docker-node/issues/1650
-RUN mv /usr/local/lib/node_modules /usr/local/lib/node_modules.tmp \
-    && mv /usr/local/lib/node_modules.tmp /usr/local/lib/node_modules \
-    && npm i --silent --global npm@8.5.1
-# RUN npm i --silent --global npm@8.5.1
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
-RUN if [ "$(uname -m)" = "aarch64" ] ; then true ; else apk --no-cache add upx=3.96-r1 && upx /usr/local/bin/node ; fi
+RUN if [ "$(uname -m)" = "aarch64" ] ; then true ; else apk --no-cache add upx=4.2.1-r0 && upx /usr/local/bin/node ; fi
 
 WORKDIR /opt/app/
 
@@ -48,13 +44,8 @@ LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
 
 ### Bundler ###
 
-FROM node:16.14.0-alpine3.15 AS bundler
-
-# workaround for https://github.com/nodejs/docker-node/issues/1650
-RUN mv /usr/local/lib/node_modules /usr/local/lib/node_modules.tmp \
-    && mv /usr/local/lib/node_modules.tmp /usr/local/lib/node_modules \
-    && npm i --silent --global npm@8.5.1
-# RUN npm i --silent --global npm@8.5.1
+# https://hub.docker.com/_/node
+FROM node:20.11.1-alpine3.19 AS bundler
 
 WORKDIR /opt/app/
 
@@ -66,7 +57,7 @@ RUN npm ci --no-optional --audit-level=high --silent
 
 COPY src/js src/js
 
-RUN npm run build -s \
+RUN npm run build --silent \
     && cp src/js/healthcheck.mjs /opt/app/dist/ \
     && chmod 400 /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs
 
@@ -75,7 +66,8 @@ LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
 
 ### Harden ###
 
-FROM alpine:3.15.0 as hardened
+# https://hub.docker.com/_/alpine
+FROM alpine:3.19.1 as hardened
 
 ARG uid=1001
 ARG user=node
@@ -90,7 +82,7 @@ SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/main" > /etc/apk/repositories \
     && echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/community" >> /etc/apk/repositories \
     && apk add --no-cache \
-       tini=0.19.0-r0 \
+       tini=0.19.0-r2 \
     && addgroup -g ${uid} ${user} \
     && adduser -g ${user} -u ${uid} -G ${user} -s /sbin/false -S -D -H ${user} \
     && mkdir -p ${app_dir} \
@@ -186,7 +178,7 @@ ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["node", "bundle.cjs"]
 
 HEALTHCHECK --interval=5s --timeout=5s --start-period=5s \
-    CMD node --experimental-modules --no-warnings ${APP_DIR}/healthcheck.mjs
+    CMD node --no-warnings ${APP_DIR}/healthcheck.mjs
 
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.revision=${git_commit} \
