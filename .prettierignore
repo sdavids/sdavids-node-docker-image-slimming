@@ -2,4 +2,6 @@
 
 package-lock.json
 dist/
-node-modules/
+.idea/
+.fleet/
+.vscode/
