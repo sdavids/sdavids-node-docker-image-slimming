@@ -63,7 +63,8 @@ if (secure) {
 server.listen(port);
 
 server.once('listening', () =>
-  console.log(`listening on http${secure ? 's' : ''}://localhost:${port}`),
+  // https://googlechrome.github.io/lighthouse-ci/docs/configuration.html#startserverreadypattern
+  console.log(`Listen local: http${secure ? 's' : ''}://localhost:${port}`),
 );
 
 server.on('error', (err) => {
