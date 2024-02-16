@@ -18,6 +18,7 @@ Sebastian Davids <sdavids@gmx.de>
 :uri-google-style: https://github.com/google/gts
 :docker-install-url: https://docs.docker.com/install/
 :nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
+:fnm-install-url: https://github.com/Schniz/fnm#installation
 
 ifdef::env-browser[:outfilesuffix: .adoc]
 
@@ -154,23 +155,97 @@ image::src/docs/asciidoc/images/layers.gif[]
 
 Install {docker-install-url}[Docker].
 
-==== NVM
+==== Node Version Manager
 
-Install {nvm-install-url}[NVM].
+Install {fnm-install-url}[fnm] or {nvm-install-url}[NVM].
 
-Afterward, execute the following in the project root:
+[NOTE]
+====
+This repository uses https://typicode.github.io/husky/[husky] for Git hooks.
 
+More information:
+https://typicode.github.io/husky/troubleshooting.html#command-not-found[Husky - Command not found]
+====
+
+===== fnm
+
+.~/.zprofile
 [source,shell]
 ----
-$ nvm use
+if type fnm > /dev/null 2>&1; then
+  eval "$(fnm env --use-on-cd)"
+fi
 ----
 
-==== husky
-
-Create `~/.huskyrc` to ensure Git UI tools can execute `node`:
-
-[source]
+.~/.huskyrc
+[source,shell]
 ----
+#!/usr/bin/env sh
+
+# vim:ft=zsh
+
+# shellcheck shell=sh disable=SC1091
+
+set -eu
+
+[ -e /etc/zshenv ] && . /etc/zshenv
+[ -e "${ZDOTDIR:=${HOME}}/.zshenv" ] && . "${ZDOTDIR:=${HOME}}/.zshenv"
+[ -e /etc/zprofile ] && . /etc/zprofile
+[ -e "${ZDOTDIR:=${HOME}}/.zprofile" ] && . "${ZDOTDIR:=${HOME}}/.zprofile"
+[ -e /etc/zlogin ] && . /etc/zlogin
+[ -e "${ZDOTDIR:=${HOME}}/.zlogin" ] && . "${ZDOTDIR:=${HOME}}/.zlogin"
+----
+
+===== nvm
+
+.~/.zshrc
+[source,shell]
+----
+export NVM_DIR="${HOME}/.nvm"
+
+[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
+[ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
+
+if type nvm > /dev/null 2>&1; then
+  autoload -U add-zsh-hook
+  load-nvmrc() {
+    local nvmrc_path="$(nvm_find_nvmrc)"
+    if [ -n "${nvmrc_path}" ]; then
+      local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+      if [ "${nvmrc_node_version}" = "N/A" ]; then
+        nvm install
+      elif [ "${nvmrc_node_version}" != "$(nvm version)" ]; then
+        nvm use
+      fi
+    elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+      echo "Reverting to nvm default version"
+      nvm use default
+    fi
+  }
+
+  add-zsh-hook chpwd load-nvmrc
+  load-nvmrc
+fi
+----
+
+.~/.huskyrc
+[source,shell]
+----
+#!/usr/bin/env sh
+
+# vim:ft=zsh
+
+# shellcheck shell=sh disable=SC1091
+
+set -eu
+
+[ -e /etc/zshenv ] && . /etc/zshenv
+[ -e "${ZDOTDIR:=${HOME}}/.zshenv" ] && . "${ZDOTDIR:=${HOME}}/.zshenv"
+[ -e /etc/zprofile ] && . /etc/zprofile
+[ -e "${ZDOTDIR:=${HOME}}/.zprofile" ] && . "${ZDOTDIR:=${HOME}}/.zprofile"
+[ -e /etc/zlogin ] && . /etc/zlogin
+[ -e "${ZDOTDIR:=${HOME}}/.zlogin" ] && . "${ZDOTDIR:=${HOME}}/.zlogin"
+
 export NVM_DIR="${HOME}/.nvm"
 
 if [ -f "${NVM_DIR}/nvm.sh" ]; then
