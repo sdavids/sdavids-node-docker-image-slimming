@@ -81,7 +81,7 @@ FROM alpine:3.15.0 as hardened
 
 ARG uid=1001
 ARG user=node
-ARG app_dir=${user}
+ARG app_dir=/${user}
 
 ENV APP_USER=${user}
 ENV APP_DIR=${app_dir}
@@ -94,7 +94,7 @@ RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/
        tini=0.19.0-r0 \
     && addgroup -g ${uid} ${user} \
     && adduser -g ${user} -u ${uid} -G ${user} -s /sbin/false -S -D -H ${user} \
-    && mkdir ${app_dir} \
+    && mkdir -p ${app_dir} \
     && chown ${user}:${user} -R ${app_dir} \
     && chmod 500 ${app_dir} \
     && find /sbin /usr/sbin \
@@ -142,9 +142,9 @@ RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/
     && find / -type f -iname '*apk*' -xdev -delete \
     && find / -type d -iname '*apk*' -print0 -xdev | xargs -0 rm -r -- \
     && find /bin /etc /lib /sbin /usr -xdev -type l -exec test ! -e {} \; -delete \
-    && mkdir -p /${app_dir}/node_modules \
-    && chown ${user}:${user} /${app_dir}/node_modules \
-    && chmod 500 /${app_dir}/node_modules \
+    && mkdir -p ${app_dir}/node_modules \
+    && chown ${user}:${user} ${app_dir}/node_modules \
+    && chmod 500 ${app_dir}/node_modules \
     && rm -rf /bin/chown /bin/chmod
 
 LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
@@ -156,7 +156,7 @@ LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
 FROM hardened
 
 ARG user=node
-ARG app_dir=${user}
+ARG app_dir=/${user}
 
 ARG git_commit
 ARG port=3000
@@ -167,8 +167,8 @@ ARG key_path=/run/secrets/key.pem
 COPY --from=installer /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 COPY --from=installer /usr/local/bin/node /usr/bin/
 
-COPY --chown=${user} --from=installer /opt/app/node_modules /${app_dir}/node_modules
-COPY --chown=${user} --from=bundler /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs /${app_dir}/
+COPY --chown=${user} --from=installer /opt/app/node_modules ${app_dir}/node_modules
+COPY --chown=${user} --from=bundler /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs ${app_dir}/
 
 ENV NODE_ENV=production
 ENV PORT=${port}
