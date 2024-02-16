@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2022, Sebastian Davids
+ * Copyright (c) 2020-2024, Sebastian Davids
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,10 @@ import http from 'http';
   process.on(signal, (err) => {
     console.error(err);
     process.exit(1);
-  })
+  }),
 );
 ['SIGINT', 'SIGTERM'].forEach((signal) =>
-  process.on(signal, () => process.exit(0))
+  process.on(signal, () => process.exit(0)),
 );
 
 const port = parseInt(process.env.PORT || '3000');
