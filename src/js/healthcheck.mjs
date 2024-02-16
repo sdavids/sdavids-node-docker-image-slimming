@@ -19,7 +19,7 @@ import http from 'http';
 ['uncaughtException', 'unhandledRejection'].forEach((signal) =>
   process.on(signal, (err) => {
     console.error(err);
-    process.exit(1);
+    process.exit(70); // EX_SOFTWARE
   }),
 );
 ['SIGINT', 'SIGTERM'].forEach((signal) =>
@@ -58,7 +58,12 @@ const options = {
 };
 
 const request = http.request(options, (res) => {
-  process.exit(res.statusCode === 200 ? 0 : 1);
+  process.exit(res.statusCode === 200 ? 0 : 100);
 });
 
-request.on('error', () => process.exit(1)).end();
+request
+  .on('error', (e) => {
+    console.error(e);
+    process.exit(70); // EX_SOFTWARE
+  })
+  .end();

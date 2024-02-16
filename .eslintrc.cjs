@@ -13,7 +13,9 @@ module.exports = {
   rules: {
     'capitalized-comments': 'off',
     'id-length': 'off',
+    'line-comment-position': 'off',
     'no-console': 'off',
+    'no-inline-comments': 'off',
     'no-magic-numbers': 'off',
     'no-ternary': 'off',
     'one-var': 'off',

@@ -22,7 +22,7 @@ import https from 'https';
 ['uncaughtException', 'unhandledRejection'].forEach((signal) =>
   process.on(signal, (err) => {
     console.error(err);
-    process.exit(1);
+    process.exit(70); // EX_SOFTWARE
   }),
 );
 ['SIGINT', 'SIGTERM'].forEach((signal) =>
@@ -71,11 +71,11 @@ server.on('error', (err) => {
     switch (err.code) {
       case 'EACCES':
         console.error('Port requires elevated privileges');
-        process.exit(1);
+        process.exit(77); // EX_NOPERM
         break;
       case 'EADDRINUSE':
         console.error('Port is already in use');
-        process.exit(1);
+        process.exit(75); // EX_TEMPFAIL
         break;
       default:
       // just log
