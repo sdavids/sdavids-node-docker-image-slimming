@@ -46,7 +46,6 @@ RUN npm ci --production --no-optional --audit-level=high --silent \
 LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
       io.sdavids.image.type="builder"
 
-
 ### Bundler ###
 
 FROM node:16.14.0-alpine3.15 AS bundler
@@ -74,7 +73,6 @@ RUN npm run build -s \
 LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
       io.sdavids.image.type="builder"
 
-
 ### Harden ###
 
 FROM alpine:3.15.0 as hardened
@@ -86,6 +84,7 @@ ARG app_dir=/${user}
 ENV APP_USER=${user}
 ENV APP_DIR=${app_dir}
 
+# https://github.com/hadolint/hadolint/wiki/DL4006
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
 RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/main" > /etc/apk/repositories \
