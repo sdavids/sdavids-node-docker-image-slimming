@@ -23,10 +23,9 @@
 # https://hub.docker.com/_/node
 FROM node:20.11.1-alpine3.19 AS installer
 
+RUN apk --no-cache add upx=4.2.1-r0
 
-SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
-
-RUN if [ "$(uname -m)" = "aarch64" ] ; then true ; else apk --no-cache add upx=4.2.1-r0 && upx /usr/local/bin/node ; fi
+RUN upx /usr/local/bin/node
 
 WORKDIR /opt/app/
 
