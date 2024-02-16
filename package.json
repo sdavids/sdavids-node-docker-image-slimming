@@ -20,7 +20,7 @@
   "scripts": {
     "preinstall": "scripts/preinstall.sh",
     "prepare": "scripts/prepare.sh",
-    "build": "webpack --config webpack.config.cjs --node-env=production && mv dist/bundle.js dist/bundle.cjs",
+    "build": "webpack --config webpack.config.cjs --define-process-env-node-env=production && mv dist/bundle.js dist/bundle.cjs",
     "cert:self-signed": "scripts/cert-self-signed.sh",
     "clean": "scripts/clean.sh",
     "clean:node": "rm -rf node_modules package-lock.json",
@@ -58,7 +58,7 @@
     "nodemon": "3.0.3",
     "prettier": "3.2.5",
     "webpack": "5.70.0",
-    "webpack-cli": "4.9.2",
+    "webpack-cli": "5.1.4",
     "webpack-node-externals": "3.0.0"
   },
   "sideEffects": false
