@@ -18,17 +18,6 @@
 # limitations under the License.
 #
 
-# yamllint needs to be in $PATH
-# https://yamllint.readthedocs.io/en/stable/
-#   Mac:
-#     brew install yamllint
-#   Linux:
-#     sudo apt-get install yamllint
+set -eu
 
-. "$(dirname -- "$0")/_/husky.sh"
-
-yamllint --strict -c .yamllint.yaml .github api *.yaml
-
-npx --no lint-staged >&2
-
-scripts/shellscript-check.sh .
+npx --yes --quiet lint-staged >&2

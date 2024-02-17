@@ -177,7 +177,7 @@ if type fnm > /dev/null 2>&1; then
 fi
 ----
 
-.~/.huskyrc
+.~/.config/husky/init.sh
 [source,shell]
 ----
 #!/usr/bin/env sh
@@ -228,7 +228,7 @@ if type nvm > /dev/null 2>&1; then
 fi
 ----
 
-.~/.huskyrc
+.~/.config/husky/init.sh
 [source,shell]
 ----
 #!/usr/bin/env sh
