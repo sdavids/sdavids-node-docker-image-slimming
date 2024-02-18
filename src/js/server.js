@@ -15,6 +15,7 @@
  */
 
 import express from 'express';
+import { faker } from '@faker-js/faker';
 import fs from 'fs';
 import http from 'http';
 import https from 'https';
@@ -44,7 +45,13 @@ app.set('port', port);
 // https://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
 app.disable('x-powered-by');
 
-app.get('/', (_, res) => res.set('Content-Type', 'text/plain').send('42'));
+app.get('/random-user', (_, res) =>
+  res.set('Content-Type', 'application/json').send({
+    userId: faker.string.uuid(),
+    username: faker.internet.userName(),
+    email: faker.internet.email(),
+  }),
+);
 
 app.get('/-/health/liveness', (_, res) => res.json({ status: 'ok' }));
 

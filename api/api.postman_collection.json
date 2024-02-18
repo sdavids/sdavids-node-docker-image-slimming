@@ -1,22 +1,22 @@
 {
   "info": {
     "name": "sdavids-node-docker-image-slimming REST API",
-    "description": "A simple endpoint in nodejs with express.\n\nContact Support:\n Name: Sebastian Davids\n Email: sdavids@gmx.de",
+    "description": "A simple endpoint in NodeJS with express.\n\nContact Support:\n Name: Sebastian Davids\n Email: sdavids@gmx.de",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "The Answer",
+      "name": "Random User",
       "request": {
         "auth": {
           "type": "noauth"
         },
-        "description": "The answer to the ultimate question of life, the universe and everything.",
+        "description": "Returns a random user.",
         "header": [],
         "method": "GET",
         "url": {
           "host": ["{{Host}}"],
-          "path": [],
+          "path": ["random-user"],
           "port": "{{Port}}",
           "protocol": "{{Protocol}}",
           "raw": "{{Protocol}}://{{Host}}:{{Port}}/"
@@ -35,7 +35,7 @@
         "method": "GET",
         "url": {
           "host": ["{{Host}}"],
-          "path": ["-", "live"],
+          "path": ["-", "health", "liveness"],
           "port": "{{Port}}",
           "protocol": "{{Protocol}}",
           "raw": "{{Protocol}}://{{Host}}:{{Port}}/-/health/liveness"
@@ -43,6 +43,5 @@
       },
       "response": []
     }
-  ],
-  "protocolProfileBehavior": {}
+  ]
 }

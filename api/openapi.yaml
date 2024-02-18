@@ -1,12 +1,12 @@
 ---
-# https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md
+# https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md
 
-openapi: 3.0.3
+openapi: 3.1.0
 
 info:
   title: sdavids-node-docker-image-slimming REST API
   version: 0.0.1
-  description: A simple endpoint in nodejs with express.
+  description: A simple endpoint in NodeJS with express.
   license:
     name: Apache-2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
@@ -18,24 +18,53 @@ tags:
   - name: API
   - name: Management
 
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+    Liveness:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - UP
+            - DOWN
+  examples:
+    random-user-ok:
+      value:
+        userId: d13e3ec3-cb8f-4fb1-8cf5-55175e5735f7
+        username: Cameron_Howe
+        email: c.howe@mutiny.com
+    liveness-ok:
+      value:
+        status: UP
+
 paths:
-  /:
+  /random-user:
     get:
       responses:
         '200':
           description: OK
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/User'
               examples:
-                answer:
-                  value: 42
-      summary: The Answer
-      description: >-
-        The answer to the ultimate question of life, the universe and
-        everything.
-      operationId: getTheAnswer
+                ok:
+                  $ref: '#/components/examples/random-user-ok'
+      summary: Random User
+      description: Returns a random user.
+      operationId: getRandomUser
       tags:
         - API
   /-/health/liveness:
@@ -46,14 +75,10 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
+                $ref: '#/components/schemas/Liveness'
               examples:
                 ok:
-                  value:
-                    status: ok
+                  $ref: '#/components/examples/liveness-ok'
       summary: Liveness Probe
       description: Liveness Probe
       operationId: getLivenessProbe
