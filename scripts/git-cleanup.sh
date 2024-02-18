@@ -30,6 +30,8 @@ git clean -fdx \
   -e .idea \
   -e .settings \
   -e .vscode \
+  -e docker/app/cert.pem \
+  -e docker/app/key.pem \
   .
 
 origin_url="$(git remote get-url origin 2> /dev/null || echo '')"
