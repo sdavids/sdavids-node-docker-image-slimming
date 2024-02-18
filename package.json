@@ -20,7 +20,7 @@
   "scripts": {
     "preinstall": "scripts/preinstall.sh",
     "prepare": "scripts/prepare.sh",
-    "build": "webpack --config webpack.config.cjs --define-process-env-node-env=production && mv dist/bundle.js dist/bundle.cjs",
+    "build": "webpack --config webpack.config.mjs --define-process-env-node-env=production && mv dist/bundle.js dist/bundle.cjs",
     "cert:self-signed": "scripts/cert-self-signed.sh",
     "clean": "scripts/clean.sh",
     "clean:node": "rm -rf node_modules package-lock.json",

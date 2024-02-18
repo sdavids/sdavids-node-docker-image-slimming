@@ -49,7 +49,7 @@ FROM node:20.11.1-alpine3.19 AS bundler
 WORKDIR /opt/app/
 
 COPY scripts/preinstall.sh scripts/prepare.sh scripts/
-COPY webpack.config.cjs ./
+COPY webpack.config.mjs ./
 COPY package.json package-lock.json ./
 
 RUN npm ci --no-optional --audit-level=high --silent
