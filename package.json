@@ -21,7 +21,7 @@
     "preinstall": "scripts/preinstall.sh",
     "prepare": "scripts/prepare.sh",
     "build": "webpack --config webpack.config.mjs --define-process-env-node-env=production && mv dist/bundle.js dist/bundle.cjs",
-    "cert:self-signed": "scripts/cert-self-signed.sh",
+    "cert:create": "scripts/create-self-signed-cert.sh docker/app",
     "clean": "scripts/clean.sh",
     "clean:node": "rm -rf node_modules package-lock.json",
     "docker:build": "scripts/docker-build.sh",

@@ -456,7 +456,7 @@ $ npm run docker:run:secure
 
 [IMPORTANT]
 ====
-One needs to create the necessary private key and certificate via <<cert_self_signed>>.
+One needs to create the necessary private key and certificate via <<cert_create>>.
 ====
 
 ==== docker:sh
@@ -524,31 +524,24 @@ Deletes `node_modules/` and `package-lock.json`.
 $ npm run clean:node
 ----
 
-[[cert_self_signed]]
-==== cert:self-signed
+[[cert_create]]
+==== cert:create
 
-Creates a private key and a self-signed certificate via https://www.openssl.org/docs/man1.0.2/man1/openssl-req.html[openssl].
+Creates a private key and a self-signed certificate.
 
 [source,shell]
 ----
-$ npm run cert:self-signed
+$ npm run cert:create
 ----
 
 => `docker/app/cert.pem` and `docker/app/key.pem`
 
 [NOTE]
 ====
-The generated certificate is valid for 10 days.
+The generated certificate is valid for 30 days.
 ====
 
 ===== MacOS
-
-One needs to add the created certificate to one's login keychain:
-
-[source,shell]
-----
-$ security add-trusted-cert -p ssl -k "$(security login-keychain | xargs)" docker/app/cert.pem
-----
 
 Check your login keychain in  _Keychain Access_; _Secure Sockets Layer (SSL)_ should be set to "Always Trust":
 
@@ -561,17 +554,8 @@ Chrome and Safari need no further configuration.
 
 ===== Firefox (MOZILLA_PKIX_ERROR_SELF_SIGNED_CERT)
 
-One needs to bypass the https://support.mozilla.org/en-US/kb/error-codes-secure-websites#w_self-signed-certificate[self-signed certificate warning] by clicking on "Advanced" and then "Accept the Risk and Continue":
+You need to bypass the https://support.mozilla.org/en-US/kb/error-codes-secure-websites#w_self-signed-certificate[self-signed certificate warning] by clicking on "Advanced" and then "Accept the Risk and Continue":
 
 image::src/docs/asciidoc/images/self-signed-firefox.png[]
 
-[NOTE]
-====
-One can delete the bypass via `Firefox > Preferences > Privacy & Security > Certificates`; click "View Certificates...":
-
-image::src/docs/asciidoc/images/self-signed-firefox-delete-1.png[]
-
-Click on the "Servers" tab:
-
-image::src/docs/asciidoc/images/self-signed-firefox-delete-2.png[]
-====
+===== Related Scripts
