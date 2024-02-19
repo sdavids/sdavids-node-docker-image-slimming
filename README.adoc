@@ -559,3 +559,31 @@ You need to bypass the https://support.mozilla.org/en-US/kb/error-codes-secure-w
 image::src/docs/asciidoc/images/self-signed-firefox.png[]
 
 ===== Related Scripts
+
+. <<cert_delete,cert_delete>>
+
+[#cert_delete]
+==== cert:delete
+
+Deletes the private key and the self-signed certificate.
+
+===== Usage
+
+[source,shell]
+----
+$ npm run cert:delete
+----
+
+===== Firefox
+
+You can delete the certificate via `Firefox > Preferences > Privacy & Security > Certificates`; click "View Certificates...":
+
+image::src/docs/asciidoc/images/self-signed-firefox-delete-1.png[]
+
+Click on the "Servers" tab:
+
+image::src/docs/asciidoc/images/self-signed-firefox-delete-2.png[]
+
+===== Related Scripts
+
+. <<cert_create,cert_create>>
