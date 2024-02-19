@@ -36,6 +36,6 @@ docker run \
   --env PROTOCOL=https \
   --env NODE_TLS_REJECT_UNAUTHORIZED='0' \
   --publish "${port}:3000/tcp" \
-  --mount "type=bind,source=${PWD}/docker/app,target=/run/secrets,readonly" \
+  --mount "type=bind,source=$PWD/docker/app,target=/run/secrets,readonly" \
   --name "${name}" \
   "${container_name}"
