@@ -289,6 +289,22 @@ $ sudo apt-get install yamllint
 $ brew install yamllint
 ----
 
+==== hadolint
+
+===== Linux
+
+[source,shell]
+----
+$ sudo apt-get install hadolint
+----
+
+===== Mac
+
+[source,shell]
+----
+$ brew install hadolint
+----
+
 ==== API Tools
 
 The usage of the API tools mentioned below is optional.
