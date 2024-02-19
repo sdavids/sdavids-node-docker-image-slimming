@@ -31,7 +31,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log
 api/
-docker-compose.yaml
 docker/
 node_modules/
 scripts/
