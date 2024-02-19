@@ -30,7 +30,7 @@ docker run \
   --interactive \
   --rm \
   --read-only \
-  --security-opt=no-new-privileges \
+  --security-opt='no-new-privileges=true' \
   --cap-drop=all \
   --publish "${port}:3000/tcp" \
   --name "${name}" \

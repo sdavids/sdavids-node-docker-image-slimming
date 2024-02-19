@@ -31,7 +31,7 @@ docker run \
   --interactive \
   --rm \
   --read-only \
-  --security-opt=no-new-privileges \
+  --security-opt='no-new-privileges=true' \
   --cap-drop=all \
   --env PROTOCOL=https \
   --env NODE_TLS_REJECT_UNAUTHORIZED='0' \
