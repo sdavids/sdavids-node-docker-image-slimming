@@ -38,9 +38,9 @@
     "format:check": "scripts/format-check.sh",
     "lint": "npx eslint --cache .",
     "lint:fix": "npx eslint --cache --fix .",
-    "start": "cross-env NODE_ENV=production node --experimental-modules src/js/server.js",
+    "start": "cross-env NODE_ENV=production node src/js/server.mjs",
     "start:build": "cross-env NODE_ENV=production node dist/bundle.cjs",
-    "start:dev": "cross-env NODE_ENV=development nodemon --inspect --watch src/js --experimental-modules src/js/server.js"
+    "start:dev": "cross-env NODE_ENV=development nodemon --inspect --watch src/js src/js/server.mjs"
   },
   "engines": {
     "node": ">= 16.14.0"

@@ -6,7 +6,7 @@ export default {
   mode: 'production',
   target: 'node20',
   externals: nodeExternals(),
-  entry: resolve(import.meta.dirname, 'src/js/server.js'),
+  entry: resolve(import.meta.dirname, 'src/js/server.mjs'),
   output: {
     filename: 'bundle.js',
     path: resolve(import.meta.dirname, 'dist'),
