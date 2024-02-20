@@ -43,7 +43,7 @@ else
 fi
 readonly commit
 
-docker build \
+docker image build \
   --no-cache \
   --compress \
   --tag "${container_name}:latest" \
@@ -54,4 +54,4 @@ docker build \
 
 echo
 
-docker inspect -f '{{json .Config.Labels}}' "${container_name}:${tag}"
+docker image inspect -f '{{json .Config.Labels}}' "${container_name}:${tag}"

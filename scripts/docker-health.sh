@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 #
-# Copyright (c) 2020-2023, Sebastian Davids
+# Copyright (c) 2020-2024, Sebastian Davids
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,6 +20,13 @@ set -eu
 
 readonly name='sdavids-node-docker-image-slimming'
 
-docker inspect \
-  --format="{{.State.Health.Status}} {{.State.Health.FailingStreak}}" \
-  "${name}"
+if [ -n "${container_id}" ]; then
+  # HEALTHCHECK defined?
+  if [ "$(docker container inspect --format='{{.State.Health}}' "${name}")" = '<nil>' ]; then
+    exit
+  fi
+
+  docker container inspect \
+    --format='{{.State.Health.Status}} {{.State.Health.FailingStreak}}' \
+    "${name}"
+fi
