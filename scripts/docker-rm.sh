@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 #
-# Copyright (c) 2020-2023, Sebastian Davids
+# Copyright (c) 2020-2024, Sebastian Davids
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ set -eu
 
 readonly name='sdavids-node-docker-image-slimming'
 
-exists="$(docker ps --all --quiet --filter="name=${name}")"
+exists="$(docker ps --all --quiet --filter="name=^/${name}$")"
 
 if [ -n "${exists}" ]; then
   docker stop "${name}" && docker rm --force --volumes "${name}"
