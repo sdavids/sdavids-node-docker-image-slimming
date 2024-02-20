@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import http from 'http';
-import https from 'https';
+import http from 'node:http';
+import https from 'node:https';
 import process from 'node:process';
 
 ['uncaughtException', 'unhandledRejection'].forEach((signal) =>

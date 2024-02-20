@@ -16,9 +16,9 @@
 
 import express from 'express';
 import { faker } from '@faker-js/faker';
-import fs from 'fs';
-import http from 'http';
-import https from 'https';
+import fs from 'node:fs';
+import http from 'node:http';
+import https from 'node:https';
 
 ['uncaughtException', 'unhandledRejection'].forEach((signal) =>
   process.on(signal, (err) => {
