@@ -16,15 +16,16 @@
 
 import http from 'http';
 import https from 'https';
+import process from 'node:process';
 
 ['uncaughtException', 'unhandledRejection'].forEach((signal) =>
-  process.on(signal, (err) => {
+  process.once(signal, (err) => {
     console.error(err);
     process.exit(70); // EX_SOFTWARE
   }),
 );
 ['SIGINT', 'SIGTERM'].forEach((signal) =>
-  process.on(signal, () => process.exit(0)),
+  process.once(signal, () => process.exit(0)),
 );
 
 const port = parseInt(process.env.PORT || '3000');
