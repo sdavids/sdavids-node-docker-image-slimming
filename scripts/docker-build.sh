@@ -29,9 +29,21 @@ readonly name='sdavids-node-docker-image-slimming'
 
 readonly container_name="${group}/${name}"
 
-commit="$(git rev-parse --verify --short HEAD)"
+if [ -n "${GITHUB_SHA:-}" ]; then
+  # https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
+  commit="${GITHUB_SHA}"
+else
+  if [ -z "$(git status --porcelain=v1 2>/dev/null)" ]; then
+    ext=''
+  else
+    ext='-next'
+  fi
+  readonly ext
+  commit="$(git rev-parse --verify HEAD)${ext}"
+fi
+readonly commit
 
-docker buildx build \
+docker build \
   --no-cache \
   --compress \
   --tag "${container_name}:latest" \
@@ -39,3 +51,7 @@ docker buildx build \
   --build-arg "git_commit=${commit}" \
   --build-arg "port=${port}" \
   .
+
+echo
+
+docker inspect -f '{{json .Config.Labels}}' "${container_name}:${tag}"
