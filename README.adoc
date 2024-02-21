@@ -448,24 +448,24 @@ Builds the app's image.
 $ npm run docker:build
 ----
 
-==== docker:run
+==== docker:start
 
 Runs the app in a container exposing an HTTP port.
 
 [source,shell]
 ----
-$ npm run docker:run
+$ npm run docker:start
 ----
 
 => `http://localhost:3000`
 
-==== docker:run:secure
+==== docker:start:secure
 
 Runs the app in a container exposing an HTTPS port.
 
 [source,shell]
 ----
-$ npm run docker:run:secure
+$ npm run docker:start:secure
 ----
 
 => `https://localhost:3000`
