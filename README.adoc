@@ -520,13 +520,13 @@ Displays the logs of the app's container.
 $ npm run docker:logs
 ----
 
-==== docker:rm
+==== docker:remove
 
 Removes the app's container.
 
 [source,shell]
 ----
-$ npm run docker:rm
+$ npm run docker:remove
 ----
 
 === Misc
