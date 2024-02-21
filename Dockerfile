@@ -135,7 +135,6 @@ RUN addgroup -g ${uid} ${user} \
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
       de.sdavids.docker.type="builder"
 
-
 ### Final ###
 
 FROM hardened
@@ -152,16 +151,16 @@ ARG key_path=/run/secrets/key.pem
 COPY --from=installer /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 COPY --from=installer /usr/local/bin/node /usr/bin/
 
-COPY --chown=${user} --from=installer /opt/app/node_modules ${app_dir}/node_modules
-COPY --chown=${user} --from=bundler /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs ${app_dir}/
+WORKDIR ${app_dir}
+
+COPY --chown=${user} --from=installer /opt/app/node_modules node_modules
+COPY --chown=${user} --from=bundler /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs ./
 
 ENV NODE_ENV=production
 ENV PORT=${port}
 
 ENV CERT_PATH=${cert_path}
 ENV KEY_PATH=${key_path}
-
-WORKDIR ${app_dir}
 
 USER ${user}
 
