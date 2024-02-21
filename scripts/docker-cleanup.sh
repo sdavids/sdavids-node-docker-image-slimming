@@ -20,7 +20,7 @@ set -eu
 
 readonly group='sdavids-node-docker-image-slimming'
 
-readonly label="io.sdavids.image.group=${group}"
+readonly label="de.sdavids.docker.group=${group}"
 
 docker container prune --force --filter="label=${label}"
 

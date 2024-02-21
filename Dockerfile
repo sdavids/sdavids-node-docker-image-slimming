@@ -37,8 +37,8 @@ RUN npm ci --production --no-optional --audit-level=high --silent && \
     find node_modules/ -type d -exec chmod 500 {} + && \
     find node_modules/ -type f -exec chmod 400 {} +
 
-LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
-      io.sdavids.image.type="builder"
+LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
+      de.sdavids.docker.type="builder"
 
 ### Bundler ###
 
@@ -59,8 +59,8 @@ RUN npm run build --silent \
     && cp src/js/healthcheck.mjs /opt/app/dist/ \
     && chmod 400 /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs
 
-LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
-      io.sdavids.image.type="builder"
+LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
+      de.sdavids.docker.type="builder"
 
 ### Harden ###
 
@@ -132,8 +132,8 @@ RUN addgroup -g ${uid} ${user} \
     && chmod 500 ${app_dir}/node_modules \
     && rm -rf /bin/chown /bin/chmod
 
-LABEL io.sdavids.image.group="sdavids-node-docker-image-slimming" \
-      io.sdavids.image.type="builder"
+LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
+      de.sdavids.docker.type="builder"
 
 
 ### Final ###
@@ -182,5 +182,5 @@ LABEL org.opencontainers.image.revision=${git_commit} \
       org.opencontainers.image.source="https://github.com/sdavids/sdavids-node-docker-image-slimming.git" \
       org.opencontainers.image.url="https://github.com/sdavids/sdavids-node-docker-image-slimming" \
       org.opencontainers.image.documentation="https://github.com/sdavids/sdavids-node-docker-image-slimming" \
-      io.sdavids.image.group="sdavids-node-docker-image-slimming" \
-      io.sdavids.image.type="production"
+      de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
+      de.sdavids.docker.type="production"
