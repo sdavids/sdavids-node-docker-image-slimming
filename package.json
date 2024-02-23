@@ -24,7 +24,7 @@
     "cert:create": "scripts/create-self-signed-cert.sh docker/app",
     "cert:delete": "scripts/delete-self-signed-cert.sh docker/app",
     "clean": "scripts/clean.sh",
-    "clean:node": "rm -rf node_modules package-lock.json",
+    "clean:node": "scripts/clean-node.sh",
     "docker:build": "scripts/docker-build.sh",
     "docker:cleanup": "scripts/docker-cleanup.sh",
     "docker:health": "scripts/docker-health.sh",
