@@ -18,20 +18,44 @@
 
 set -eu
 
-readonly port="${1:-3000}"
+readonly http_port="${1:-3000}"
 
-readonly group='sdavids'
-readonly name='sdavids-node-docker-image-slimming'
+readonly tag='local'
 
-readonly container_name="${group}/${name}"
+# https://docs.docker.com/reference/cli/docker/image/tag/#description
+readonly namespace='sdavids-node-docker-image-slimming'
+readonly repository='sdavids-node-docker-image-slimming'
 
+readonly label_group='de.sdavids.docker.group'
+
+readonly label="${label_group}=${namespace}"
+
+readonly image_name="${namespace}/${repository}"
+
+readonly container_name='sdavids-node-docker-image-slimming'
+
+readonly host_name='localhost'
+
+readonly network_name="${repository}"
+
+docker network inspect "${network_name}" > /dev/null 2>&1 \
+  || docker network create \
+       --driver bridge "${network_name}" \
+       --label "${label_group}=${namespace}"> /dev/null
+
+# to ensure ${label} is set, we use --label "${label}"
+# which might overwrite the label ${label_group} of the image
 docker container run \
   --init \
-  --interactive \
   --rm \
+  --interactive \
   --read-only \
   --security-opt='no-new-privileges=true' \
   --cap-drop=all \
-  --publish "${port}:3000/tcp" \
-  --name "${name}" \
-  "${container_name}"
+  --network="${network_name}" \
+  --publish "${http_port}:3000/tcp" \
+  --name "${container_name}" \
+  --label "${label}" \
+  "${image_name}:${tag}"
+
+printf '\nListen local: http://%s\n' "${host_name}:${http_port}"

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 #
 # Copyright (c) 2024, Sebastian Davids
@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-set -eu
+set -Eeu -o pipefail -o posix
 
 readonly out_dir="${1:-$PWD}"
 
@@ -111,8 +111,49 @@ if [ "$(uname)" = 'Darwin' ]; then
   # https://ss64.com/mac/security-cert-verify.html
   security verify-cert -q -n -L -r "${cert_path}"
 
-  echo "Adding 'localhost' certificate (expires on: $(date -Idate -v +"${days}"d)) to keychain ${login_keychain} ..."
+  printf "Adding 'localhost' certificate (expires on: %s) to keychain %s ...\n" "$(date -Idate -v +"${days}"d)" "${login_keychain}"
 
   # https://ss64.com/mac/security-cert.html
   security add-trusted-cert -p ssl -k "${login_keychain}" "${cert_path}"
 fi
+
+(
+  cd "${out_dir}"
+
+  if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != "true" ]; then
+    exit 0 # ${out_dir} not a git repository
+  fi
+
+  set +e
+  git check-ignore -q key.pem
+  key_ignored=$?
+
+  git check-ignore -q cert.pem
+  cert_ignored=$?
+  set -e
+
+  if [ $key_ignored -ne 0 ] || [ $cert_ignored -ne 0 ]; then
+      printf "\nWARNING: key.pem and/or cert.pem is not ignored in '%s'\n\n" "$PWD/.gitignore"
+      read -p "Do you want me to modify your .gitignore file (Y/N)? " -n 1 -r should_modify
+
+      case "${should_modify}" in
+        y|Y ) printf "\n\n" ;;
+        * ) printf "\n"; exit 0;;
+      esac
+  fi
+
+  if [ $key_ignored -eq 0 ]; then
+    if [ $cert_ignored -eq 0 ]; then
+      exit 0 # both already ignored
+    fi
+    printf "cert.pem\n" >> .gitignore
+  else
+    if [ $cert_ignored -eq 0 ]; then
+      printf "key.pem\n" >> .gitignore
+    else
+      printf "cert.pem\nkey.pem\n" >> .gitignore
+    fi
+  fi
+
+  git status
+)

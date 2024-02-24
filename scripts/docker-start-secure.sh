@@ -18,24 +18,47 @@
 
 set -eu
 
-readonly port="${1:-3000}"
+readonly https_port="${1:-3000}"
 
-readonly group='sdavids'
-readonly name='sdavids-node-docker-image-slimming'
+readonly tag='local'
 
-readonly container_name="${group}/${name}"
+# https://docs.docker.com/reference/cli/docker/image/tag/#description
+readonly namespace='sdavids-node-docker-image-slimming'
+readonly repository='sdavids-node-docker-image-slimming'
 
-# https://nodejs.org/docs/latest/api/cli.html#node_tls_reject_unauthorizedvalue
+readonly label_group='de.sdavids.docker.group'
+
+readonly label="${label_group}=${namespace}"
+
+readonly image_name="${namespace}/${repository}"
+
+readonly container_name='sdavids-node-docker-image-slimming'
+
+readonly host_name='localhost'
+
+readonly network_name="${repository}"
+
+docker network inspect "${network_name}" > /dev/null 2>&1 \
+  || docker network create \
+       --driver bridge "${network_name}" \
+       --label "${label_group}=${namespace}"> /dev/null
+
+# to ensure ${label} is set, we use --label "${label}"
+# which might overwrite the label ${label_group} of the image
 docker container run \
   --init \
-  --interactive \
   --rm \
+  --interactive \
   --read-only \
   --security-opt='no-new-privileges=true' \
   --cap-drop=all \
   --env PROTOCOL=https \
   --env NODE_TLS_REJECT_UNAUTHORIZED='0' \
-  --publish "${port}:3000/tcp" \
+  --network="${network_name}" \
+  --publish "${https_port}:3000/tcp" \
   --mount "type=bind,source=$PWD/docker/app,target=/run/secrets,readonly" \
-  --name "${name}" \
-  "${container_name}"
+  --name "${container_name}" \
+  --label "${label}" \
+  "${image_name}:${tag}"
+
+printf '\nListen local: https://%s\n' "${host_name}:${https_port}"

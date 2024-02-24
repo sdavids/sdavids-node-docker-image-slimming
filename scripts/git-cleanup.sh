@@ -20,7 +20,7 @@
 
 set -eu
 
-if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != "true" ]; then
+if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != 'true' ]; then
   echo "'$PWD' is not a git repository" >&2
   exit 1
 fi

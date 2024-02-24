@@ -16,42 +16,57 @@
 # limitations under the License.
 #
 
-# script needs to be invoked from project's root directory
-
 set -eu
 
 readonly tag="${1:-local}"
 
+readonly dockerfile="${2:-$PWD/Dockerfile}"
+
 readonly port=3000
 
-readonly group='sdavids'
-readonly name='sdavids-node-docker-image-slimming'
+if [ ! -f "${dockerfile}" ]; then
+  echo "Dockerfile '${dockerfile}' does not exist" >&2
+  exit 1
+fi
 
-readonly container_name="${group}/${name}"
+# https://docs.docker.com/reference/cli/docker/image/tag/#description
+readonly namespace='sdavids-node-docker-image-slimming'
+readonly repository='sdavids-node-docker-image-slimming'
+
+readonly label_group='de.sdavids.docker.group'
+
+readonly label="${label_group}=${namespace}"
+
+readonly image_name="${namespace}/${repository}"
 
 if [ -n "${GITHUB_SHA:-}" ]; then
   # https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
   commit="${GITHUB_SHA}"
+elif [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != 'true' ]; then
+  commit='N/A'
 else
   if [ -z "$(git status --porcelain=v1 2>/dev/null)" ]; then
     ext=''
   else
     ext='-next'
   fi
-  readonly ext
   commit="$(git rev-parse --verify HEAD)${ext}"
+  unset ext
 fi
 readonly commit
 
+# to ensure ${label} is set, we use --label "${label}"
+# which might overwrite the LABEL ${label_group} of the Dockerfile
 docker image build \
-  --no-cache \
+  --file "${dockerfile}" \
   --compress \
-  --tag "${container_name}:latest" \
-  --tag "${container_name}:${tag}" \
+  --tag "${image_name}:latest" \
+  --tag "${image_name}:${tag}" \
   --build-arg "git_commit=${commit}" \
   --build-arg "port=${port}" \
+  --label "${label}" \
   .
 
 echo
 
-docker image inspect -f '{{json .Config.Labels}}' "${container_name}:${tag}"
+docker image inspect -f '{{json .Config.Labels}}' "${image_name}:${tag}"
