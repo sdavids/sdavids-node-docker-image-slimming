@@ -475,15 +475,6 @@ $ npm run docker:start:secure
 One needs to create the necessary private key and certificate via <<cert_create>>.
 ====
 
-==== docker:sh
-
-Enters a shell into a running app container.
-
-[source,shell]
-----
-$ npm run docker:sh
-----
-
 ==== docker:cleanup
 
 Removes all containers, volumes, and images previously created by this project.
@@ -491,42 +482,6 @@ Removes all containers, volumes, and images previously created by this project.
 [source,shell]
 ----
 $ npm run docker:cleanup
-----
-
-==== docker:health
-
-Displays the health of the app.
-
-[source,shell]
-----
-$ npm run docker:health
-----
-
-==== docker:inspect
-
-Displays the Docker information of the app's container.
-
-[source,shell]
-----
-$ npm run docker:inspect
-----
-
-==== docker:logs
-
-Displays the logs of the app's container.
-
-[source,shell]
-----
-$ npm run docker:logs
-----
-
-==== docker:remove
-
-Removes the app's container.
-
-[source,shell]
-----
-$ npm run docker:remove
 ----
 
 === Misc
