@@ -24,15 +24,16 @@
 FROM node:20.11.1-alpine3.19 AS installer
 
 RUN apk --no-cache add upx=4.2.1-r0 && \
-    upx /usr/local/bin/node
+    upx /usr/local/bin/node && \
+    npm i --global clean-modules@3.0.4
 
 WORKDIR /opt/app/
 
-COPY scripts/node_modules-clean.sh scripts/preinstall.sh scripts/prepare.sh scripts/
+COPY scripts/preinstall.sh scripts/prepare.sh scripts/
 COPY package.json package-lock.json ./
 
 RUN npm ci --production --no-optional --audit-level=high --silent && \
-    scripts/node_modules-clean.sh && \
+    clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json' && \
     find node_modules/ -type d -depth -exec rmdir -p --ignore-fail-on-non-empty {} \; && \
     find node_modules/ -type d -exec chmod 500 {} + && \
     find node_modules/ -type f -exec chmod 400 {} +
