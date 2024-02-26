@@ -1,7 +1,7 @@
 = Node Docker Image Slimming
 Sebastian Davids <sdavids@gmx.de>
 // Metadata:
-:description: node docker image slimming
+:description: Techniques for creating a smaller Node.js Docker image.
 // Settings:
 :sectnums:
 :sectanchors:
@@ -41,6 +41,8 @@ image:http://isitmaintained.com/badge/open/sdavids/sdavids-node-docker-image-sli
 endif::[]
 
 toc::[]
+
+{description}
 
 == License
 
