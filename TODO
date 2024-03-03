@@ -1,2 +1,8 @@
 = sdavids-node-docker-image-slimming
 Sebastian Davids <sdavids@gmx.de>
+
+== commitlint
+
+* remove body-max-line-length
++
+https://github.com/conventional-changelog/commitlint/issues/2112
