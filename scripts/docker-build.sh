@@ -39,6 +39,23 @@ readonly label="${label_group}=${namespace}"
 
 readonly image_name="${namespace}/${repository}"
 
+# https://reproducible-builds.org/docs/source-date-epoch/
+if [ -z "${SOURCE_DATE_EPOCH:-}" ]; then
+  if [ -z "$(git status --porcelain=v1 2>/dev/null)" ]; then
+    SOURCE_DATE_EPOCH="$(git log --max-count=1 --pretty=format:%ct)"
+  else
+    SOURCE_DATE_EPOCH="$(date +%s)"
+  fi
+  export SOURCE_DATE_EPOCH
+fi
+
+if [ "$(uname)" = 'Darwin' ]; then
+  created_at="$(date -r "${SOURCE_DATE_EPOCH}" -Iseconds -u | sed -e 's/+00:00$/Z/')"
+else
+  created_at="$(date -d "@${SOURCE_DATE_EPOCH}" -Iseconds -u | sed -e 's/+00:00$/Z/')"
+fi
+readonly created_at
+
 if [ -n "${GITHUB_SHA:-}" ]; then
   # https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
   commit="${GITHUB_SHA}"
@@ -63,6 +80,7 @@ docker image build \
   --tag "${image_name}:latest" \
   --tag "${image_name}:${tag}" \
   --build-arg "git_commit=${commit}" \
+  --build-arg "created_at=${created_at}" \
   --build-arg "port=${port}" \
   --label "${label}" \
   .

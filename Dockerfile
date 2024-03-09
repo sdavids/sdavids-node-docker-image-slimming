@@ -144,6 +144,7 @@ ARG user=node
 ARG app_dir=/${user}
 
 ARG git_commit
+ARG created_at
 ARG port=3000
 
 ARG cert_path=/run/secrets/cert.pem
@@ -174,6 +175,7 @@ HEALTHCHECK --interval=5s --timeout=5s --start-period=5s \
 
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.revision=${git_commit} \
+      org.opencontainers.image.created="${created_at}" \
       org.opencontainers.image.licenses="Apache-2.0" \
       org.opencontainers.image.vendor="Sebastian Davids" \
       org.opencontainers.image.authors="Sebastian Davids <sdavids@gmx.de>" \
