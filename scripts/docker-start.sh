@@ -58,4 +58,17 @@ docker container run \
   --label "${label}" \
   "${image_name}:${tag}"
 
-printf '\nListen local: http://%s\n' "${host_name}:${http_port}"
+readonly url="http://${host_name}:${http_port}"
+
+printf '\nListen local: %s\n' "${url}"
+
+if command -v pbcopy > /dev/null 2>&1; then
+  printf "%s" "${url}" | pbcopy
+  printf '\nThe URL has been copied to the clipboard.\n'
+elif command -v xclip > /dev/null 2>&1; then
+  printf "%s" "${url}" | xclip -selection clipboard
+  printf '\nThe URL has been copied to the clipboard.\n'
+elif command -v wl-copy > /dev/null 2>&1; then
+  printf "%s" "${url}" | wl-copy
+  printf '\nThe URL has been copied to the clipboard.\n'
+fi
