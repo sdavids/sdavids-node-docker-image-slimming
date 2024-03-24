@@ -295,10 +295,7 @@ $ brew install yamllint
 
 ===== Linux
 
-[source,shell]
-----
-$ sudo apt-get install hadolint
-----
+Install https://github.com/hadolint/hadolint?tab=readme-ov-file#install[hadolint].
 
 ===== Mac
 
