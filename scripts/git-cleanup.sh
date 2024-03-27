@@ -28,7 +28,6 @@ fi
 git clean -fdx \
   -e .fleet \
   -e .idea \
-  -e .settings \
   -e .vscode \
   -e docker/app/cert.pem \
   -e docker/app/key.pem \
