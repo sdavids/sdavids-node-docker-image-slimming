@@ -29,6 +29,8 @@ jffi*.dylib
 *.crt
 *.key
 *.pem
+*.p12
+*.pfx
 
 ### environment files ###
 .env
