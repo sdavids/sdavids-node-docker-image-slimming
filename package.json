@@ -37,9 +37,6 @@
     "start:build": "NODE_ENV=production node dist/bundle.cjs",
     "start:dev": "NODE_ENV=development nodemon --inspect --watch src/js src/js/server.mjs"
   },
-  "engines": {
-    "node": ">= 16.14.0"
-  },
   "dependencies": {
     "@commitlint/cli": "19.2.1",
     "@commitlint/config-conventional": "19.1.0",
