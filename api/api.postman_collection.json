@@ -16,7 +16,7 @@
         "method": "GET",
         "url": {
           "host": ["{{Host}}"],
-          "path": ["random-user"],
+          "path": [],
           "port": "{{Port}}",
           "protocol": "{{Protocol}}",
           "raw": "{{Protocol}}://{{Host}}:{{Port}}/"

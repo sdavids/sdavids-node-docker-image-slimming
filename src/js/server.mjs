@@ -45,7 +45,7 @@ app.set('port', port);
 // https://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
 app.disable('x-powered-by');
 
-app.get('/random-user', (_, res) =>
+app.get('/', (_, res) =>
   res.set('Content-Type', 'application/json').send({
     userId: faker.string.uuid(),
     username: faker.internet.userName(),
