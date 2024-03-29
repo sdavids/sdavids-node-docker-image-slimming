@@ -48,7 +48,7 @@ docker network inspect "${network_name}" > /dev/null 2>&1 \
 docker container run \
   --init \
   --rm \
-  --interactive \
+  --detach \
   --read-only \
   --security-opt='no-new-privileges=true' \
   --cap-drop=all \
@@ -56,7 +56,7 @@ docker container run \
   --publish "${http_port}:3000/tcp" \
   --name "${container_name}" \
   --label "${label}" \
-  "${image_name}:${tag}"
+  "${image_name}:${tag}" > /dev/null
 
 readonly url="http://${host_name}:${http_port}"
 

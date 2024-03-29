@@ -447,9 +447,36 @@ Builds the app's image.
 $ npm run docker:build
 ----
 
+==== docker:cleanup
+
+Removes all containers, volumes, and images previously created by this project.
+
+[source,shell]
+----
+$ npm run docker:cleanup
+----
+
+==== docker-logs
+
+Displays the logs of the app's container.
+
+[source,shell]
+----
+$ npm run docker:logs
+----
+
+==== docker:sh
+
+Opens a shell into the running app's container.
+
+[source,shell]
+----
+$ npm run docker:sh
+----
+
 ==== docker:start
 
-Runs the app in a container exposing an HTTP port.
+Starts the app in a container exposing an HTTP port.
 
 [source,shell]
 ----
@@ -460,7 +487,7 @@ $ npm run docker:start
 
 ==== docker:start:secure
 
-Runs the app in a container exposing an HTTPS port.
+Starts the app in a container exposing an HTTPS port.
 
 [source,shell]
 ----
@@ -474,13 +501,13 @@ $ npm run docker:start:secure
 One needs to create the necessary private key and certificate via <<cert_create>>.
 ====
 
-==== docker:cleanup
+==== docker:stop
 
-Removes all containers, volumes, and images previously created by this project.
+Stops the app's container.
 
 [source,shell]
 ----
-$ npm run docker:cleanup
+$ npm run docker:stop
 ----
 
 === Misc
