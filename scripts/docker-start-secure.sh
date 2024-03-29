@@ -56,7 +56,7 @@ docker container run \
   --env NODE_TLS_REJECT_UNAUTHORIZED='0' \
   --network="${network_name}" \
   --publish "${https_port}:3000/tcp" \
-  --mount "type=bind,source=$PWD/docker/app,target=/run/secrets,readonly" \
+  --mount "type=bind,source=$PWD/docker/certs,target=/run/secrets,readonly" \
   --name "${container_name}" \
   --label "${label}" \
   "${image_name}:${tag}" > /dev/null

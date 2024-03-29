@@ -531,7 +531,7 @@ Creates a private key and a self-signed certificate.
 $ npm run cert:create
 ----
 
-=> `docker/app/cert.pem` and `docker/app/key.pem`
+=> `docker/certs/cert.pem` and `docker/certs/key.pem`
 
 [NOTE]
 ====

@@ -29,8 +29,8 @@ git clean -fdx \
   -e .fleet \
   -e .idea \
   -e .vscode \
-  -e docker/app/cert.pem \
-  -e docker/app/key.pem \
+  -e docker/certs/cert.pem \
+  -e docker/certs/key.pem \
   .
 
 origin_url="$(git remote get-url origin 2> /dev/null || echo '')"
