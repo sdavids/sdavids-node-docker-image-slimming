@@ -20,7 +20,6 @@
 .vscode/
 .yamllint.yaml
 AUTHORS
-CHANGELOG.adoc
 CODE_OF_CONDUCT.adoc
 CODING_STYLE.adoc
 CONTRIBUTING.adoc
