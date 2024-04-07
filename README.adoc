@@ -43,7 +43,66 @@ endif::[]
 
 toc::[]
 
-{description}
+This repository showcases several techniques for creating smaller Node.js Docker images.
+
+== Example Docker Image
+
+The link:Dockerfile[example] is an https://expressjs.com[Express]-based REST API packaged in a Docker image with a https://docs.docker.com/reference/dockerfile/#healthcheck[HEALTHCHECK].
+
+=== Running the Example
+
+. Build the Docker image:
++
+[source,shell]
+----
+$ npm run docker:build
+----
+
+. Start the image (HTTP server):
++
+[source,shell]
+----
+$ npm run docker:start
+----
++
+=> `http://localhost:3000[http://localhost:3000]`
+
+. Stop the image:
++
+[source,shell]
+----
+$ npm run docker:stop
+----
+
+. Create a self-signed certificate:
++
+[source,shell]
+----
+$ npm run cert:create
+----
+
+. Start the image (HTTPS server):
++
+[source,shell]
+----
+$ npm run docker:start:secure
+----
++
+=> `https://localhost:3000[https://localhost:3000]`
+
+There are also <<build-tasks, other build tasks>> available.
+
+=== Example REST API
+
+The example exposes two endpoints (link:api/openapi.yaml[OpenAPI 3 Description]):
+
+`/`::
+returns a randomly generated user in JSON format
+
+`/-/health/liveness`::
+liveness probe
+
+You can use several <<api-tools>> to interact with the API.
 
 == License
 
@@ -305,6 +364,7 @@ Install https://github.com/hadolint/hadolint?tab=readme-ov-file#install[hadolint
 $ brew install hadolint
 ----
 
+[#api-tools]
 === API Tools
 
 ==== OpenAPI
@@ -396,6 +456,11 @@ $ curl --insecure https://localhost:3000/
 $ curl --insecure https://localhost:3000/-/health/liveness
 ----
 
+===== More Information
+
+* https://github.com/Huachao/vscode-restclient?tab=readme-ov-file#environments[REST Client - Environments]
+
+[#build-tasks]
 == Build Tasks
 
 === Development
