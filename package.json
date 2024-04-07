@@ -27,6 +27,7 @@
     "clean:node": "scripts/clean-node.sh",
     "docker:build": "scripts/docker-build.sh",
     "docker:cleanup": "scripts/docker-cleanup.sh",
+    "docker:health": "scripts/docker-health.sh",
     "docker:logs": "scripts/docker-logs.sh",
     "docker:sh": "scripts/docker-sh.sh",
     "docker:start": "scripts/docker-start.sh",
