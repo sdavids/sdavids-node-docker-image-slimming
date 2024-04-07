@@ -6,7 +6,7 @@ openapi: 3.1.0
 info:
   title: sdavids-node-docker-image-slimming REST API
   version: 0.0.1
-  description: A simple endpoint in NodeJS with express.
+  description: A simple endpoint in NodeJS with Express.
   license:
     name: Apache-2.0
     url: https://www.apache.org/licenses/LICENSE-2.0

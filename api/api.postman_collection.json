@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "sdavids-node-docker-image-slimming REST API",
-    "description": "A simple endpoint in NodeJS with express.\n\nContact Support:\n Name: Sebastian Davids\n Email: sdavids@gmx.de",
+    "description": "A simple endpoint in NodeJS with Express.\n\nContact Support:\n Name: Sebastian Davids\n Email: sdavids@gmx.de",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
