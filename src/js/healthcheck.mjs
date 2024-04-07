@@ -45,10 +45,10 @@ protocol += ':';
 
 const path = process.env.HEALTHCHECK_PATH || '/-/health/liveness';
 
-const timeout = parseInt(process.env.TIMEOUT_MS || '2000');
+const timeout = parseInt(process.env.HEALTHCHECK_TIMEOUT_MS || '2000');
 if (isNaN(timeout) || timeout < 0) {
   const message =
-    'TIMEOUT_MS needs to be a number greater or equal to 0 (timeout disabled)';
+    'HEALTHCHECK_TIMEOUT_MS needs to be a number greater or equal to 0 (timeout disabled)';
   console.error(message);
   throw new RangeError(message);
 }
