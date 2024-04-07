@@ -18,15 +18,13 @@ import http from 'node:http';
 import https from 'node:https';
 import process from 'node:process';
 
-['uncaughtException', 'unhandledRejection'].forEach((signal) =>
-  process.once(signal, (err) => {
+['uncaughtException', 'unhandledRejection'].forEach((s) =>
+  process.once(s, (err) => {
     console.error(err);
     process.exit(70); // EX_SOFTWARE
   }),
 );
-['SIGINT', 'SIGTERM'].forEach((signal) =>
-  process.once(signal, () => process.exit(0)),
-);
+['SIGINT', 'SIGTERM'].forEach((s) => process.once(s, () => process.exit(0)));
 
 const port = parseInt(process.env.PORT || '3000');
 if (isNaN(port) || port < 1 || port > 65535) {
