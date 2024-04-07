@@ -4,7 +4,6 @@
 # https://prettier.io/docs/en/ignore.html
 
 package-lock.json
-dist/
 .idea/
 .fleet/
 .vscode/

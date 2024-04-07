@@ -10,9 +10,6 @@ import js from '@eslint/js';
 
 // noinspection JSUnusedGlobalSymbols
 export default [
-  {
-    ignores: ['dist/*'],
-  },
   js.configs.all,
   {
     name: 'sdavids-node-docker-image-slimming',
