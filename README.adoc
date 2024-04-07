@@ -382,6 +382,20 @@ https://github.com/Huachao/vscode-restclient?tab=readme-ov-file#environments[Swi
 
 * https://github.com/Huachao/vscode-restclient?tab=readme-ov-file#environments[REST Client - Environments]
 
+==== cURL
+
+[source,shell]
+----
+$ curl http://localhost:3000/
+$ curl http://localhost:3000/-/health/liveness
+----
+
+[source,shell]
+----
+$ curl --insecure https://localhost:3000/
+$ curl --insecure https://localhost:3000/-/health/liveness
+----
+
 == Build Tasks
 
 === Development
