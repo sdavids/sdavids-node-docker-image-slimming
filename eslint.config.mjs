@@ -1,4 +1,4 @@
-// https://eslint.org/docs/latest/use/configure/configuration-files-new
+// https://eslint.org/docs/latest/use/configure/configuration-files
 
 import globals from 'globals';
 import js from '@eslint/js';
