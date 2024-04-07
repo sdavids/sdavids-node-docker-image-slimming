@@ -307,16 +307,6 @@ $ brew install hadolint
 
 ==== API Tools
 
-The usage of the API tools mentioned below is optional.
-
-===== Stoplight Studio
-
-Install https://stoplight.io/studio/[Stoplight Studio].
-
-Add:
-
-* link:api/openapi.yaml[OpenAPI 3 Description]
-
 ===== Postman
 
 Install https://www.postman.com/downloads/[Postman].
