@@ -43,6 +43,8 @@ if (!(protocol === 'http' || protocol === 'https')) {
 }
 protocol += ':';
 
+const path = process.env.HEALTHCHECK_PATH || '/-/health/liveness';
+
 const timeout = parseInt(process.env.TIMEOUT_MS || '2000');
 if (isNaN(timeout) || timeout < 0) {
   const message =
@@ -53,7 +55,7 @@ if (isNaN(timeout) || timeout < 0) {
 
 // https://nodejs.org/api/http.html#http_http_request_options_callback
 const options = {
-  path: '/-/health/liveness',
+  path,
   port,
   protocol,
   timeout,
