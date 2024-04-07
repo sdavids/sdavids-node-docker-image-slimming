@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import http from 'node:http';
-import https from 'node:https';
 import process from 'node:process';
 
 ['uncaughtException', 'unhandledRejection'].forEach((s) =>
@@ -46,6 +44,18 @@ if (isNaN(timeout) || timeout < 0) {
   );
 }
 
+// eslint-disable-next-line init-declarations
+let client;
+if (protocol === 'https:') {
+  try {
+    client = await import('node:https');
+  } catch {
+    throw new Error('https support is disabled');
+  }
+} else {
+  client = await import('node:http');
+}
+
 // https://nodejs.org/api/http.html#http_http_request_options_callback
 const options = {
   path,
@@ -53,8 +63,6 @@ const options = {
   protocol,
   timeout,
 };
-
-const client = protocol === 'https:' ? https : http;
 
 const request = client.request(options, (res) => {
   process.exit(res.statusCode === 200 ? 0 : 100);
