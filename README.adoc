@@ -352,6 +352,36 @@ use with the `local` or `local-secure` environments defined in:
 * https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#run_request[Execute HTTP requests]
 * https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#disable_certificate_verification[Disable certificate verification]
 
+===== Visual Studio Code
+
+Install and enable the https://github.com/Huachao/vscode-restclient[REST Client] extension.
+
+Add the following snippet to `.vscode/settings.json`:
+
+[source,json]
+----
+    "rest-client.environmentVariables": {
+        "local": {
+            "host": "http://localhost",
+            "port": "3000"
+          },
+          "local-secure": {
+            "host": "https://localhost",
+            "port": "3000"
+          }
+    }
+----
+
+Open:
+
+* link:api/api.http[HTTP requests file]
+
+https://github.com/Huachao/vscode-restclient?tab=readme-ov-file#environments[Switch] (kbd:[Ctrl+Alt+E] / macOS: kbd:[⌘ Сmd+⌥ Opt+E]) to the `local` or `local-secure` environment.
+
+====== More Information
+
+* https://github.com/Huachao/vscode-restclient?tab=readme-ov-file#environments[REST Client - Environments]
+
 == Build Tasks
 
 === Development
