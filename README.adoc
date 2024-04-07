@@ -335,6 +335,23 @@ Open:
 
 * link:api/api.paw[RapidAPI Project]
 
+===== JetBrains IDEs
+
+Install and enable the https://plugins.jetbrains.com/plugin/13121-http-client[HTTP Client] plugin.
+
+Open:
+
+* link:api/api.http[HTTP requests file]
+
+use with the `local` or `local-secure` environments defined in:
+
+* link:api/http-client.private.env.json[HTTP environment file]
+
+====== More Information
+
+* https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#run_request[Execute HTTP requests]
+* https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#disable_certificate_verification[Disable certificate verification]
+
 == Build Tasks
 
 === Development

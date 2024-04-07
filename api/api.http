@@ -1,0 +1,7 @@
+### Random User
+GET {{host}}:{{port}}/
+Accept: application/json
+
+### Liveness Probe
+GET {{host}}:{{port}}/-/health/liveness
+Accept: application/json
