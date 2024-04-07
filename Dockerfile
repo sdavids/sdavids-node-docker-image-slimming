@@ -72,9 +72,6 @@ ARG uid=1001
 ARG user=node
 ARG app_dir=/${user}
 
-ENV APP_USER=${user}
-ENV APP_DIR=${app_dir}
-
 # https://github.com/hadolint/hadolint/wiki/DL4006
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
@@ -163,6 +160,8 @@ ENV PORT=${port}
 
 ENV CERT_PATH=${cert_path}
 ENV KEY_PATH=${key_path}
+
+ENV APP_DIR=${app_dir}
 
 USER ${user}
 
