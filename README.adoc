@@ -305,15 +305,15 @@ Install https://github.com/hadolint/hadolint?tab=readme-ov-file#install[hadolint
 $ brew install hadolint
 ----
 
-==== API Tools
+=== API Tools
 
-===== OpenAPI
+==== OpenAPI
 
 Open:
 
 link:api/openapi.yaml[OpenAPI 3 Description]
 
-===== Postman
+==== Postman
 
 Install https://www.postman.com/downloads/[Postman].
 
@@ -323,11 +323,11 @@ Import:
 * link:api/local.postman_environment.json[Postman 'local' Environment]
 * link:api/local-secure.postman_environment.json[Postman 'local secure' Environment]
 
-====== FAQ
+===== More Information
 
 * https://blog.postman.com/self-signed-ssl-certificate-troubleshooting/[Troubleshooting Self-signed SSL Certificate Issues and More in Postman]
 
-===== RapidAPI
+==== RapidAPI
 
 Install https://paw.cloud[RapidAPI].
 
@@ -335,7 +335,7 @@ Open:
 
 * link:api/api.paw[RapidAPI Project]
 
-===== JetBrains IDEs
+==== JetBrains IDEs
 
 Install and enable the https://plugins.jetbrains.com/plugin/13121-http-client[HTTP Client] plugin.
 
@@ -347,12 +347,12 @@ use with the `local` or `local-secure` environments defined in:
 
 * link:api/http-client.private.env.json[HTTP environment file]
 
-====== More Information
+===== More Information
 
 * https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#run_request[Execute HTTP requests]
 * https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#disable_certificate_verification[Disable certificate verification]
 
-===== Visual Studio Code
+==== Visual Studio Code
 
 Install and enable the https://github.com/Huachao/vscode-restclient[REST Client] extension.
 
@@ -378,7 +378,7 @@ Open:
 
 https://github.com/Huachao/vscode-restclient?tab=readme-ov-file#environments[Switch] (kbd:[Ctrl+Alt+E] / macOS: kbd:[⌘ Сmd+⌥ Opt+E]) to the `local` or `local-secure` environment.
 
-====== More Information
+===== More Information
 
 * https://github.com/Huachao/vscode-restclient?tab=readme-ov-file#environments[REST Client - Environments]
 
