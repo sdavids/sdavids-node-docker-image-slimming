@@ -39,8 +39,8 @@ Further documentation can be found on the main branch: https://github.com/sdavid
 
 This branch utilizes:
 
-* the default variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for building the image
-* the default variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for serving the example REST API
+* the `alpine` variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for building the image
+* the `alpine` variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for serving the example REST API
 * use a https://docs.docker.com/reference/dockerfile/#dockerignore-file[.dockerignore file] and specific `COPY` commands
 +
 [NOTE]
@@ -55,12 +55,12 @@ The https://github.com/sdavids/sdavids-shell-misc?tab=readme-ov-file#212-ls_exte
 $ SOURCE_DATE_EPOCH=1 GITHUB_SHA="N/A" scripts/docker-build.sh -n
 ...
 $ docker images --filter="label=de.sdavids.docker.group=sdavids-node-docker-image-slimming" --format "{{.Repository}}\t{{.Tag}}\t{{.Size}}"
-de.sdavids/sdavids-node-docker-image-slimming   latest  1.77GB
-de.sdavids/sdavids-node-docker-image-slimming   local   1.77GB
+de.sdavids/sdavids-node-docker-image-slimming   latest  382MB
+de.sdavids/sdavids-node-docker-image-slimming   local   382MB
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local du -hs /node
-120M    /node
+119.9M  /node
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local du -hs /node/node_modules
-120M    /node/node_modules
+119.7M  /node/node_modules
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local stat -c "%s" /node/server.mjs
 2139
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local ls -A /node
@@ -97,21 +97,18 @@ SIZE      CREATED BY
 0B        /bin/sh -c #(nop)  CMD ["node"]
 0B        /bin/sh -c #(nop)  ENTRYPOINT ["docker-entry…
 20.5kB    /bin/sh -c #(nop) COPY file:4d192565a7220e13…
-5.39MB    /bin/sh -c set -ex   && export GNUPGHOME="$(…
+5.71MB    /bin/sh -c apk add --no-cache --virtual .bui…
 0B        /bin/sh -c #(nop)  ENV YARN_VERSION=1.22.19
-176MB     /bin/sh -c ARCH= && dpkgArch="$(dpkg --print…
+128MB     /bin/sh -c addgroup -g 1000 node     && addu…
 0B        /bin/sh -c #(nop)  ENV NODE_VERSION=20.13.1
-69.6kB    /bin/sh -c groupadd --gid 1000 node   && use…
-618MB     /bin/sh -c set -ex;  apt-get update;  apt-ge…
-193MB     /bin/sh -c set -eux;  apt-get update;  apt-g…
-52.3MB    /bin/sh -c set -eux;  apt-get update;  apt-g…
-0B        /bin/sh -c #(nop)  CMD ["bash"]
-133MB     /bin/sh -c #(nop) ADD file:2cc4cba2834c189d0…
+0B        /bin/sh -c #(nop)  CMD ["/bin/sh"]
+8.07MB    /bin/sh -c #(nop) ADD file:37a76ec18f9887751…
 $ printf 'Layer Count: %s' "$(docker history de.sdavids/sdavids-node-docker-image-slimming:local | tail -n +2 | wc -l | tr -d ' ')"
-Layer Count: 35
+Layer Count: 31
 ----
 
 === More Information
 
 * https://docs.docker.com/reference/dockerfile/#dockerignore-file[.dockerignore file]
 * https://docs.docker.com/reference/dockerfile/#copy[Dockerfile - COPY]
+* https://hub.docker.com/_/node[node:<version>-alpine]

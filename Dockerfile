@@ -7,7 +7,7 @@
 
 ### Final ###
 
-FROM node:20.13.1
+FROM node:20.13.1-alpine3.19
 
 ARG user=node
 ARG app_dir=/${user}
