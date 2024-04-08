@@ -40,7 +40,14 @@ Further documentation can be found on the main branch: https://github.com/sdavid
 This branch utilizes:
 
 * the `alpine` variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for building the image
-* the `alpine` variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for serving the example REST API
+* the https://hub.docker.com/_/alpine/[official Alpine Docker image] for serving the example REST API
++
+[NOTE]
+====
+Depending on your project setup you might have to install more packages via `apk add --no-cache`.
+
+The dependencies of `docker run --rm alpine apk add nodejs` might be a starting point.functions might help fine-tuning your `.dockerignore` file.
+====
 * use a https://docs.docker.com/reference/dockerfile/#dockerignore-file[.dockerignore file] and specific `COPY` commands
 +
 [NOTE]
@@ -69,8 +76,8 @@ Depending on your project setup you might not be able to omit the https://nodejs
 $ SOURCE_DATE_EPOCH=1 GITHUB_SHA="N/A" scripts/docker-build.sh -n
 ...
 $ docker images --filter="label=de.sdavids.docker.group=sdavids-node-docker-image-slimming" --format "{{.Repository}}\t{{.Tag}}\t{{.Size}}"
-de.sdavids/sdavids-node-docker-image-slimming   latest  216MB
-de.sdavids/sdavids-node-docker-image-slimming   local   216MB
+de.sdavids/sdavids-node-docker-image-slimming   latest  116MB
+de.sdavids/sdavids-node-docker-image-slimming   local   116MB
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local du -hs /node
 22.4M   /node
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local du -hs /node/node_modules
@@ -95,6 +102,7 @@ SIZE      CREATED BY
 0B        ENV NODE_ENV=production
 16.4kB    COPY --chown=node:node src/js ./ # buildkit
 23.5MB    COPY --chown=node:node /opt/app/node_modules…
+56.8MB    RUN |8 uid=1001 user=node app_dir=/node git_…
 8.19kB    WORKDIR /node
 0B        ARG key_path=/run/secrets/key.pem
 0B        ARG cert_path=/run/secrets/cert.pem
@@ -103,17 +111,11 @@ SIZE      CREATED BY
 0B        ARG git_commit
 0B        ARG app_dir=/node
 0B        ARG user=node
-0B        /bin/sh -c #(nop)  CMD ["node"]
-0B        /bin/sh -c #(nop)  ENTRYPOINT ["docker-entry…
-20.5kB    /bin/sh -c #(nop) COPY file:4d192565a7220e13…
-5.71MB    /bin/sh -c apk add --no-cache --virtual .bui…
-0B        /bin/sh -c #(nop)  ENV YARN_VERSION=1.22.19
-128MB     /bin/sh -c addgroup -g 1000 node     && addu…
-0B        /bin/sh -c #(nop)  ENV NODE_VERSION=20.13.1
+0B        ARG uid=1001
 0B        /bin/sh -c #(nop)  CMD ["/bin/sh"]
 8.07MB    /bin/sh -c #(nop) ADD file:37a76ec18f9887751…
 $ printf 'Layer Count: %s' "$(docker history de.sdavids/sdavids-node-docker-image-slimming:local | tail -n +2 | wc -l | tr -d ' ')"
-Layer Count: 29
+Layer Count: 24
 ----
 
 === More Information
@@ -126,3 +128,4 @@ Layer Count: 29
 * https://docs.npmjs.com/cli/v10/commands/npm-cache[npm-cache]
 * https://www.npmjs.com/package/clean-modules[clean-modules]
 * https://docs.docker.com/build/building/multi-stage/[Multi-stage builds]
+* https://hub.docker.com/_/alpine/[Official Alpine Docker Image]

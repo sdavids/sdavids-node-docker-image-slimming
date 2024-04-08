@@ -26,9 +26,10 @@ LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
 
 ### Final ###
 
-# https://hub.docker.com/_/node
-FROM node:20.13.1-alpine3.19
+# https://hub.docker.com/_/alpine
+FROM alpine:3.19.1
 
+ARG uid=1001
 ARG user=node
 ARG app_dir=/${user}
 
@@ -40,6 +41,10 @@ ARG cert_path=/run/secrets/cert.pem
 ARG key_path=/run/secrets/key.pem
 
 WORKDIR ${app_dir}
+
+RUN addgroup -g ${uid} ${user} && \
+    adduser -g ${user} -u ${uid} -G ${user} -s /sbin/nologin -S -D -h ${app_dir} ${user} && \
+    apk add --no-cache nodejs=20.12.1-r0
 
 COPY --from=installer --chown=${user}:${user} /opt/app/node_modules node_modules
 COPY --chown=${user}:${user} src/js ./
