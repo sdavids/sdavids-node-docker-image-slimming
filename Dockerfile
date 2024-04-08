@@ -32,7 +32,7 @@ WORKDIR /opt/app/
 COPY scripts/preinstall.sh scripts/prepare.sh scripts/
 COPY package.json package-lock.json ./
 
-RUN npm ci --production --no-optional --audit-level=high --silent && \
+RUN npm ci --omit dev --omit optional --omit peer --audit-level=high --silent && \
     clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json' && \
     find node_modules/ -type d -depth -exec rmdir -p --ignore-fail-on-non-empty {} \; && \
     find node_modules/ -type d -exec chmod 500 {} + && \
