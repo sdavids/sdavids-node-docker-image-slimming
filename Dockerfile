@@ -10,7 +10,9 @@
 # https://hub.docker.com/_/node
 FROM node:20.13.1-alpine3.19 AS installer
 
-RUN npm i --global --omit optional --omit peer --silent clean-modules@3.0.5
+RUN apk --no-cache add upx=4.2.1-r0 && \
+    upx /usr/local/bin/node && \
+    npm i --global --omit optional --omit peer --silent clean-modules@3.0.5
 
 WORKDIR /opt/app/
 
@@ -42,10 +44,13 @@ ARG key_path=/run/secrets/key.pem
 
 WORKDIR ${app_dir}
 
+# hadolint ignore=DL3018
 RUN addgroup -g ${uid} ${user} && \
     adduser -g ${user} -u ${uid} -G ${user} -s /sbin/nologin -S -D -h ${app_dir} ${user} && \
-    apk add --no-cache nodejs=20.12.1-r0
+    apk add --no-cache ca-certificates
 
+COPY --from=installer /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
+COPY --from=installer /usr/local/bin/node /usr/bin/
 COPY --from=installer --chown=${user}:${user} /opt/app/node_modules node_modules
 COPY --chown=${user}:${user} src/js ./
 
