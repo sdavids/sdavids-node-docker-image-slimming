@@ -614,7 +614,7 @@ Starts the app in a container exposing an HTTP port.
 $ npm run docker:start
 ----
 
-=> `http://localhost:3000`
+=> `http://localhost:3000[http://localhost:3000]`
 
 ==== docker:start:secure
 
@@ -625,7 +625,7 @@ Starts the app in a container exposing an HTTPS port.
 $ npm run docker:start:secure
 ----
 
-=> `https://localhost:3000`
+=> `https://localhost:3000[https://localhost:3000]`
 
 [IMPORTANT]
 ====
