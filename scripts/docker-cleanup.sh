@@ -18,11 +18,11 @@
 
 set -eu
 
-readonly namespace='de.sdavids'
+readonly repository='sdavids-node-docker-image-slimming'
 
 readonly label_group='de.sdavids.docker.group'
 
-readonly label="${label_group}=${namespace}"
+readonly label="${label_group}=${repository}"
 
 docker container prune --force --filter="label=${label}"
 

@@ -35,7 +35,7 @@ readonly repository='sdavids-node-docker-image-slimming'
 
 readonly label_group='de.sdavids.docker.group'
 
-readonly label="${label_group}=${namespace}"
+readonly label="${label_group}=${repository}"
 
 readonly image_name="${namespace}/${repository}"
 
