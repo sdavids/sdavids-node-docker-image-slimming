@@ -54,6 +54,12 @@ The https://github.com/sdavids/sdavids-shell-misc?tab=readme-ov-file#212-ls_exte
 Depending on your project setup you might not be able to omit the https://nodejs.org/en/blog/npm/peer-dependencies[peer dependencies].
 ====
 * use `npm cache clean --force`
+* use the https://www.npmjs.com/package/clean-modules[clean-modules] npm package to clean up the `node_modules` directory
++
+[NOTE]
+====
+`clean-modules` will have more impact once there are more dependencies.
+====
 
 === Result
 
@@ -62,12 +68,12 @@ Depending on your project setup you might not be able to omit the https://nodejs
 $ SOURCE_DATE_EPOCH=1 GITHUB_SHA="N/A" scripts/docker-build.sh -n
 ...
 $ docker images --filter="label=de.sdavids.docker.group=sdavids-node-docker-image-slimming" --format "{{.Repository}}\t{{.Tag}}\t{{.Size}}"
-de.sdavids/sdavids-node-docker-image-slimming   latest  233MB
-de.sdavids/sdavids-node-docker-image-slimming   local   233MB
+de.sdavids/sdavids-node-docker-image-slimming   latest  217MB
+de.sdavids/sdavids-node-docker-image-slimming   local   217MB
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local du -hs /node
-38.4M   /node
+22.6M   /node
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local du -hs /node/node_modules
-38.3M   /node/node_modules
+22.4M   /node/node_modules
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local stat -c "%s" /node/server.mjs
 2139
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local ls -A /node
@@ -90,7 +96,7 @@ SIZE      CREATED BY
 0B        ENV PORT=3000
 0B        ENV NODE_ENV=production
 16.4kB    COPY --chown=node:node src/js ./ # buildkit
-40.5MB    RUN |7 user=node app_dir=/node git_commit=N/…
+24.9MB    RUN |7 user=node app_dir=/node git_commit=N/…
 168kB     COPY package.json package-lock.json ./ # bui…
 20.5kB    COPY scripts/preinstall.sh scripts/prepare.s…
 8.19kB    WORKDIR /node
@@ -122,3 +128,4 @@ Layer Count: 31
 * https://docs.npmjs.com/cli/v10/commands/npm-ci[npm-ci]
 * https://docs.npmjs.com/cli/v10/commands/npm-ci#omit[npm-ci --omit]
 * https://docs.npmjs.com/cli/v10/commands/npm-cache[npm-cache]
+* https://www.npmjs.com/package/clean-modules[clean-modules]

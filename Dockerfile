@@ -25,7 +25,9 @@ COPY scripts/preinstall.sh scripts/prepare.sh scripts/
 COPY package.json package-lock.json ./
 
 RUN npm ci --omit dev --omit optional --omit peer --audit-level=high --silent && \
+    npm i --global --omit optional --omit peer --silent clean-modules@3.0.5 && \
     npm cache clean --force && \
+    clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json' && \
     chown -R ${user}:${user} .
 
 COPY --chown=${user}:${user} src/js ./
