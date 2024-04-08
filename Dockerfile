@@ -25,7 +25,7 @@ FROM node:20.12.0-alpine3.19 AS installer
 
 RUN apk --no-cache add upx=4.2.1-r0 && \
     upx /usr/local/bin/node && \
-    npm i --global clean-modules@3.0.4
+    npm i --global --omit optional --omit peer --silent clean-modules@3.0.5
 
 WORKDIR /opt/app/
 
@@ -34,7 +34,6 @@ COPY package.json package-lock.json ./
 
 RUN npm ci --omit dev --omit optional --omit peer --audit-level=high --silent && \
     clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json' && \
-    find node_modules/ -type d -depth -exec rmdir -p --ignore-fail-on-non-empty {} \; && \
     find node_modules/ -type d -exec chmod 500 {} + && \
     find node_modules/ -type f -exec chmod 400 {} +
 
