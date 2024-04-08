@@ -30,7 +30,7 @@ if [ ! -f "${dockerfile}" ]; then
 fi
 
 # https://docs.docker.com/reference/cli/docker/image/tag/#description
-readonly namespace='sdavids-node-docker-image-slimming'
+readonly namespace='de.sdavids'
 readonly repository='sdavids-node-docker-image-slimming'
 
 readonly label_group='de.sdavids.docker.group'

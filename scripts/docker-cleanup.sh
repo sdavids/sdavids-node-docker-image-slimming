@@ -18,7 +18,7 @@
 
 set -eu
 
-readonly namespace='sdavids-node-docker-image-slimming'
+readonly namespace='de.sdavids'
 
 readonly label_group='de.sdavids.docker.group'
 
