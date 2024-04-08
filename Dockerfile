@@ -24,7 +24,8 @@ WORKDIR ${app_dir}
 COPY scripts/preinstall.sh scripts/prepare.sh scripts/
 COPY package.json package-lock.json ./
 
-RUN npm i --audit-level=high --silent && \
+RUN npm ci --omit dev --omit optional --omit peer --audit-level=high --silent && \
+    npm cache clean --force && \
     chown -R ${user}:${user} .
 
 COPY --chown=${user}:${user} src/js ./
