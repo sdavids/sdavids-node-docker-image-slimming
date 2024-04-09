@@ -11,6 +11,8 @@ readonly base_dir="$PWD"
 
 readonly eslint_cache_file="${base_dir}/.eslintcache"
 readonly prettier_cache_file="${base_dir}/node_modules/.cache/prettier/.prettier-cache"
+readonly build_dir="${base_dir}/dist"
 
 rm -rf "${eslint_cache_file}" \
-       "${prettier_cache_file}"
+       "${prettier_cache_file}" \
+       "${build_dir}"
