@@ -57,7 +57,7 @@ COPY src/js src/js
 
 RUN npm run build --silent \
     && cp src/js/healthcheck.mjs /opt/app/dist/ \
-    && chmod 400 /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs
+    && chmod 400 /opt/app/dist/server.cjs /opt/app/dist/healthcheck.mjs
 
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
       de.sdavids.docker.type="builder"
@@ -152,7 +152,7 @@ COPY --from=installer /usr/local/bin/node /usr/bin/
 WORKDIR ${app_dir}
 
 COPY --chown=${user} --from=installer /opt/app/node_modules node_modules
-COPY --chown=${user} --from=bundler /opt/app/dist/bundle.cjs /opt/app/dist/healthcheck.mjs ./
+COPY --chown=${user} --from=bundler /opt/app/dist/server.cjs /opt/app/dist/healthcheck.mjs ./
 
 ENV NODE_ENV=production
 ENV PORT=${port}
@@ -166,7 +166,7 @@ USER ${user}
 
 EXPOSE ${port}
 
-CMD ["node", "bundle.cjs"]
+CMD ["node", "server.cjs"]
 
 HEALTHCHECK --interval=5s --timeout=5s --start-period=5s \
     CMD node --no-warnings ${APP_DIR}/healthcheck.mjs

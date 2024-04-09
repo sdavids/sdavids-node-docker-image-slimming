@@ -20,7 +20,7 @@
   "scripts": {
     "preinstall": "scripts/preinstall.sh",
     "prepare": "scripts/prepare.sh",
-    "build": "webpack --config webpack.config.mjs --define-process-env-node-env=production && mv dist/bundle.js dist/bundle.cjs",
+    "build": "webpack --config webpack.config.mjs --define-process-env-node-env=production && mv dist/server.js dist/server.cjs",
     "cert:create": "scripts/create-self-signed-cert.sh docker/certs",
     "cert:delete": "scripts/delete-self-signed-cert.sh docker/certs",
     "clean": "scripts/clean.sh",
@@ -38,7 +38,7 @@
     "lint": "npx eslint --cache .",
     "lint:fix": "npx eslint --cache --fix .",
     "start": "NODE_ENV=production node src/js/server.mjs",
-    "start:build": "NODE_ENV=production node dist/bundle.cjs",
+    "start:build": "NODE_ENV=production node dist/server.cjs",
     "start:dev": "NODE_ENV=development nodemon --inspect --watch src/js src/js/server.mjs"
   },
   "dependencies": {

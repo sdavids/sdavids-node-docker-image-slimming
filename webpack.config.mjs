@@ -8,7 +8,7 @@ export default {
   externals: nodeExternals(),
   entry: resolve(import.meta.dirname, 'src/js/server.mjs'),
   output: {
-    filename: 'bundle.js',
+    filename: 'server.js',
     path: resolve(import.meta.dirname, 'dist'),
     publicPath: '/',
   },
