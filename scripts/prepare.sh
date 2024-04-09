@@ -24,4 +24,4 @@ if npx --yes --quiet is-ci ; then
   exit 0
 fi
 
-npx --yes --quiet husky install .husky
+npx --yes --quiet husky .husky
