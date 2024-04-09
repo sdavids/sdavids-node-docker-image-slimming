@@ -69,6 +69,12 @@ Depending on your project setup you might not be able to omit the https://nodejs
 ====
 * use a multi-stage build
 * use https://upx.github.io[UPX] to compress the `node` binary
+* harden the final `alpine` image
++
+[NOTE]
+====
+Hardening does not only decrease the image size but also makes it significantly more secure.
+====
 
 === Result
 
@@ -89,6 +95,7 @@ $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local ls -A /nod
 healthcheck.mjs
 node_modules
 server.mjs
+tmp
 $ docker image history --format "table {{.Size}}\t{{.CreatedBy}}" de.sdavids/sdavids-node-docker-image-slimming:local
 SIZE      CREATED BY
 0B        LABEL org.opencontainers.image.revision=N/A …
@@ -101,12 +108,11 @@ SIZE      CREATED BY
 0B        ENV CERT_PATH=/run/secrets/cert.pem
 0B        ENV PORT=3000
 0B        ENV NODE_ENV=production
-16.4kB    COPY --chown=node:node src/js ./ # buildkit
+16.4kB    COPY --chown=node:node /opt/app ./ # buildkit
 23.5MB    COPY --chown=node:node /opt/app/node_modules…
-35.7MB    COPY /usr/local/bin/node /usr/bin/ # buildkit
-2.86MB    COPY /usr/lib/libgcc_s.so.1 /usr/lib/libstdc…
-1.5MB     RUN |8 uid=1001 user=node app_dir=/node git_…
-8.19kB    WORKDIR /node
+35.7MB    COPY --chown=node:node /usr/local/bin/node /…
+2.86MB    COPY --chown=node:node /usr/lib/libgcc_s.so.…
+4.1kB     WORKDIR /node
 0B        ARG key_path=/run/secrets/key.pem
 0B        ARG cert_path=/run/secrets/cert.pem
 0B        ARG port=3000
@@ -114,11 +120,16 @@ SIZE      CREATED BY
 0B        ARG git_commit
 0B        ARG app_dir=/node
 0B        ARG user=node
+0B        ENV TMPDIR=/node/tmp
+1.43MB    RUN |3 uid=1001 user=node app_dir=/node /bin…
+0B        SHELL [/bin/ash -eo pipefail -c]
+0B        ARG app_dir=/node
+0B        ARG user=node
 0B        ARG uid=1001
 0B        /bin/sh -c #(nop)  CMD ["/bin/sh"]
 8.07MB    /bin/sh -c #(nop) ADD file:37a76ec18f9887751…
 $ printf 'Layer Count: %s' "$(docker history de.sdavids/sdavids-node-docker-image-slimming:local | tail -n +2 | wc -l | tr -d ' ')"
-Layer Count: 26
+Layer Count: 30
 ----
 
 === More Information
@@ -133,3 +144,4 @@ Layer Count: 26
 * https://docs.docker.com/build/building/multi-stage/[Multi-stage builds]
 * https://hub.docker.com/_/alpine/[Official Alpine Docker Image]
 * https://upx.github.io[UPX]
+* https://github.com/ironpeakservices/iron-alpine[iron-alpine]

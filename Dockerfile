@@ -21,17 +21,114 @@ COPY package.json package-lock.json ./
 
 RUN npm ci --omit dev --omit optional --omit peer --audit-level=high --silent && \
     npm cache clean --force && \
-    clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json'
+    clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json' && \
+# harden permissions
+    chmod 500 node_modules && \
+    find node_modules -type d -exec chmod 500 {} + && \
+    find node_modules -type f -exec chmod 400 {} +
 
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
       de.sdavids.docker.type="builder"
 
-### Final ###
+### Bundler ###
 
 # https://hub.docker.com/_/alpine
-FROM alpine:3.19.1
+FROM alpine:3.19.1 AS bundler
+
+WORKDIR /opt/app/
+
+COPY src/js .
+
+# keep only JavaScript/JSON files and harden permissions
+RUN find . -type f ! \( -name '*.cjs' -o -name '*.js' -o -name '*.json' -o -name '*.mjs' \) -delete && \
+    find . -type d -empty -delete && \
+    find . -type d -exec chmod 500 {} + && \
+    find . -type f -exec chmod 400 {} +
+
+LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
+      de.sdavids.docker.type="builder"
+
+### Harden ###
+
+# https://hub.docker.com/_/alpine
+FROM alpine:3.19.1 as hardened
 
 ARG uid=1001
+ARG user=node
+ARG app_dir=/${user}
+
+# https://github.com/hadolint/hadolint/wiki/DL4006
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+
+# use apk repositories over HTTPS only
+# hadolint ignore=DL3018
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/main" > /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/community" >> /etc/apk/repositories && \
+# add root certificates
+    apk add --no-cache ca-certificates && \
+# add the app user and the working directory
+    addgroup -g ${uid} ${user} && \
+    adduser -g ${user} -u ${uid} -G ${user} -s /sbin/nologin -S -D -h ${app_dir} ${user} && \
+    mkdir ${app_dir}/node_modules ${app_dir}/tmp && \
+    chmod -R 700 "${app_dir}" && \
+    chown -R ${user}:${user} ${app_dir} && \
+# remove unnecessary accounts
+    sed -i -r "/^(${user}|root|nobody)/!d" /etc/group && \
+    sed -i -r "/^(${user}|root|nobody)/!d" /etc/passwd && \
+# remove interactive login shell for everybody
+    sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd && \
+# disable password login for everybody
+   while IFS=: read -r username _; do passwd -l "${username}"; done < /etc/passwd || true && \
+# remove account-related temp files
+   find /bin /etc /lib /sbin /usr -xdev -type f -regex '.*-$' -exec rm -f {} + && \
+# remove admin commands
+    find /sbin /usr/sbin ! -type d -a ! -name apk -a -delete && \
+# remove crontabs
+    rm -rf /var/spool/cron /etc/crontabs /etc/periodic && \
+# remove SUID & SGID files
+    find /bin /etc /lib /sbin /usr -xdev -type f -a \( -perm +4000 -o -perm +2000 \) -delete && \
+# remove world-writeable permissions
+    find / -xdev -type d -perm +0002 -exec chmod o-w {} + && \
+    find / -xdev -type f -perm +0002 -exec chmod o-w {} + && \
+# remove init scripts
+    rm -rf /etc/init.d /lib/rc /etc/conf.d /etc/inittab /etc/runlevels /etc/rc.conf /etc/logrotate.d && \
+# remove kernel tunables
+    rm -rf /etc/sysctl* /etc/modprobe.d /etc/modules /etc/mdev.conf /etc/acpi && \
+# remove root home dir
+    rm -rf /root && \
+# remove fstab
+    rm -f /etc/fstab && \
+# remove symlinks without targets
+    find /bin /etc /lib /sbin /usr -xdev -type l -exec test ! -e {} \; -delete && \
+# ensure system directories are owned and writable only by root
+    find /bin /etc /lib /sbin /usr -xdev -type d \
+      -exec chown root:root {} \; \
+      -exec chmod 0755 {} \; && \
+# remove dangerous commands
+    find /bin /etc /lib /sbin /usr -xdev \( \
+      -iname chgrp -o \
+      -iname chmod -o \
+      -iname chown -o \
+      -iname hexdump -o \
+      -iname ln -o \
+      -iname od -o \
+      -iname strings -o \
+      -iname su -o \
+      -iname sudo \
+      -iname wget \
+    \) -delete && \
+# remove apk-related files
+    find /bin /etc /lib /sbin /usr -xdev -type f -regex '.*apk.*' -exec rm -rf {} + && \
+    rm -rf /etc/apk /lib/apk /usr/share/apk
+
+# use temp dir inside of app user's home
+# https://nodejs.org/api/os.html#ostmpdir
+ENV TMPDIR=${app_dir}/tmp
+
+### Final ###
+
+FROM hardened
+
 ARG user=node
 ARG app_dir=/${user}
 
@@ -44,15 +141,10 @@ ARG key_path=/run/secrets/key.pem
 
 WORKDIR ${app_dir}
 
-# hadolint ignore=DL3018
-RUN addgroup -g ${uid} ${user} && \
-    adduser -g ${user} -u ${uid} -G ${user} -s /sbin/nologin -S -D -h ${app_dir} ${user} && \
-    apk add --no-cache ca-certificates
-
-COPY --from=installer /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
-COPY --from=installer /usr/local/bin/node /usr/bin/
+COPY --from=installer --chown=${user}:${user} /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
+COPY --from=installer --chown=${user}:${user} /usr/local/bin/node /usr/bin/
 COPY --from=installer --chown=${user}:${user} /opt/app/node_modules node_modules
-COPY --chown=${user}:${user} src/js ./
+COPY --from=bundler --chown=${user}:${user} /opt/app ./
 
 ENV NODE_ENV=production
 ENV PORT=${port}
