@@ -33,6 +33,7 @@ COPY scripts/preinstall.sh scripts/prepare.sh scripts/
 COPY package.json package-lock.json ./
 
 RUN npm ci --omit dev --omit optional --omit peer --audit-level=high --silent && \
+    npm cache clean --force && \
     clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json' && \
 # harden permissions
     chmod 500 node_modules && \
@@ -53,7 +54,8 @@ COPY scripts/preinstall.sh scripts/prepare.sh scripts/
 COPY webpack.config.mjs ./
 COPY package.json package-lock.json ./
 
-RUN npm ci --omit optional --omit peer --audit-level=high --silent
+RUN npm ci --omit optional --omit peer --audit-level=high --silent && \
+    npm cache clean --force
 
 COPY src/js src/js
 
