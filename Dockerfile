@@ -5,8 +5,28 @@
 
 # https://docs.docker.com/engine/reference/builder/
 
+### Installer ###
+
+# https://hub.docker.com/_/node
+FROM node:20.13.1-alpine3.19 AS installer
+
+RUN npm i --global --omit optional --omit peer --silent clean-modules@3.0.5
+
+WORKDIR /opt/app/
+
+COPY scripts/preinstall.sh scripts/prepare.sh scripts/
+COPY package.json package-lock.json ./
+
+RUN npm ci --omit dev --omit optional --omit peer --audit-level=high --silent && \
+    npm cache clean --force && \
+    clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json'
+
+LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
+      de.sdavids.docker.type="builder"
+
 ### Final ###
 
+# https://hub.docker.com/_/node
 FROM node:20.13.1-alpine3.19
 
 ARG user=node
@@ -21,15 +41,7 @@ ARG key_path=/run/secrets/key.pem
 
 WORKDIR ${app_dir}
 
-COPY scripts/preinstall.sh scripts/prepare.sh scripts/
-COPY package.json package-lock.json ./
-
-RUN npm ci --omit dev --omit optional --omit peer --audit-level=high --silent && \
-    npm i --global --omit optional --omit peer --silent clean-modules@3.0.5 && \
-    npm cache clean --force && \
-    clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json' && \
-    chown -R ${user}:${user} .
-
+COPY --from=installer --chown=${user}:${user} /opt/app/node_modules node_modules
 COPY --chown=${user}:${user} src/js ./
 
 ENV NODE_ENV=production
