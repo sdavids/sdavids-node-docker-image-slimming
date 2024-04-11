@@ -41,13 +41,13 @@ if [ -n "${origin_url}" ]; then
   set -e
 
   if [ ${remote_exits} -eq 0 ]; then
-    git remote prune origin
+    git remote prune origin 1> /dev/null
   else
-    git remote remove origin
+    git remote remove origin 1> /dev/null
   fi
 fi
 
-git repack -d
-git prune-packed
-git reflog expire --expire=1.month.ago --expire-unreachable=now
+git repack -d --quiet
+git prune-packed --quiet
+git reflog expire --expire=1.month.ago --expire-unreachable=now 1> /dev/null
 git gc --aggressive
