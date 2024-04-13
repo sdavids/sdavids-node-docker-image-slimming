@@ -11,39 +11,30 @@
 FROM node:20.13.1-alpine3.19 AS installer
 
 RUN apk --no-cache add upx=4.2.1-r0 && \
-    upx /usr/local/bin/node && \
-    npm i --global --omit optional --omit peer --silent clean-modules@3.0.5
+    upx /usr/local/bin/node
 
 WORKDIR /opt/app/
-
-COPY scripts/preinstall.sh scripts/prepare.sh scripts/
-COPY package.json package-lock.json ./
-
-RUN npm ci --omit dev --omit optional --omit peer --audit-level=high --silent && \
-    npm cache clean --force && \
-    clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json' && \
-# harden permissions
-    chmod 500 node_modules && \
-    find node_modules -type d -exec chmod 500 {} + && \
-    find node_modules -type f -exec chmod 400 {} +
 
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
       de.sdavids.docker.type="builder"
 
 ### Bundler ###
 
-# https://hub.docker.com/_/alpine
-FROM alpine:3.19.1 AS bundler
+# https://hub.docker.com/_/node
+FROM node:20.12.0-alpine3.19 AS bundler
 
 WORKDIR /opt/app/
 
-COPY src/js .
+COPY scripts/preinstall.sh scripts/prepare.sh scripts/build.sh scripts/
+COPY package.json package-lock.json ./
 
-# keep only JavaScript/JSON files and harden permissions
-RUN find . -type f ! \( -name '*.cjs' -o -name '*.js' -o -name '*.json' -o -name '*.mjs' \) -delete && \
-    find . -type d -empty -delete && \
-    find . -type d -exec chmod 500 {} + && \
-    find . -type f -exec chmod 400 {} +
+RUN npm ci --omit optional --omit peer --audit-level=high --silent && \
+    npm cache clean --force
+
+COPY src/js src/js
+
+RUN npm run build --silent && \
+    chmod 400 /opt/app/dist/server.cjs /opt/app/dist/healthcheck.mjs
 
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
       de.sdavids.docker.type="builder"
@@ -69,7 +60,7 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/v$(cut -d . -f 1,2 < /etc/alpine
 # add the app user and the working directory
     addgroup -g ${uid} ${user} && \
     adduser -g ${user} -u ${uid} -G ${user} -s /sbin/nologin -S -D -h ${app_dir} ${user} && \
-    mkdir ${app_dir}/node_modules ${app_dir}/tmp && \
+    mkdir ${app_dir}/tmp && \
     chmod -R 700 "${app_dir}" && \
     chown -R ${user}:${user} ${app_dir} && \
 # remove unnecessary accounts
@@ -143,8 +134,7 @@ WORKDIR ${app_dir}
 
 COPY --from=installer --chown=${user}:${user} /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 COPY --from=installer --chown=${user}:${user} /usr/local/bin/node /usr/bin/
-COPY --from=installer --chown=${user}:${user} /opt/app/node_modules node_modules
-COPY --from=bundler --chown=${user}:${user} /opt/app ./
+COPY --from=bundler --chown=${user}:${user} /opt/app/dist/server.cjs /opt/app/dist/healthcheck.mjs ./
 
 ENV NODE_ENV=production
 ENV PORT=${port}
@@ -158,7 +148,7 @@ USER ${user}
 
 EXPOSE ${port}
 
-CMD ["node", "server.mjs"]
+CMD ["node", "server.cjs"]
 
 HEALTHCHECK --interval=5s --timeout=5s --start-period=5s \
     CMD node --no-warnings ${APP_DIR}/healthcheck.mjs
