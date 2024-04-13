@@ -50,7 +50,7 @@ FROM node:20.12.0-alpine3.19 AS bundler
 
 WORKDIR /opt/app/
 
-COPY scripts/preinstall.sh scripts/prepare.sh scripts/
+COPY scripts/preinstall.sh scripts/prepare.sh scripts/build.sh scripts/
 COPY webpack.config.mjs ./
 COPY package.json package-lock.json ./
 

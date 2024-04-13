@@ -20,7 +20,7 @@
   "scripts": {
     "preinstall": "scripts/preinstall.sh",
     "prepare": "scripts/prepare.sh",
-    "build": "webpack --config webpack.config.mjs --define-process-env-node-env=production && mv dist/server.js dist/server.cjs",
+    "build": "scripts/build.sh",
     "cert:create": "scripts/create-self-signed-cert.sh docker/certs",
     "cert:delete": "scripts/delete-self-signed-cert.sh docker/certs",
     "clean": "scripts/clean.sh",
