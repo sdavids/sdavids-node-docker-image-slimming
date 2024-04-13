@@ -46,6 +46,7 @@ toc::[]
 
 This repository showcases several techniques for creating smaller Node.js Docker images:
 
+. .dockerignore file
 . multi-stage build
 . smaller base image
 . image hardening
@@ -58,7 +59,7 @@ The link:Dockerfile[example] is an https://expressjs.com[Express]-based REST API
 ****
 *TLDR*
 
-1880 MB => 123 MB (-93.46%)
+1890 MB => 123 MB (-93.46%)
 ****
 
 == Techniques
@@ -90,61 +91,68 @@ All branches besides `main` will be force-pushed to in order to keep them up-to 
 |0
 |https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/000-base?tab=readme-ov-file#node-docker-image-slimming[000-base]
 |36
-|1880
+|1890
 |112.0
 |2635
 
 |1
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/001-alpine?tab=readme-ov-file#node-docker-image-slimming[001-alpine]
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/001-dockerignore?tab=readme-ov-file#node-docker-image-slimming[001-dockerignore]
+|36
+|1880
+|112.0
+|2635
+
+|2
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/002-alpine?tab=readme-ov-file#node-docker-image-slimming[002-alpine]
 |32
 |496
 |111.1
 |2635
 
-|2
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/002-alpine-npm-ci?tab=readme-ov-file#node-docker-image-slimming[002-alpine-npm-ci]
+|3
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/003-alpine-npm-ci?tab=readme-ov-file#node-docker-image-slimming[003-alpine-npm-ci]
 |32
 |317
 |54.0
 |2635
 
-|3
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/003-alpine-clean-modules?tab=readme-ov-file#node-docker-image-slimming[003-alpine-clean-modules]
+|4
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/004-alpine-clean-modules?tab=readme-ov-file#node-docker-image-slimming[004-alpine-clean-modules]
 |32
 |266
 |30.0
 |2635
 
-|4
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/004-alpine-multi-stage-build?tab=readme-ov-file#node-docker-image-slimming[004-alpine-multi-stage-build]
+|5
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/005-alpine-multi-stage-build?tab=readme-ov-file#node-docker-image-slimming[005-alpine-multi-stage-build]
 |30
 |263
 |30.0
 |2635
 
-|5
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/005-alpine-alpine-final?tab=readme-ov-file#node-docker-image-slimming[005-alpine-alpine-final]
+|6
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/006-alpine-alpine-final?tab=readme-ov-file#node-docker-image-slimming[006-alpine-alpine-final]
 |25
 |160
 |30.0
 |2635
 
-|6
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/006-alpine-upx?tab=readme-ov-file#node-docker-image-slimming[006-alpine-upx]
+|7
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/007-alpine-upx?tab=readme-ov-file#node-docker-image-slimming[007-alpine-upx]
 |27
 |158
 |30.0
 |2635
 
-|7
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/007-alpine-hardening?tab=readme-ov-file#node-docker-image-slimming[007-alpine-hardening]
+|8
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/008-alpine-hardening?tab=readme-ov-file#node-docker-image-slimming[008-alpine-hardening]
 |30
 |123
 |30.0
 |2635
 
-|8
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/008-alpine-webpack?tab=readme-ov-file#node-docker-image-slimming[008-alpine-webpack]
+|9
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/009-alpine-webpack?tab=readme-ov-file#node-docker-image-slimming[009-alpine-webpack]
 |30
 |123
 |30.0
@@ -154,6 +162,12 @@ All branches besides `main` will be force-pushed to in order to keep them up-to 
 
 [start=0]
 . baseline with the default variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for building the image and serving the example REST API with no optimizations
+. use a https://docs.docker.com/reference/dockerfile/#dockerignore-file[.dockerignore file] and specific `COPY` commands
++
+[NOTE]
+====
+The https://github.com/sdavids/sdavids-shell-misc?tab=readme-ov-file#212-ls_extensions[ls_extensions] and https://github.com/sdavids/sdavids-shell-misc?tab=readme-ov-file#ls_extensions_git[ls_extensions_git] functions might help fine-tuning your `.dockerignore` file.
+====
 . use the `alpine` variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for both building and running
 . use `npm ci --omit dev --omit optional --omit peer` instead of `npm i`
 +
