@@ -44,102 +44,151 @@ endif::[]
 
 toc::[]
 
-This repository showcases several techniques for creating smaller Node.js Docker images.
+This repository showcases several techniques for creating smaller Node.js Docker images:
 
-== Results
-
-link:Dockerfile[]
-
-[%header,cols="4,>2,>2,>2"]
-|===
-
-|Stage
-|Layers
-|Size (MB)
-|Difference (MB)
-
-|initial
-|14
-|947.90
-|
-
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/d861f69f5df0edc6bef5bfeefdc14dc75d15904a[npm ci --production --no-optional]
-|14
-|945.60
-|-2.30
-
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/64c4d969653429d8de7c53fa9f431e2bb09c3602[node_modules clean script]
-|15
-|944.90
-|-0.70
-
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/5dca92add2b014615ebf69ad8935cb8de2d28d35[node alpine]
-|9
-|116.10
-|-828.80
-
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/448e239d678fb2a454702a6b94d88d9b274c7893[multi-stage build]
-|8
-|115.50
-|-0.60
-
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/55a8ef45ee4f64b15b175883f68a0c946da65149[alpine]
-|5
-|38.47
-|-76.93
-
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/58b7f8d9bda7a27cbfaac416de9e2c369fc2d3d4[upx]
-|7
-|35.52
-|-2.95
-
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/877ee7f4e70a74aa25e3f9741bd7a2884995bf04[webpack]
-|6
-|35.48
-|-0.04
-
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/commit/9b228b4a65bfb81746332967f313ead5ede2d25f[harden]
-|6
-|35.45
-|-0.03
-
-|===
-
-[NOTE]
-====
-The clean script will have more impact once there are more dependencies.
-
-Webpack will have more impact once there are more source files to bundle.
-====
-
-=== Directory Structure
-
-[source,shell]
-----
-/node  [dr-x node node ]
-├──    [-r-- node node ] bundle.cjs
-├──    [-r-- node node ] healthcheck.mjs
-└──    [dr-x node node ] node_modules
-  ├──  [dr-x node node ]   accepts
-  │ ├─ [-r-- node node ]     index.js
-  │ └─ [-r-- node node ]     package.json
-  ├──  [dr-x node node ]   array-flatten
-  │ ├─ [-r-- node node ]     array-flatten.js
-  │ └─ [-r-- node node ]     package.json
-  ├──  [dr-x node node ]   body-parser
-  │ ├─ [-r-- node node ]     index.js
-  │ ├─ [dr-x node node ]     lib
-  │ └─ [-r-- node node ]     package.json
-  ...
-----
-
-=== Layers
-
-image::src/docs/asciidoc/images/layers.gif[]
-
-== Example Docker Image
+. multi-stage build
+. smaller base image
+. image hardening
+. https://upx.github.io[UPX]
+. cleaning up `node_modules`
+. JavaScript bundling
 
 The link:Dockerfile[example] is an https://expressjs.com[Express]-based REST API packaged in a Docker image with a https://docs.docker.com/reference/dockerfile/#healthcheck[HEALTHCHECK].
+
+****
+*TLDR*
+
+1880 MB => 123 MB (-93.46%)
+****
+
+== Techniques
+
+The final result with all techniques applied can be found in the `main` branch:
+
+* link:Dockerfile[]
+* link:scripts/docker-build.sh[]
+
+The other branches showcase a single technique--the last commit of the branch contains the changes for the specific technique.
+
+[WARNING]
+====
+All branches besides `main` will be force-pushed to in order to keep them up-to date with the main branch and remain a single commit.
+====
+
+=== Results
+
+[%header,cols=">1,4,^2m,>2m,>2m,>2m"]
+|===
+
+|#
+|Branch
+| Layer Count
+|Image Size (MB)
+|node_modules Size (MB)
+|server.mjs Size (B)
+
+|0
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/000-base?tab=readme-ov-file#node-docker-image-slimming[000-base]
+|36
+|1880
+|112.0
+|2635
+
+|1
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/001-alpine?tab=readme-ov-file#node-docker-image-slimming[001-alpine]
+|32
+|496
+|111.1
+|2635
+
+|2
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/002-alpine-npm-ci?tab=readme-ov-file#node-docker-image-slimming[002-alpine-npm-ci]
+|32
+|317
+|54.0
+|2635
+
+|3
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/003-alpine-clean-modules?tab=readme-ov-file#node-docker-image-slimming[003-alpine-clean-modules]
+|32
+|266
+|30.0
+|2635
+
+|4
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/004-alpine-multi-stage-build?tab=readme-ov-file#node-docker-image-slimming[004-alpine-multi-stage-build]
+|30
+|263
+|30.0
+|2635
+
+|5
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/005-alpine-alpine-final?tab=readme-ov-file#node-docker-image-slimming[005-alpine-alpine-final]
+|25
+|160
+|30.0
+|2635
+
+|6
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/006-alpine-upx?tab=readme-ov-file#node-docker-image-slimming[006-alpine-upx]
+|27
+|158
+|30.0
+|2635
+
+|7
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/007-alpine-hardening?tab=readme-ov-file#node-docker-image-slimming[007-alpine-hardening]
+|30
+|123
+|30.0
+|2635
+
+|8
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/008-alpine-webpack?tab=readme-ov-file#node-docker-image-slimming[008-alpine-webpack]
+|30
+|123
+|30.0
+|1189
+
+|===
+
+[start=0]
+. baseline with the default variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for building the image and serving the example REST API with no optimizations
+. use the `alpine` variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for both building and running
+. use `npm ci --omit dev --omit optional --omit peer` instead of `npm i`
++
+[NOTE]
+====
+Depending on your project setup you might not be able to omit the https://nodejs.org/en/blog/npm/peer-dependencies[peer dependencies].
+====
+. use the https://www.npmjs.com/package/clean-modules[clean-modules] npm package to clean up the `node_modules` directory
++
+[NOTE]
+====
+`clean-modules` will have more impact once there are more dependencies.
+====
+. use a multi-stage build
+. use the https://hub.docker.com/_/alpine/[official Alpine Docker image] for serving the example REST API
++
+[NOTE]
+====
+Depending on your project setup you might have to install more packages via `apk add --no-cache`.
+
+The dependencies of `docker run --rm alpine apk add nodejs` might be a starting point.
+====
+. use https://upx.github.io[UPX] to compress the `node` binary
+. harden the final `alpine` image
++
+[NOTE]
+====
+Hardening does not only decrease the image size but also makes it significantly more secure.
+====
+. use https://webpack.js.org[webpack] to bundle the example REST API
++
+[NOTE]
+====
+webpack will have more impact once there are more source files to bundle.
+====
 
 === Running the Example
 
