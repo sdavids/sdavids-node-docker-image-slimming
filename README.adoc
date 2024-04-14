@@ -273,6 +273,22 @@ liveness probe
 
 You can use several <<api-tools>> to interact with the API.
 
+=== More Information
+
+* https://docs.docker.com/reference/dockerfile/#dockerignore-file[.dockerignore file]
+* https://docs.docker.com/reference/dockerfile/#copy[Dockerfile - COPY]
+* https://hub.docker.com/_/node[node:<version>-alpine]
+* https://docs.npmjs.com/cli/v10/commands/npm-ci[npm-ci]
+* https://docs.npmjs.com/cli/v10/commands/npm-ci#omit[npm-ci --omit]
+* https://docs.npmjs.com/cli/v10/commands/npm-cache[npm-cache]
+* https://www.npmjs.com/package/clean-modules[clean-modules]
+* https://docs.docker.com/build/building/multi-stage/[Multi-stage builds]
+* https://hub.docker.com/_/alpine/[Official Alpine Docker Image]
+* https://upx.github.io[UPX]
+* https://github.com/ironpeakservices/iron-alpine[iron-alpine]
+* https://webpack.js.org[webpack]
+* https://esbuild.github.io/getting-started/#bundling-for-node[esbuild - Bundling for node]
+
 == License
 
 Apache License, Version 2.0 (link:LICENSE[] or {uri-apache-license}).
