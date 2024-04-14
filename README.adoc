@@ -159,6 +159,13 @@ All branches besides `main` will be force-pushed to in order to keep them up-to 
 |1189
 
 |9
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/009-alpine-esbuild-external?tab=readme-ov-file#node-docker-image-slimming[009-alpine-esbuild-external]
+|30
+|114.0
+|22.4
+|1136
+
+|9
 |https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/009-alpine-esbuild?tab=readme-ov-file#node-docker-image-slimming[009-alpine-esbuild]
 |29
 |93.5
@@ -205,11 +212,17 @@ The dependencies of `docker run --rm alpine apk add nodejs` might be a starting 
 Hardening does not only decrease the image size but also makes it significantly more secure.
 ====
 . bundle the example REST API
-.. use https://webpack.js.org[webpack]
 +
 [NOTE]
 ====
-webpack will have more impact once there are more source files to bundle.
+Bundling will have more impact once there are more source files to bundle.
+====
+.. use https://webpack.js.org[webpack]
+.. use https://esbuild.github.io[esbuild]; `esbuild --bundle --minify --packages=external`
++
+[NOTE]
+====
+Minified JavaScript makes debugging production issues harder.
 ====
 .. use https://esbuild.github.io[esbuild]; `esbuild --bundle --minify`
 +
