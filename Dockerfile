@@ -32,18 +32,21 @@ LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
 
 ### Bundler ###
 
-# https://hub.docker.com/_/alpine
-FROM alpine:3.19.1 AS bundler
+# https://hub.docker.com/_/node
+FROM node:20.12.0-alpine3.19 AS bundler
 
 WORKDIR /opt/app/
 
-COPY src/js .
+COPY scripts/preinstall.sh scripts/prepare.sh scripts/build.sh scripts/
+COPY package.json package-lock.json ./
 
-# keep only JavaScript/JSON files and harden permissions
-RUN find . -type f ! \( -name '*.cjs' -o -name '*.js' -o -name '*.json' -o -name '*.mjs' \) -delete && \
-    find . -type d -empty -delete && \
-    find . -type d -exec chmod 500 {} + && \
-    find . -type f -exec chmod 400 {} +
+RUN npm ci --omit optional --omit peer --audit-level=high --silent && \
+    npm cache clean --force
+
+COPY src/js src/js
+
+RUN npm run build --silent && \
+    chmod 400 /opt/app/dist/server.mjs /opt/app/dist/healthcheck.mjs
 
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
       de.sdavids.docker.type="builder"
@@ -144,7 +147,7 @@ WORKDIR ${app_dir}
 COPY --from=installer --chown=${user}:${user} /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 COPY --from=installer --chown=${user}:${user} /usr/local/bin/node /usr/bin/
 COPY --from=installer --chown=${user}:${user} /opt/app/node_modules node_modules
-COPY --from=bundler --chown=${user}:${user} /opt/app ./
+COPY --from=bundler --chown=${user}:${user} /opt/app/dist/server.mjs /opt/app/dist/healthcheck.mjs ./
 
 ENV NODE_ENV=production
 ENV PORT=${port}

@@ -38,6 +38,7 @@ SECURITY.md
 TODO
 api/
 commitlint.config.mjs
+dist/
 docker/
 eslint.config.mjs
 lint-staged.config.mjs
@@ -46,5 +47,6 @@ prettier.config.mjs
 scripts/
 src/docs/
 Thumbs.db
+!scripts/build.sh
 !scripts/preinstall.sh
 !scripts/prepare.sh

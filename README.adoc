@@ -75,6 +75,12 @@ Depending on your project setup you might not be able to omit the https://nodejs
 ====
 Hardening does not only decrease the image size but also makes it significantly more secure.
 ====
+* use https://esbuild.github.io[esbuild]; `esbuild --bundle --minify --packages=external`
++
+[NOTE]
+====
+Minified JavaScript makes debugging production issues harder.
+====
 
 === Result
 
@@ -90,7 +96,7 @@ $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local du -hs /no
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local du -hs /node/node_modules
 22.4M   /node/node_modules
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local stat -c "%s" /node/server.mjs
-2139
+1136
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local ls -A /node
 healthcheck.mjs
 node_modules
@@ -108,7 +114,7 @@ SIZE      CREATED BY
 0B        ENV CERT_PATH=/run/secrets/cert.pem
 0B        ENV PORT=3000
 0B        ENV NODE_ENV=production
-16.4kB    COPY --chown=node:node /opt/app ./ # buildkit
+16.4kB    COPY --chown=node:node /opt/app/dist/server.…
 23.5MB    COPY --chown=node:node /opt/app/node_modules…
 35.7MB    COPY --chown=node:node /usr/local/bin/node /…
 2.86MB    COPY --chown=node:node /usr/lib/libgcc_s.so.…
@@ -145,3 +151,4 @@ Layer Count: 30
 * https://hub.docker.com/_/alpine/[Official Alpine Docker Image]
 * https://upx.github.io[UPX]
 * https://github.com/ironpeakservices/iron-alpine[iron-alpine]
+* https://esbuild.github.io/getting-started/#bundling-for-node[esbuild - Bundling for node]
