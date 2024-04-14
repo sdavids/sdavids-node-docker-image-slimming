@@ -24,21 +24,9 @@
 FROM node:20.12.0-alpine3.19 AS installer
 
 RUN apk --no-cache add upx=4.2.1-r0 && \
-    upx /usr/local/bin/node && \
-    npm i --global --omit optional --omit peer --silent clean-modules@3.0.5
+    upx /usr/local/bin/node
 
 WORKDIR /opt/app/
-
-COPY scripts/preinstall.sh scripts/prepare.sh scripts/
-COPY package.json package-lock.json ./
-
-RUN npm ci --omit dev --omit optional --omit peer --audit-level=high --silent && \
-    npm cache clean --force && \
-    clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json' && \
-# harden permissions
-    chmod 500 node_modules && \
-    find node_modules -type d -exec chmod 500 {} + && \
-    find node_modules -type f -exec chmod 400 {} +
 
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
       de.sdavids.docker.type="builder"
@@ -51,7 +39,6 @@ FROM node:20.12.0-alpine3.19 AS bundler
 WORKDIR /opt/app/
 
 COPY scripts/preinstall.sh scripts/prepare.sh scripts/build.sh scripts/
-COPY webpack.config.mjs ./
 COPY package.json package-lock.json ./
 
 RUN npm ci --omit optional --omit peer --audit-level=high --silent && \
@@ -60,7 +47,6 @@ RUN npm ci --omit optional --omit peer --audit-level=high --silent && \
 COPY src/js src/js
 
 RUN npm run build --silent && \
-    cp src/js/healthcheck.mjs /opt/app/dist/ && \
     chmod 400 /opt/app/dist/server.cjs /opt/app/dist/healthcheck.mjs
 
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
@@ -87,7 +73,7 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/v$(cut -d . -f 1,2 < /etc/alpine
 # add the app user and the working directory
     addgroup -g ${uid} ${user} && \
     adduser -g ${user} -u ${uid} -G ${user} -s /sbin/nologin -S -D -h ${app_dir} ${user} && \
-    mkdir ${app_dir}/node_modules ${app_dir}/tmp && \
+    mkdir ${app_dir}/tmp && \
     chmod -R 700 "${app_dir}" && \
     chown -R ${user}:${user} ${app_dir} && \
 # remove unnecessary accounts
@@ -161,7 +147,6 @@ WORKDIR ${app_dir}
 
 COPY --from=installer --chown=${user}:${user} /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 COPY --from=installer --chown=${user}:${user} /usr/local/bin/node /usr/bin/
-COPY --from=installer --chown=${user}:${user} /opt/app/node_modules node_modules
 COPY --from=bundler --chown=${user}:${user} /opt/app/dist/server.cjs /opt/app/dist/healthcheck.mjs ./
 
 ENV NODE_ENV=production

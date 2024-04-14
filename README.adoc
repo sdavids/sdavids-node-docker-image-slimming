@@ -59,7 +59,7 @@ The link:Dockerfile[example] is an https://expressjs.com[Express]-based REST API
 ****
 *TLDR*
 
-1890 MB => 123 MB (-93.46%)
+1780 MB => 93.5 MB (-94.75%)
 ****
 
 == Techniques
@@ -90,73 +90,80 @@ All branches besides `main` will be force-pushed to in order to keep them up-to 
 
 |0
 |https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/000-base?tab=readme-ov-file#node-docker-image-slimming[000-base]
-|36
-|1890
+|33
+|1780.0
 |112.0
 |2635
 
 |1
 |https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/001-dockerignore?tab=readme-ov-file#node-docker-image-slimming[001-dockerignore]
-|36
-|1880
+|35
+|1750.0
 |112.0
 |2635
 
 |2
 |https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/002-alpine?tab=readme-ov-file#node-docker-image-slimming[002-alpine]
-|32
-|496
+|31
+|363.0
 |111.1
 |2635
 
 |3
 |https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/003-alpine-npm-ci?tab=readme-ov-file#node-docker-image-slimming[003-alpine-npm-ci]
-|32
-|317
-|54.0
+|31
+|236.0
+|38.3
 |2635
 
 |4
 |https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/004-alpine-clean-modules?tab=readme-ov-file#node-docker-image-slimming[004-alpine-clean-modules]
-|32
-|266
+|31
+|266.0
 |30.0
 |2635
 
 |5
 |https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/005-alpine-multi-stage-build?tab=readme-ov-file#node-docker-image-slimming[005-alpine-multi-stage-build]
-|30
-|263
-|30.0
+|29
+|219.0
+|22.4
 |2635
 
 |6
 |https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/006-alpine-alpine-final?tab=readme-ov-file#node-docker-image-slimming[006-alpine-alpine-final]
-|25
-|160
-|30.0
+|4
+|116.0
+|22.4
 |2635
 
 |7
 |https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/007-alpine-upx?tab=readme-ov-file#node-docker-image-slimming[007-alpine-upx]
-|27
-|158
-|30.0
+|26
+|114.0
+|22.4
 |2635
 
 |8
 |https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/008-alpine-hardening?tab=readme-ov-file#node-docker-image-slimming[008-alpine-hardening]
 |30
-|123
-|30.0
+|114.0
+|22.4
 |2635
 
 |9
 |https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/009-alpine-webpack?tab=readme-ov-file#node-docker-image-slimming[009-alpine-webpack]
 |30
-|123
-|30.0
+|114.0
+|22.4
 |1189
+
+|9
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/009-alpine-esbuild?tab=readme-ov-file#node-docker-image-slimming[009-alpine-esbuild]
+|29
+|93.5
+|0
+|4750597
 
 |===
 
@@ -197,11 +204,18 @@ The dependencies of `docker run --rm alpine apk add nodejs` might be a starting 
 ====
 Hardening does not only decrease the image size but also makes it significantly more secure.
 ====
-. use https://webpack.js.org[webpack] to bundle the example REST API
+. bundle the example REST API
+.. use https://webpack.js.org[webpack]
 +
 [NOTE]
 ====
 webpack will have more impact once there are more source files to bundle.
+====
+.. use https://esbuild.github.io[esbuild]; `esbuild --bundle --minify`
++
+[NOTE]
+====
+Minified JavaScript makes debugging production issues harder.
 ====
 
 === Running the Example

@@ -49,16 +49,13 @@
     "@commitlint/cli": "19.2.1",
     "@commitlint/config-conventional": "19.1.0",
     "@eslint/js": "9.0.0",
+    "esbuild": "0.20.2",
     "eslint": "9.0.0",
     "globals": "15.0.0",
     "husky": "9.0.11",
     "is-ci": "3.0.1",
     "lint-staged": "15.2.2",
     "nodemon": "3.1.0",
-    "prettier": "3.2.5",
-    "webpack": "5.91.0",
-    "webpack-cli": "5.1.4",
-    "webpack-node-externals": "3.0.0"
-  },
-  "sideEffects": false
+    "prettier": "3.2.5"
+  }
 }
