@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import nodeExternals from 'webpack-node-externals';
 import { resolve } from 'path';
 

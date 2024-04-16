@@ -1,4 +1,7 @@
 ---
+# SPDX-FileCopyrightText: © 2023 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
 # https://yamllint.readthedocs.io/en/stable/configuration.html#default-configuration
 
 extends: default

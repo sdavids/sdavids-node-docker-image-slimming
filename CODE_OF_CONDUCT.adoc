@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: © 2020 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
 = Contributor Covenant Code of Conduct
 // Metadata:
 :description: contributor covenant code of conduct

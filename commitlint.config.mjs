@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 // https://github.com/conventional-changelog/commitlint/blob/master/docs/reference-rules.md
 
 // noinspection JSUnusedGlobalSymbols
