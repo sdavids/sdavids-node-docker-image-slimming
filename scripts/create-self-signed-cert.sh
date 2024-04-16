@@ -34,7 +34,7 @@ if [ -n "${2+x}" ]; then # $2 defined
       fi
       if [ "${days}" -gt 24855 ]; then
         echo "'$2' is too big; range: [1, 24855]" >&2
-        exit 2
+        exit 3
       fi
     ;;
   esac
@@ -62,18 +62,18 @@ if [ "$(uname)" = 'Darwin' ]; then
 
   if [ "${found}" = 0 ]; then
     printf "Keychain %s already has a certificate for '%s'. You can delete the existing certificate via:\n\n\tsecurity delete-certificate -c %s -t %s\n" "${login_keychain}" "${host_name}" "${host_name}" "${login_keychain}" >&2
-    exit 3
+    exit 4
   fi
 fi
 
 if [ -f "${key_path}" ]; then
   echo "key '${key_path}' already exists" >&2
-  exit 4
+  exit 5
 fi
 
 if [ -f "${cert_path}" ]; then
   echo "certificate '${cert_path}' already exists" >&2
-  exit 5
+  exit 6
 fi
 
 uid="$(whoami)"
