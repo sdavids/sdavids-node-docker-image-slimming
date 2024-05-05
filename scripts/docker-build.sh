@@ -1,19 +1,38 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # SPDX-FileCopyrightText: © 2020 Sebastian Davids <sdavids@gmx.de>
 # SPDX-License-Identifier: Apache-2.0
 
-set -eu
+set -Eeu -o pipefail -o posix
 
-readonly tag="${1:-local}"
+while getopts ':d:np:t:' opt; do
+  case "${opt}" in
+    d) dockerfile="${OPTARG}"
+      ;;
+    n) no_cache='--no-cache'
+      ;;
+    p) port="${OPTARG}"
+      ;;
+    t) tag="${OPTARG}"
+      ;;
+    ?)
+      echo "Usage: $0 [-d Dockerfile] [-n] [-t tag]" >&2
+      exit 1
+      ;;
+  esac
+done
 
-readonly dockerfile="${2:-$PWD/Dockerfile}"
+readonly dockerfile="${dockerfile:-$PWD/Dockerfile}"
 
-readonly port=3000
+readonly no_cache="${no_cache:-}"
+
+readonly port="${port:-3000}"
+
+readonly tag="${tag:-local}"
 
 if [ ! -f "${dockerfile}" ]; then
   echo "Dockerfile '${dockerfile}' does not exist" >&2
-  exit 1
+  exit 2
 fi
 
 # https://docs.docker.com/reference/cli/docker/image/tag/#description
@@ -61,7 +80,9 @@ readonly commit
 
 # to ensure ${label} is set, we use --label "${label}"
 # which might overwrite the LABEL ${label_group} of the Dockerfile
+# shellcheck disable=SC2086
 docker image build \
+  ${no_cache} \
   --file "${dockerfile}" \
   --compress \
   --tag "${image_name}:latest" \
