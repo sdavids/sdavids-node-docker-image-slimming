@@ -20,6 +20,7 @@
 .npmrc
 .nvmrc
 .prettierignore
+.reuse
 .vscode/
 .yamllint.yaml
 AUTHORS
@@ -29,7 +30,6 @@ CONTRIBUTING.adoc
 CONTRIBUTORS
 COPYRIGHT
 Dockerfile
-LICENSE
 NOTICE
 OSSMETADATA
 README.adoc
