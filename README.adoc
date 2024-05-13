@@ -41,7 +41,12 @@ This branch utilizes:
 
 * the default variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for building the image
 * the default variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for serving the example REST API
-* no optimizations
+* use a https://docs.docker.com/reference/dockerfile/#dockerignore-file[.dockerignore file] and specific `COPY` commands
++
+[NOTE]
+====
+The https://github.com/sdavids/sdavids-shell-misc?tab=readme-ov-file#212-ls_extensions[ls_extensions] and https://github.com/sdavids/sdavids-shell-misc?tab=readme-ov-file#ls_extensions_git[ls_extensions_git] functions might help fine-tuning your `.dockerignore` file.
+====
 
 === Result
 
@@ -50,56 +55,26 @@ This branch utilizes:
 $ SOURCE_DATE_EPOCH=1 GITHUB_SHA="N/A" scripts/docker-build.sh -n
 ...
 $ docker images --filter="label=de.sdavids.docker.group=sdavids-node-docker-image-slimming" --format "{{.Repository}}\t{{.Tag}}\t{{.Size}}"
-de.sdavids/sdavids-node-docker-image-slimming   latest  1.95GB
-de.sdavids/sdavids-node-docker-image-slimming   local   1.95GB
+de.sdavids/sdavids-node-docker-image-slimming   latest  1.77GB
+de.sdavids/sdavids-node-docker-image-slimming   local   1.77GB
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local du -hs /node
-153M    /node
+120M    /node
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local du -hs /node/node_modules
-140M    /node/node_modules
-$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local stat -c "%s" /node/src/js/server.mjs
+120M    /node/node_modules
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local stat -c "%s" /node/server.mjs
 2139
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:local ls -A /node
-.editorconfig
-.git
-.git-blame-ignore-revs
-.gitattributes
-.github
-.gitignore
-.hadolint.yaml
-.husky
-.idea
-.mailmap
-.npmrc
-.nvmrc
-.prettierignore
-.reuse
-.yamllint.yaml
-AUTHORS
-CODE_OF_CONDUCT.adoc
-CODING_STYLE.adoc
-CONTRIBUTING.adoc
-CONTRIBUTORS
-Dockerfile
-LICENSES
-OSSMETADATA
-README.adoc
-SECURITY.md
-TODO
-api
-commitlint.config.mjs
-eslint.config.mjs
-lint-staged.config.mjs
+healthcheck.mjs
 node_modules
 package-lock.json
 package.json
-prettier.config.mjs
 scripts
-src
+server.mjs
 $ docker image history --format "table {{.Size}}\t{{.CreatedBy}}" de.sdavids/sdavids-node-docker-image-slimming:local
 SIZE      CREATED BY
 0B        LABEL org.opencontainers.image.revision=N/A …
 0B        HEALTHCHECK &{["CMD-SHELL" "node --no-warnin…
-0B        CMD ["node" "src/js/server.mjs"]
+0B        CMD ["node" "server.mjs"]
 0B        EXPOSE map[3000/tcp:{}]
 0B        USER node
 0B        ENV APP_DIR=/node
@@ -107,8 +82,10 @@ SIZE      CREATED BY
 0B        ENV CERT_PATH=/run/secrets/cert.pem
 0B        ENV PORT=3000
 0B        ENV NODE_ENV=production
-165MB     RUN |7 user=node app_dir=/node git_commit=N/…
-140MB     COPY . ./ # buildkit
+16.4kB    COPY --chown=node:node src/js ./ # buildkit
+152MB     RUN |7 user=node app_dir=/node git_commit=N/…
+168kB     COPY package.json package-lock.json ./ # bui…
+20.5kB    COPY scripts/preinstall.sh scripts/prepare.s…
 8.19kB    WORKDIR /node
 0B        ARG key_path=/run/secrets/key.pem
 0B        ARG cert_path=/run/secrets/cert.pem
@@ -131,7 +108,10 @@ SIZE      CREATED BY
 0B        /bin/sh -c #(nop)  CMD ["bash"]
 133MB     /bin/sh -c #(nop) ADD file:2cc4cba2834c189d0…
 $ printf 'Layer Count: %s' "$(docker history de.sdavids/sdavids-node-docker-image-slimming:local | tail -n +2 | wc -l | tr -d ' ')"
-Layer Count: 33
+Layer Count: 35
 ----
 
 === More Information
+
+* https://docs.docker.com/reference/dockerfile/#dockerignore-file[.dockerignore file]
+* https://docs.docker.com/reference/dockerfile/#copy[Dockerfile - COPY]

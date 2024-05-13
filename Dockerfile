@@ -21,10 +21,13 @@ ARG key_path=/run/secrets/key.pem
 
 WORKDIR ${app_dir}
 
-COPY . ./
+COPY scripts/preinstall.sh scripts/prepare.sh scripts/
+COPY package.json package-lock.json ./
 
 RUN npm i --audit-level=high --silent && \
     chown -R ${user}:${user} .
+
+COPY --chown=${user}:${user} src/js ./
 
 ENV NODE_ENV=production
 ENV PORT=${port}
@@ -38,10 +41,10 @@ USER ${user}
 
 EXPOSE ${port}
 
-CMD ["node", "src/js/server.mjs"]
+CMD ["node", "server.mjs"]
 
 HEALTHCHECK --interval=5s --timeout=5s --start-period=5s \
-    CMD node --no-warnings ${APP_DIR}/src/js/healthcheck.mjs
+    CMD node --no-warnings ${APP_DIR}/healthcheck.mjs
 
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.revision=${git_commit} \
