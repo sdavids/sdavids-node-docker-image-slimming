@@ -9,7 +9,7 @@ while getopts ':d:np:t:' opt; do
   case "${opt}" in
     d) dockerfile="${OPTARG}"
       ;;
-    n) no_cache='--no-cache'
+    n) no_cache='--pull --no-cache'
       ;;
     p) port="${OPTARG}"
       ;;
