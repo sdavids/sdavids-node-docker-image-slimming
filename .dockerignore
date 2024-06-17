@@ -30,12 +30,12 @@ api/
 commitlint.config.mjs
 dist/
 docker/
+docs/
 eslint.config.mjs
 lint-staged.config.mjs
 node_modules/
 prettier.config.mjs
 scripts/
-src/docs/
 Thumbs.db
 !scripts/build.sh
 !scripts/preinstall.sh

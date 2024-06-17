@@ -779,7 +779,7 @@ The generated certificate is valid for 30 days.
 
 Check your login keychain in  _Keychain Access_; _Secure Sockets Layer (SSL)_ should be set to "Always Trust":
 
-image::src/docs/asciidoc/images/self-signed-macos.png[]
+image::docs/asciidoc/images/self-signed-macos.png[]
 
 [NOTE]
 ====
@@ -790,7 +790,7 @@ Chrome and Safari need no further configuration.
 
 You need to bypass the https://support.mozilla.org/en-US/kb/error-codes-secure-websites#w_self-signed-certificate[self-signed certificate warning] by clicking on "Advanced" and then "Accept the Risk and Continue":
 
-image::src/docs/asciidoc/images/self-signed-firefox.png[]
+image::docs/asciidoc/images/self-signed-firefox.png[]
 
 ===== Related Scripts
 
@@ -812,11 +812,11 @@ $ npm run cert:delete
 
 You can delete the certificate via `Firefox > Preferences > Privacy & Security > Certificates`; click "View Certificates...":
 
-image::src/docs/asciidoc/images/self-signed-firefox-delete-1.png[]
+image::docs/asciidoc/images/self-signed-firefox-delete-1.png[]
 
 Click on the "Servers" tab:
 
-image::src/docs/asciidoc/images/self-signed-firefox-delete-2.png[]
+image::docs/asciidoc/images/self-signed-firefox-delete-2.png[]
 
 ===== Related Scripts
 
