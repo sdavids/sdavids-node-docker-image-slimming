@@ -7,7 +7,7 @@ Files: OSSMETADATA
 Copyright: © 2020 Sebastian Davids <sdavids@gmx.de>
 License: Apache-2.0
 
-Files: src/docs/asciidoc/images/self-signed-macos.png
+Files: docs/asciidoc/images/self-signed-macos.png
 Copyright: © 2020 Sebastian Davids <sdavids@gmx.de>
 License: Apache-2.0
 
@@ -27,7 +27,7 @@ Files: api/api.postman_collection.json api/local-secure.postman_environment.json
 Copyright: © 2020 Sebastian Davids <sdavids@gmx.de>
 License: Apache-2.0
 
-Files: src/docs/asciidoc/images/self-signed-firefox-delete-1.png src/docs/asciidoc/images/self-signed-firefox-delete-2.png src/docs/asciidoc/images/self-signed-firefox.png
+Files: docs/asciidoc/images/self-signed-firefox-delete-1.png docs/asciidoc/images/self-signed-firefox-delete-2.png docs/asciidoc/images/self-signed-firefox.png
 Copyright: © 2024 Sebastian Davids <sdavids@gmx.de>
 License: Apache-2.0
 
