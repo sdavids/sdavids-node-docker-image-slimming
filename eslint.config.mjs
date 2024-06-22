@@ -12,10 +12,16 @@ import js from '@eslint/js';
 export default [
   {
     ignores: ['dist/*'],
+    name: 'global/ignores',
   },
-  js.configs.all,
   {
-    name: 'sdavids-node-docker-image-slimming',
+    files: ['**/*.mjs'],
+    name: 'eslint/js/all',
+    ...js.configs.all,
+  },
+  {
+    files: ['**/*.mjs'],
+    name: 'sdavids/defaults/js',
     languageOptions: {
       globals: {
         ...globals.browser,
