@@ -40,7 +40,7 @@
     "lint:fix": "npx eslint --cache --fix .",
     "start": "NODE_ENV=production node src/js/server.mjs",
     "start:build": "NODE_ENV=production node dist/server.cjs",
-    "start:dev": "NODE_ENV=development nodemon --inspect --watch src/js src/js/server.mjs"
+    "start:dev": "NODE_ENV=development node --watch-path=./src/js src/js/server.mjs"
   },
   "dependencies": {
     "@faker-js/faker": "8.4.1",
@@ -56,7 +56,6 @@
     "husky": "9.0.11",
     "is-ci": "3.0.1",
     "lint-staged": "15.2.2",
-    "nodemon": "3.1.0",
     "prettier": "3.2.5"
   }
 }
