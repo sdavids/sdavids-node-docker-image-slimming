@@ -9,9 +9,9 @@
 ### Installer ###
 
 # https://hub.docker.com/_/node
-FROM node:20.13.1-alpine3.19 AS installer
+FROM node:20.13.1-alpine3.20 AS installer
 
-RUN apk --no-cache add upx=4.2.1-r0 && \
+RUN apk --no-cache add upx=4.2.4-r0 && \
     upx /usr/local/bin/node
 
 WORKDIR /opt/app/
@@ -22,7 +22,7 @@ LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
 ### Bundler ###
 
 # https://hub.docker.com/_/node
-FROM node:20.13.1-alpine3.19 AS bundler
+FROM node:20.13.1-alpine3.20 AS bundler
 
 WORKDIR /opt/app/
 
@@ -44,7 +44,7 @@ LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
 ### Harden ###
 
 # https://hub.docker.com/_/alpine
-FROM alpine:3.19.1 as hardened
+FROM alpine:3.20.6 AS hardened
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
