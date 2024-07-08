@@ -1,7 +1,5 @@
-/*
- * SPDX-FileCopyrightText: © 2020 Sebastian Davids <sdavids@gmx.de>
- * SPDX-License-Identifier: Apache-2.0
- */
+// SPDX-FileCopyrightText: © 2020 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
 
 import process from 'node:process';
 

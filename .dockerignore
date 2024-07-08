@@ -20,11 +20,11 @@
 .npmrc
 .nvmrc
 .prettierignore
-.reuse
 .vscode/
 .yamllint.yaml
 Dockerfile
 README.adoc
+REUSE.toml
 TODO
 api/
 commitlint.config.mjs
