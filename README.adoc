@@ -75,7 +75,7 @@ The other branches showcase a single technique--the last commit of the branch co
 
 [WARNING]
 ====
-All branches besides `main` will be force-pushed to in order to keep them up-to date with the main branch and remain a single commit.
+All branches besides `main` will be force-pushed to in order to keep them aligned with the main branch.
 ====
 
 === Results
