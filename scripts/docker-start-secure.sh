@@ -41,6 +41,8 @@ docker container run \
   --cap-drop=all \
   --env PROTOCOL=https \
   --env NODE_TLS_REJECT_UNAUTHORIZED='0' \
+  --env CERT_PATH=/run/secrets/cert.pem \
+  --env KEY_PATH=/run/secrets/key.pem \
   --network="${network_name}" \
   --publish "${https_port}:3000/tcp" \
   --mount "type=bind,source=$PWD/docker/certs,target=/run/secrets,readonly" \

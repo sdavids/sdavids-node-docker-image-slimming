@@ -126,9 +126,6 @@ COPY --from=bundler --chown=node:node /opt/app/dist/server.cjs /opt/app/dist/hea
 ENV NODE_ENV=production
 ENV PORT=3000
 
-ENV CERT_PATH=/run/secrets/cert.pem
-ENV KEY_PATH=/run/secrets/key.pem
-
 USER node:node
 
 EXPOSE 3000
