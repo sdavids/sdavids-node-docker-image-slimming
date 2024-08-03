@@ -44,10 +44,6 @@ LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
 # https://hub.docker.com/_/alpine
 FROM alpine:3.19.1 as hardened
 
-ARG uid=1001
-ARG user=node
-ARG app_dir=/${user}
-
 # https://github.com/hadolint/hadolint/wiki/DL4006
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
@@ -58,14 +54,14 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/v$(cut -d . -f 1,2 < /etc/alpine
 # add root certificates
     apk add --no-cache ca-certificates && \
 # add the app user and the working directory
-    addgroup -g ${uid} ${user} && \
-    adduser -g ${user} -u ${uid} -G ${user} -s /sbin/nologin -S -D -h ${app_dir} ${user} && \
-    mkdir ${app_dir}/tmp && \
-    chmod -R 700 "${app_dir}" && \
-    chown -R ${user}:${user} ${app_dir} && \
+    addgroup -g 1001 node && \
+    adduser -g node -u 1001 -G node -s /sbin/nologin -S -D -h /node node && \
+    mkdir /node/tmp && \
+    chmod -R 700 /node && \
+    chown -R node:node /node && \
 # remove unnecessary accounts
-    sed -i -r "/^(${user}|root|nobody)/!d" /etc/group && \
-    sed -i -r "/^(${user}|root|nobody)/!d" /etc/passwd && \
+    sed -i -r "/^(node|root|nobody)/!d" /etc/group && \
+    sed -i -r "/^(node|root|nobody)/!d" /etc/passwd && \
 # remove interactive login shell for everybody
     sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd && \
 # disable password login for everybody
@@ -114,49 +110,35 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/v$(cut -d . -f 1,2 < /etc/alpine
 
 # use temp dir inside of app user's home
 # https://nodejs.org/api/os.html#ostmpdir
-ENV TMPDIR=${app_dir}/tmp
+ENV TMPDIR=/node/tmp
 
 ### Final ###
 
 FROM hardened
 
-ARG user=node
-ARG app_dir=/${user}
+WORKDIR /node
 
-ARG git_commit
-ARG created_at
-ARG port=3000
-
-ARG cert_path=/run/secrets/cert.pem
-ARG key_path=/run/secrets/key.pem
-
-WORKDIR ${app_dir}
-
-COPY --from=installer --chown=${user}:${user} /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
-COPY --from=installer --chown=${user}:${user} /usr/local/bin/node /usr/bin/
-COPY --from=bundler --chown=${user}:${user} /opt/app/dist/server.cjs /opt/app/dist/healthcheck.mjs ./
+COPY --from=installer --chown=node:node /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
+COPY --from=installer --chown=node:node /usr/local/bin/node /usr/bin/
+COPY --from=bundler --chown=node:node /opt/app/dist/server.cjs /opt/app/dist/healthcheck.mjs ./
 
 ENV NODE_ENV=production
-ENV PORT=${port}
+ENV PORT=3000
 
-ENV CERT_PATH=${cert_path}
-ENV KEY_PATH=${key_path}
+ENV CERT_PATH=/run/secrets/cert.pem
+ENV KEY_PATH=/run/secrets/key.pem
 
-ENV APP_DIR=${app_dir}
+USER node:node
 
-USER ${user}
-
-EXPOSE ${port}
+EXPOSE 3000
 
 CMD ["node", "server.cjs"]
 
 HEALTHCHECK --interval=5s --timeout=5s --start-period=5s \
-    CMD node --no-warnings ${APP_DIR}/healthcheck.mjs
+    CMD node --no-warnings /node/healthcheck.mjs
 
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
-LABEL org.opencontainers.image.revision=${git_commit} \
-      org.opencontainers.image.created="${created_at}" \
-      org.opencontainers.image.licenses="Apache-2.0" \
+LABEL org.opencontainers.image.licenses="Apache-2.0" \
       org.opencontainers.image.vendor="Sebastian Davids" \
       org.opencontainers.image.authors="Sebastian Davids <sdavids@gmx.de>" \
       org.opencontainers.image.title="sdavids-node-docker-image-slimming" \

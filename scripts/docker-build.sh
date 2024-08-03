@@ -11,8 +11,6 @@ while getopts ':d:np:t:' opt; do
       ;;
     n) no_cache='--pull --no-cache'
       ;;
-    p) port="${OPTARG}"
-      ;;
     t) tag="${OPTARG}"
       ;;
     ?)
@@ -26,8 +24,6 @@ readonly dockerfile="${dockerfile:-$PWD/Dockerfile}"
 
 readonly no_cache="${no_cache:-}"
 
-readonly port="${port:-3000}"
-
 readonly tag="${tag:-local}"
 
 if [ ! -f "${dockerfile}" ]; then
@@ -40,8 +36,6 @@ readonly namespace='de.sdavids'
 readonly repository='sdavids-node-docker-image-slimming'
 
 readonly label_group='de.sdavids.docker.group'
-
-readonly label="${label_group}=${repository}"
 
 readonly image_name="${namespace}/${repository}"
 
@@ -78,8 +72,6 @@ else
 fi
 readonly commit
 
-# to ensure ${label} is set, we use --label "${label}"
-# which might overwrite the LABEL ${label_group} of the Dockerfile
 # shellcheck disable=SC2086
 docker image build \
   ${no_cache} \
@@ -87,10 +79,9 @@ docker image build \
   --compress \
   --tag "${image_name}:latest" \
   --tag "${image_name}:${tag}" \
-  --build-arg "git_commit=${commit}" \
-  --build-arg "created_at=${created_at}" \
-  --build-arg "port=${port}" \
-  --label "${label}" \
+  --label "${label_group}=${repository}" \
+  --label "org.opencontainers.image.revision=${commit}" \
+  --label "org.opencontainers.image.created=${created_at}" \
   .
 
 echo

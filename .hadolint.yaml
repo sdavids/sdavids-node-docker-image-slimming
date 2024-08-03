@@ -7,10 +7,3 @@
 failure-threshold: style
 trustedRegistries:
   - docker.io
-label-schema:
-  org.opencontainers.image.licenses: spdx
-  org.opencontainers.image.revision: text
-  org.opencontainers.image.vendor: text
-  org.opencontainers.image.title: text
-  de.sdavids.docker.group: text
-  de.sdavids.docker.type: text
