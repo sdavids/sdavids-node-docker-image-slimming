@@ -23,6 +23,7 @@
     "cert:create": "scripts/create-self-signed-cert.sh docker/certs",
     "cert:delete": "scripts/delete-self-signed-cert.sh docker/certs",
     "cert:renew": "scripts/renew_self_signed_cert.sh docker/certs",
+    "cert:verify": "scripts/verify_self_signed_cert.sh docker/certs",
     "clean": "scripts/clean.sh",
     "clean:node": "scripts/clean-node.sh",
     "docker:build": "scripts/docker-build.sh",
