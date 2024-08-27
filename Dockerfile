@@ -26,14 +26,11 @@ FROM node:20.13.1-alpine3.19 AS bundler
 
 WORKDIR /opt/app/
 
-RUN mkdir scripts && \
-    touch 'scripts/macos_node_modules_fix.sh' && \
-    chmod u+x 'scripts/macos_node_modules_fix.sh'
-
-COPY scripts/prepare.sh scripts/build.sh scripts/
+COPY scripts/build.sh scripts/
 COPY package.json package-lock.json ./
 
-RUN npm ci --omit optional --omit peer --audit-level=high --silent && \
+RUN npm ci --ignore-scripts --omit optional --omit peer --audit-level=high --silent && \
+    node node_modules/esbuild/install.js && \
     npm cache clean --force
 
 COPY src/js src/js
