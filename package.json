@@ -17,7 +17,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "preinstall": "scripts/preinstall.sh",
+    "preinstall": "scripts/macos_node_modules_fix.sh",
     "prepare": "scripts/prepare.sh",
     "build": "scripts/build.sh",
     "cert:create": "scripts/create-self-signed-cert.sh docker/certs",

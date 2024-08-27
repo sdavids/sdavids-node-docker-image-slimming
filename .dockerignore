@@ -38,5 +38,4 @@ prettier.config.mjs
 scripts/
 Thumbs.db
 !scripts/build.sh
-!scripts/preinstall.sh
 !scripts/prepare.sh

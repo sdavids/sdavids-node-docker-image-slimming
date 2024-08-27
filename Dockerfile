@@ -26,7 +26,11 @@ FROM node:20.13.1-alpine3.19 AS bundler
 
 WORKDIR /opt/app/
 
-COPY scripts/preinstall.sh scripts/prepare.sh scripts/build.sh scripts/
+RUN mkdir scripts && \
+    touch 'scripts/macos_node_modules_fix.sh' && \
+    chmod u+x 'scripts/macos_node_modules_fix.sh'
+
+COPY scripts/prepare.sh scripts/build.sh scripts/
 COPY package.json package-lock.json ./
 
 RUN npm ci --omit optional --omit peer --audit-level=high --silent && \
