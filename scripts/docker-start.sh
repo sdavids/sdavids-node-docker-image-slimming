@@ -39,6 +39,7 @@ docker container run \
   --read-only \
   --security-opt='no-new-privileges=true' \
   --cap-drop=all \
+  --env HEALTHCHECK_URL='http://localhost:3000/-/health/liveness' \
   --network="${network_name}" \
   --publish "${http_port}:3000/tcp" \
   --name "${container_name}" \

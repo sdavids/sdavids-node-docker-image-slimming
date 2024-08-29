@@ -39,7 +39,7 @@ docker container run \
   --read-only \
   --security-opt='no-new-privileges=true' \
   --cap-drop=all \
-  --env PROTOCOL=https \
+  --env HEALTHCHECK_URL='https://localhost:3000/-/health/liveness' \
   --env NODE_TLS_REJECT_UNAUTHORIZED='0' \
   --env CERT_PATH=/run/secrets/cert.pem \
   --env KEY_PATH=/run/secrets/key.pem \
