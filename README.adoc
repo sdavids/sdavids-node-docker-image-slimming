@@ -318,6 +318,17 @@ We abide by the {uri-contributor-covenant}[Contributor Covenant, Version 2.1] an
 
 For more information, please see link:CODE_OF_CONDUCT{outfilesuffix}[].
 
+== Development
+
+=== Start Auto-Reloading Dev Server
+
+[source,shell]
+----
+$ npm run start:dev
+----
+
+⇒ http://localhost:3000
+
 == Development Environment Setup
 
 === Installation
