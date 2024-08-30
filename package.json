@@ -7,7 +7,6 @@
     "Sebastian Davids <sdavids@gmx.de>"
   ],
   "homepage": "https://github.com/sdavids/sdavids-node-docker-image-slimming",
-  "bugs": "https://github.com/sdavids/sdavids-node-docker-image-slimming/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/sdavids/sdavids-node-docker-image-slimming.git"
