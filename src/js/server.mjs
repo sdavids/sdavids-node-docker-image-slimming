@@ -40,7 +40,7 @@ app.disable('x-powered-by');
 app.get('/', (_, res) =>
   res.json({
     userId: faker.string.uuid(),
-    username: faker.internet.userName(),
+    username: faker.internet.username(),
     email: faker.internet.email(),
   }),
 );
