@@ -3,27 +3,32 @@
 
 # https://docs.docker.com/build/building/context/#dockerignore-files
 
-*.swp
+*~
+*.orig
+*.sw[a-p]
+*.tmp
 .DS_Store
+[Dd]esktop.ini
+Thumbs.db
+
+*.adoc
 .dockerignore
 .editorconfig
 .eslintcache
 .fleet/
 .git/
+.git-blame-ignore-revs
 .gitattributes
 .github/
 .gitignore
-.git-blame-ignore-revs
 .hadolint.yaml
 .husky/
 .idea/
-.npmrc
-.nvmrc
 .prettierignore
 .vscode/
 .yamllint.yaml
 Dockerfile
-README.adoc
+LICENSES/
 REUSE.toml
 TODO
 api/
@@ -36,5 +41,4 @@ lint-staged.config.mjs
 node_modules/
 prettier.config.mjs
 scripts/
-Thumbs.db
 !scripts/build.sh
