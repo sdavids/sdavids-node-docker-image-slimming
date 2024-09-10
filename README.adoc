@@ -400,7 +400,7 @@ if command -v nvm > /dev/null 2>&1; then
         nvm use
       fi
     elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
-      echo "Reverting to nvm default version"
+      echo 'Reverting to nvm default version'
       nvm use default
     fi
   }
@@ -433,7 +433,7 @@ export NVM_DIR="${HOME}/.nvm"
 if [ -f "${NVM_DIR}/nvm.sh" ]; then
   . "${NVM_DIR}/nvm.sh"
 
-  if [ -f ".nvmrc" ]; then
+  if [ -f '.nvmrc' ]; then
     nvm use
   fi
 fi
