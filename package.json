@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "9.7.0",
-    "express": "4.19.2"
+    "express": "5.1.0"
   },
   "devDependencies": {
     "esbuild": "0.25.3"
