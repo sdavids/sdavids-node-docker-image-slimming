@@ -698,7 +698,7 @@ Removes all containers, volumes, and images previously created by this project.
 ----
 $ npm run docker:cleanup
 ----
-==== docker-health
+==== docker:health
 
 Displays the https://docs.docker.com/reference/dockerfile/#healthcheck[health status] of the app's container.
 
@@ -707,7 +707,7 @@ Displays the https://docs.docker.com/reference/dockerfile/#healthcheck[health st
 $ npm run docker:health
 ----
 
-==== docker-logs
+==== docker:logs
 
 Displays the logs of the app's container.
 
