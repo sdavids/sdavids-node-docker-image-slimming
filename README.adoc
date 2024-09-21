@@ -772,6 +772,15 @@ Deletes `node_modules/` and `package-lock.json`.
 $ npm run clean:node
 ----
 
+==== dependency:updates
+
+Check dependency updates.
+
+[source,shell]
+----
+$ npm run dependency:updates
+----
+
 [[cert_create]]
 ==== cert:create
 
