@@ -5,6 +5,7 @@
 
 ### Temporary ###
 *~
+*.tmp
 
 ### vim ###
 *.sw[a-p]
@@ -16,7 +17,7 @@
 .DS_Store
 
 ### Windows ###
-desktop.ini
+[Dd]esktop.ini
 Thumbs.db
 
 ### Jetbrains ###
