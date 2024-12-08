@@ -1,4 +1,5 @@
 # syntax=docker/dockerfile:1
+# check=error=true
 
 # SPDX-FileCopyrightText: © 2020 Sebastian Davids <sdavids@gmx.de>
 # SPDX-License-Identifier: Apache-2.0
