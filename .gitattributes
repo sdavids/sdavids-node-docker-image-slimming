@@ -16,4 +16,4 @@
 *.paw binary -eol -whitespace
 *.png binary -eol -whitespace
 
-package-lock.json -diff linguist-generated=true
+package-lock.json linguist-generated=true
