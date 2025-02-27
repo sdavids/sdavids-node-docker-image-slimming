@@ -25,6 +25,8 @@ readonly host_name='localhost'
 
 readonly network_name="${repository}"
 
+readonly secrets_dir="$PWD/docker/certs"
+
 docker network inspect "${network_name}" >/dev/null 2>&1 \
   || docker network create \
     --driver bridge "${network_name}" \
@@ -45,7 +47,7 @@ docker container run \
   --env KEY_PATH=/run/secrets/key.pem \
   --network="${network_name}" \
   --publish "${https_port}:3000" \
-  --mount "type=bind,source=$PWD/docker/certs,target=/run/secrets,readonly" \
+  --mount "type=bind,source=${secrets_dir},target=/run/secrets,readonly" \
   --name "${container_name}" \
   --label "${label}" \
   "${image_name}:${tag}" >/dev/null
