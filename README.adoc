@@ -224,13 +224,17 @@ Bundling will have more impact once there are more source files to bundle.
 +
 [NOTE]
 ====
-Minified JavaScript makes debugging production issues harder.
+`esbuild` only supports bundling to _ESM_ if the code and all of its dependencies are _ESM_ modules.
+Otherwise, it has to be bundled as _CommonJS_ and in that case top-level `await` is not supported.
 ====
 .. use https://esbuild.github.io[esbuild]; `esbuild --bundle --minify`
 +
 [NOTE]
 ====
-Minified JavaScript makes debugging production issues harder.
+`esbuild` only supports bundling to _ESM_ if the code and all of its dependencies are _ESM_ modules.
+Otherwise, it has to be bundled as _CommonJS_ and in that case top-level `await` is not supported.
+
+Also, minified JavaScript makes debugging production issues harder.
 ====
 
 === Running the Example
@@ -303,6 +307,8 @@ You can use several <<api-tools>> to interact with the API.
 * https://github.com/ironpeakservices/iron-alpine[iron-alpine]
 * https://webpack.js.org[webpack]
 * https://esbuild.github.io/getting-started/#bundling-for-node[esbuild - Bundling for node]
+* https://github.com/evanw/esbuild/issues/1921[esbuild - Dynamic require not supported]
+* https://github.com/evanw/esbuild/issues/253#issuecomment-667601648[esbuild - Support for top-level await]
 
 == License
 
