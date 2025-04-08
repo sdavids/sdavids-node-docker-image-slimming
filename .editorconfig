@@ -22,7 +22,7 @@ max_line_length = 80
 [*.yaml]
 max_line_length = 80
 
-[*.{cjs,mjs}]
+[*.mjs]
 max_line_length = 80
 
 [*.json]
