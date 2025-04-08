@@ -267,7 +267,7 @@ There are also <<build-tasks, other build tasks>> available.
 
 === Example REST API
 
-The example exposes two endpoints (link:api/openapi.yaml[OpenAPI 3 Description]):
+The example exposes two endpoints:
 
 `/`::
 returns a randomly generated user in JSON format
@@ -275,7 +275,17 @@ returns a randomly generated user in JSON format
 `/-/health/liveness`::
 liveness probe
 
-You can use several <<api-tools>> to interact with the API.
+[,console]
+----
+$ curl http://localhost:3000/
+$ curl http://localhost:3000/-/health/liveness
+----
+
+[,console]
+----
+$ curl --insecure https://localhost:3000/
+$ curl --insecure https://localhost:3000/-/health/liveness
+----
 
 === More Information
 
@@ -359,102 +369,6 @@ if command -v nvm > /dev/null 2>&1; then
   load-nvmrc
 fi
 ----
-
-[#api-tools]
-=== API Tools
-
-==== OpenAPI
-
-Open:
-
-link:api/openapi.yaml[OpenAPI 3 Description]
-
-==== Postman
-
-Install https://www.postman.com/downloads/[Postman].
-
-Import:
-
-* link:api/api.postman_collection.json[Postman Collection]
-* link:api/local.postman_environment.json[Postman 'local' Environment]
-* link:api/local-secure.postman_environment.json[Postman 'local secure' Environment]
-
-===== More Information
-
-* https://blog.postman.com/self-signed-ssl-certificate-troubleshooting/[Troubleshooting Self-signed SSL Certificate Issues and More in Postman]
-
-==== RapidAPI
-
-Install https://paw.cloud[RapidAPI].
-
-Open:
-
-* link:api/api.paw[RapidAPI Project]
-
-==== JetBrains IDEs
-
-Install and enable the https://plugins.jetbrains.com/plugin/13121-http-client[HTTP Client] plugin.
-
-Open:
-
-* link:api/api.http[HTTP requests file]
-
-use with the `local` or `local-secure` environments defined in:
-
-* link:api/http-client.private.env.json[HTTP environment file]
-
-===== More Information
-
-* https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#run_request[Execute HTTP requests]
-* https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html#disable_certificate_verification[Disable certificate verification]
-
-==== Visual Studio Code
-
-Install and enable the https://github.com/Huachao/vscode-restclient[REST Client] extension.
-
-Add the following snippet to `.vscode/settings.json`:
-
-[,json]
-----
-    "rest-client.environmentVariables": {
-        "local": {
-            "host": "http://localhost",
-            "port": "3000"
-          },
-          "local-secure": {
-            "host": "https://localhost",
-            "port": "3000"
-          }
-    }
-----
-
-Open:
-
-* link:api/api.http[HTTP requests file]
-
-https://github.com/Huachao/vscode-restclient?tab=readme-ov-file#environments[Switch] (kbd:[Ctrl+Alt+E] / macOS: kbd:[⌘ Сmd+⌥ Opt+E]) to the `local` or `local-secure` environment.
-
-===== More Information
-
-* https://github.com/Huachao/vscode-restclient?tab=readme-ov-file#environments[REST Client - Environments]
-
-==== cURL
-
-[,console]
-----
-$ curl http://localhost:3000/
-$ curl http://localhost:3000/-/health/liveness
-----
-
-[,console]
-----
-$ curl --insecure https://localhost:3000/
-$ curl --insecure https://localhost:3000/-/health/liveness
-----
-
-===== More Information
-
-* https://github.com/Huachao/vscode-restclient?tab=readme-ov-file#environments[REST Client - Environments]
 
 [#build-tasks]
 == Build Tasks

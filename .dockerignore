@@ -24,7 +24,6 @@ Thumbs.db
 Dockerfile
 LICENSES/
 REUSE.toml
-api/
 dist/
 docker/
 docs/

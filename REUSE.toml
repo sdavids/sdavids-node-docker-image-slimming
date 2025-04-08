@@ -23,21 +23,6 @@ SPDX-FileCopyrightText = "© 2020 Sebastian Davids <sdavids@gmx.de>"
 SPDX-License-Identifier = "Apache-2.0"
 
 [[annotations]]
-path = "api/api.paw"
-SPDX-FileCopyrightText = "© 2020 Sebastian Davids <sdavids@gmx.de>"
-SPDX-License-Identifier = "Apache-2.0"
-
-[[annotations]]
-path = ["api/api.postman_collection.json", "api/local-secure.postman_environment.json", "api/local.postman_environment.json"]
-SPDX-FileCopyrightText = "© 2020 Sebastian Davids <sdavids@gmx.de>"
-SPDX-License-Identifier = "Apache-2.0"
-
-[[annotations]]
 path = ["docs/asciidoc/images/self-signed-firefox-delete-1.png", "docs/asciidoc/images/self-signed-firefox-delete-2.png", "docs/asciidoc/images/self-signed-firefox.png"]
-SPDX-FileCopyrightText = "© 2024 Sebastian Davids <sdavids@gmx.de>"
-SPDX-License-Identifier = "Apache-2.0"
-
-[[annotations]]
-path = ["api/api.http", "api/http-client.private.env.json"]
 SPDX-FileCopyrightText = "© 2024 Sebastian Davids <sdavids@gmx.de>"
 SPDX-License-Identifier = "Apache-2.0"
