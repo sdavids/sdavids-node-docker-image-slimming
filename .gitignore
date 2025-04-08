@@ -45,8 +45,5 @@ jffi*.dylib
 ### NodeJS ###
 node_modules/
 
-### ESLint ###
-.eslintcache
-
 ### Build ###
 dist/

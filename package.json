@@ -18,7 +18,6 @@
   "type": "module",
   "scripts": {
     "preinstall": "scripts/macos_node_modules_fix.sh",
-    "prepare": "scripts/prepare.sh",
     "build": "scripts/build.sh",
     "cert:create": "scripts/create-self-signed-cert.sh docker/certs",
     "cert:delete": "scripts/delete-self-signed-cert.sh docker/certs",
@@ -34,10 +33,6 @@
     "docker:start": "scripts/docker-start.sh",
     "docker:start:secure": "scripts/docker-start-secure.sh",
     "docker:stop": "scripts/docker-stop.sh",
-    "format": "scripts/format.sh",
-    "format:check": "scripts/format-check.sh",
-    "lint": "npx eslint --cache .",
-    "lint:fix": "npx eslint --cache --fix .",
     "start": "NODE_ENV=production node src/js/server.mjs",
     "start:build": "NODE_ENV=production node dist/server.cjs",
     "start:dev": "NODE_ENV=development node --watch-path=./src/js src/js/server.mjs"
@@ -47,15 +42,6 @@
     "express": "4.19.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.3.0",
-    "@commitlint/config-conventional": "19.2.2",
-    "@eslint/js": "9.2.0",
-    "esbuild": "0.21.2",
-    "eslint": "9.2.0",
-    "globals": "15.2.0",
-    "husky": "9.0.11",
-    "is-ci": "3.0.1",
-    "lint-staged": "15.2.2",
-    "prettier": "3.2.5"
+    "esbuild": "0.21.2"
   }
 }

@@ -18,15 +18,12 @@ import { faker } from '@faker-js/faker';
   process.on(signal, () => process.exit(0)),
 );
 
-// eslint-disable-next-line dot-notation
 const port = Number(process.env['PORT'] ?? 3000);
 if (isNaN(port) || port < 1 || port > 65535) {
   console.error(`port must be between 1 and 65535: ${port}`);
   process.exit(64); // EX_USAGE
 }
-// eslint-disable-next-line dot-notation
 const certPath = process.env['CERT_PATH'];
-// eslint-disable-next-line dot-notation
 const keyPath = process.env['KEY_PATH'];
 
 let secure = keyPath && certPath;
@@ -51,7 +48,7 @@ app.get('/', (_, res) =>
 app.get('/-/health/liveness', (_, res) => res.json({ status: 'ok' }));
 
 const options = {};
-// eslint-disable-next-line init-declarations
+
 let engine;
 if (secure) {
   try {

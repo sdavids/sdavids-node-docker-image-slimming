@@ -12,7 +12,6 @@
 *.adoc linguist-documentation
 *.sh diff=bash
 
-*.gif binary -eol -whitespace
 *.paw binary -eol -whitespace
 *.png binary -eol -whitespace
 

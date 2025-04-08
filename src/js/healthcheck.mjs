@@ -14,11 +14,9 @@ import process from 'node:process';
 );
 
 const url =
-  // eslint-disable-next-line dot-notation
   process.env['HEALTHCHECK_URL'] ?? 'http://localhost:3000/-/health/liveness';
 
 try {
-  // eslint-disable-next-line no-new
   new URL(url);
 } catch {
   console.error(`'${url}' is not a valid URL`);
@@ -27,7 +25,6 @@ try {
 
 const httpClient = await import('node:http');
 
-// eslint-disable-next-line init-declarations
 let httpsClient;
 try {
   httpsClient = await import('node:https');

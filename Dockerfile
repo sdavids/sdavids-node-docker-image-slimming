@@ -46,11 +46,9 @@ LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
 # https://hub.docker.com/_/alpine
 FROM alpine:3.19.1 as hardened
 
-# https://github.com/hadolint/hadolint/wiki/DL4006
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
 # use apk repositories over HTTPS only
-# hadolint ignore=DL3018
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/main" > /etc/apk/repositories && \
     echo "https://dl-cdn.alpinelinux.org/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/community" >> /etc/apk/repositories && \
 # add root certificates
