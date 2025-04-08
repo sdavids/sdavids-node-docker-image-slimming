@@ -10,7 +10,6 @@
 * whitespace=tab-in-indent,trailing-space,tabwidth=2
 
 *.adoc linguist-documentation
-*.md diff=markdown linguist-documentation
 *.sh diff=bash
 
 *.gif binary -eol -whitespace
