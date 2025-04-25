@@ -228,14 +228,14 @@ Also, minified JavaScript makes debugging production issues harder.
 +
 [,console]
 ----
-$ npm run docker:build
+$ node --run docker:build
 ----
 
 . Start the image (HTTP server):
 +
 [,console]
 ----
-$ npm run docker:start
+$ node --run docker:start
 ----
 +
 => `http://localhost:3000[http://localhost:3000]`
@@ -244,21 +244,21 @@ $ npm run docker:start
 +
 [,console]
 ----
-$ npm run docker:stop
+$ node --run docker:stop
 ----
 
 . Create a self-signed certificate:
 +
 [,console]
 ----
-$ npm run cert:create
+$ node --run cert:create
 ----
 
 . Start the image (HTTPS server):
 +
 [,console]
 ----
-$ npm run docker:start:secure
+$ node --run docker:start:secure
 ----
 +
 => `https://localhost:3000[https://localhost:3000]`
@@ -309,7 +309,7 @@ $ curl --insecure https://localhost:3000/-/health/liveness
 
 [,console]
 ----
-$ npm run start:dev
+$ node --run start:dev
 ----
 
 ⇒ http://localhost:3000

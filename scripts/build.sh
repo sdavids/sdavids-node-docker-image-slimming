@@ -7,8 +7,8 @@ set -eu
 
 readonly base_dir="${1:-$PWD}"
 
-readonly node_target="${2:-node20.12}"
-readonly esbuild_target="${1:-es2022}"
+readonly node_target="${2:-node22.15.0}"
+readonly esbuild_target="${1:-es2024}"
 
 readonly dir="${base_dir}/dist"
 

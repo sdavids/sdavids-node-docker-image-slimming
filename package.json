@@ -44,5 +44,15 @@
   },
   "devDependencies": {
     "esbuild": "0.21.2"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">= 22.15"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": ">= 10.9"
+    }
   }
 }
