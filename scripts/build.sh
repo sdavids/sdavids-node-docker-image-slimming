@@ -18,6 +18,8 @@ if [ ! -d 'node_modules' ]; then
   npm ci --ignore-scripts=false --fund=false
 fi
 
+# needs to be bundled as CJS due to
+# https://github.com/evanw/esbuild/issues/1921
 npx --yes --quiet \
   esbuild "${base_dir}/src/js/server.mjs" \
   --bundle \
