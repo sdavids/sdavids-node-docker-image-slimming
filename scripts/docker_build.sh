@@ -7,14 +7,20 @@ set -Eeu -o pipefail -o posix
 
 while getopts ':d:np:t:' opt; do
   case "${opt}" in
-    d) dockerfile="${OPTARG}"
+    d)
+      dockerfile="${OPTARG}"
       ;;
-    n) no_cache='--pull --no-cache'
+    n)
+      no_cache='--pull --no-cache'
       ;;
-    t) tag="${OPTARG}"
+    p)
+      platform="${OPTARG}"
+      ;;
+    t)
+      tag="${OPTARG}"
       ;;
     ?)
-      echo "Usage: $0 [-d Dockerfile] [-n] [-t tag]" >&2
+      echo "Usage: $0 [-d Dockerfile] [-n] [-p platform] [-t tag]" >&2
       exit 1
       ;;
   esac
@@ -23,6 +29,9 @@ done
 readonly dockerfile="${dockerfile:-$PWD/Dockerfile}"
 
 readonly no_cache="${no_cache:-}"
+
+# https://docs.docker.com/reference/cli/docker/buildx/build/#platform
+readonly platform="${platform:-}"
 
 readonly tag="${tag:-local}"
 
@@ -40,7 +49,7 @@ readonly label_group='de.sdavids.docker.group'
 readonly image_name="${namespace}/${repository}"
 
 # https://reproducible-builds.org/docs/source-date-epoch/
-if [ -z "${SOURCE_DATE_EPOCH:-}" ]; then
+if [ -z "${SOURCE_DATE_EPOCH+x}" ]; then
   if [ -z "$(git status --porcelain=v1 2>/dev/null)" ]; then
     SOURCE_DATE_EPOCH="$(git log --max-count=1 --pretty=format:%ct)"
   else
@@ -56,7 +65,7 @@ else
 fi
 readonly created_at
 
-if [ -n "${GITHUB_SHA:-}" ]; then
+if [ -n "${GITHUB_SHA+x}" ]; then
   # https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
   commit="${GITHUB_SHA}"
 elif [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != 'true' ]; then
@@ -72,17 +81,30 @@ else
 fi
 readonly commit
 
+# https://github.com/opencontainers/image-spec/blob/master/annotations.md
 # shellcheck disable=SC2086
-docker image build \
-  ${no_cache} \
-  --file "${dockerfile}" \
-  --compress \
-  --tag "${image_name}:latest" \
-  --tag "${image_name}:${tag}" \
-  --label "${label_group}=${repository}" \
-  --label "org.opencontainers.image.revision=${commit}" \
-  --label "org.opencontainers.image.created=${created_at}" \
-  .
+if [ -n "${platform}" ]; then
+  docker image build \
+    ${no_cache} \
+    --file "${dockerfile}" \
+    --platform="${platform}" \
+    --tag "${image_name}:latest" \
+    --tag "${image_name}:${tag}" \
+    --label "${label_group}=${repository}" \
+    --label "org.opencontainers.image.revision=${commit}" \
+    --label "org.opencontainers.image.created=${created_at}" \
+    .
+else
+  docker image build \
+    ${no_cache} \
+    --file "${dockerfile}" \
+    --tag "${image_name}:latest" \
+    --tag "${image_name}:${tag}" \
+    --label "${label_group}=${repository}" \
+    --label "org.opencontainers.image.revision=${commit}" \
+    --label "org.opencontainers.image.created=${created_at}" \
+    .
+fi
 
 echo
 

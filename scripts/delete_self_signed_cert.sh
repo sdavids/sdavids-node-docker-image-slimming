@@ -15,7 +15,7 @@ readonly cert_path="${base_dir}/cert.pem"
 if [ "$(uname)" = 'Darwin' ]; then
   set +e
   # https://ss64.com/mac/security-find-cert.html
-  security find-certificate -c "${host_name}" 1> /dev/null 2> /dev/null
+  security find-certificate -c "${host_name}" 1>/dev/null 2>/dev/null
   found=$?
   set -e
 
@@ -39,9 +39,10 @@ if [ -f "${cert_path}" ]; then
 fi
 
 # delete empty certs dir if not $PWD
-if [ -d "${base_dir}" ] && \
-   [ "${base_dir}" != "$PWD" ] && \
-   [ -z "$(ls -A "${base_dir}")" ]; then
+if [ -d "${base_dir}" ] \
+  && [ "${base_dir}" != "$PWD" ] \
+  && [ "${base_dir}" != '.' ] \
+  && [ -z "$(ls -A "${base_dir}")" ]; then
 
   rmdir "${base_dir}"
 fi

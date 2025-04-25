@@ -5,6 +5,6 @@
 
 set -eu
 
-readonly base_dir="${PWD}"
+readonly base_dir="${1:-$PWD}"
 
 rm -rf "${base_dir}/node_modules" "${base_dir}/package-lock.json"

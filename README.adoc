@@ -54,7 +54,7 @@ The link:Dockerfile[example] is an https://expressjs.com[Express]-based REST API
 The final result with all techniques applied can be found in the `main` branch:
 
 * link:Dockerfile[]
-* link:scripts/docker-build.sh[]
+* link:scripts/docker_build.sh[]
 
 The other branches showcase a single technique--the last commit of the branch contains the changes for the specific technique.
 

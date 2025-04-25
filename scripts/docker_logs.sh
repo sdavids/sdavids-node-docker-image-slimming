@@ -7,8 +7,7 @@ set -eu
 
 readonly container_name='sdavids-node-docker-image-slimming'
 
-docker exec \
-  --interactive \
-  --tty \
-  "${container_name}" \
-  sh
+docker container logs \
+  --follow \
+  --timestamps \
+  "${container_name}"
