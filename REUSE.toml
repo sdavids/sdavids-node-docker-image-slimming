@@ -8,11 +8,6 @@ SPDX-PackageSupplier = "Sebastian Davids <sdavids@gmx.de>"
 SPDX-PackageDownloadLocation = "https://github.com/sdavids/sdavids-node-docker-image-slimming"
 
 [[annotations]]
-path = "docs/asciidoc/images/self-signed-macos.png"
-SPDX-FileCopyrightText = "© 2020 Sebastian Davids <sdavids@gmx.de>"
-SPDX-License-Identifier = "Apache-2.0"
-
-[[annotations]]
 path = ["package.json", "package-lock.json"]
 SPDX-FileCopyrightText = "© 2020 Sebastian Davids <sdavids@gmx.de>"
 SPDX-License-Identifier = "Apache-2.0"
@@ -20,9 +15,4 @@ SPDX-License-Identifier = "Apache-2.0"
 [[annotations]]
 path = ".nvmrc"
 SPDX-FileCopyrightText = "© 2020 Sebastian Davids <sdavids@gmx.de>"
-SPDX-License-Identifier = "Apache-2.0"
-
-[[annotations]]
-path = ["docs/asciidoc/images/self-signed-firefox-delete-1.png", "docs/asciidoc/images/self-signed-firefox-delete-2.png", "docs/asciidoc/images/self-signed-firefox.png"]
-SPDX-FileCopyrightText = "© 2024 Sebastian Davids <sdavids@gmx.de>"
 SPDX-License-Identifier = "Apache-2.0"

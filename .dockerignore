@@ -26,7 +26,6 @@ LICENSES/
 REUSE.toml
 dist/
 docker/
-docs/
 node_modules/
 scripts/
 !scripts/build.sh
