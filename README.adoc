@@ -60,7 +60,7 @@ The other branches showcase a single technique--the last commit of the branch co
 
 [WARNING]
 ====
-All branches besides `main` will be force-pushed to in order to keep them aligned with the main branch.
+All branches besides `main` will be force-pushed to keep them aligned with the main branch.
 ====
 
 === Results
@@ -162,19 +162,20 @@ All branches besides `main` will be force-pushed to in order to keep them aligne
 |===
 
 [start=0]
-. baseline with the default variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for building the image and serving the example REST API with no optimizations
+. baseline with the default variant of the https://hub.docker.com/_/node/[official Node.js Docker image] for building the image and serving the example REST API with no optimizations
 . use a https://docs.docker.com/reference/dockerfile/#dockerignore-file[.dockerignore file] and specific `COPY` commands
 +
 [NOTE]
 ====
 The https://github.com/sdavids/sdavids-shell-misc?tab=readme-ov-file#212-ls_extensions[ls_extensions] and https://github.com/sdavids/sdavids-shell-misc?tab=readme-ov-file#ls_extensions_git[ls_extensions_git] functions might help fine-tuning your `.dockerignore` file.
 ====
-. use the `alpine` variant of the https://hub.docker.com/_/node/[offical NodeJS Docker image] for both building and running
+. use the `alpine` variant of the https://hub.docker.com/_/node/[official Node.js Docker image] for both building and running
 . use `npm ci --omit dev --omit optional --omit peer` instead of `npm i`
 +
 [NOTE]
 ====
-Depending on your project setup you might not be able to omit the https://nodejs.org/en/blog/npm/peer-dependencies[peer dependencies].
+Depending on your project setup, you might not be able to omit the
+https://nodejs.org/en/blog/npm/peer-dependencies[peer dependencies].
 ====
 . use the https://www.npmjs.com/package/clean-modules[clean-modules] npm package to clean up the `node_modules` directory
 +
@@ -211,6 +212,8 @@ Bundling will have more impact once there are more source files to bundle.
 ====
 `esbuild` only supports bundling to _ESM_ if the code and all of its dependencies are _ESM_ modules.
 Otherwise, it has to be bundled as _CommonJS_ and in that case top-level `await` is not supported.
+
+Also, minified JavaScript makes debugging production issues harder.
 ====
 .. use https://esbuild.github.io[esbuild]; `esbuild --bundle --minify`
 +
@@ -288,7 +291,7 @@ $ curl --insecure https://localhost:3000/-/health/liveness
 === More Information
 
 * https://docs.docker.com/reference/dockerfile/#dockerignore-file[.dockerignore file]
-* https://docs.docker.com/reference/dockerfile/#copy[Dockerfile - COPY]
+* https://docs.docker.com/reference/dockerfile/#copy[Dockerfile COPY]
 * https://hub.docker.com/_/node[node:<version>-alpine]
 * https://docs.npmjs.com/cli/v10/commands/npm-ci[npm-ci]
 * https://docs.npmjs.com/cli/v10/commands/npm-ci#omit[npm-ci --omit]
