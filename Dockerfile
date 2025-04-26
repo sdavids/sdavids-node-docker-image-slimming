@@ -6,10 +6,10 @@
 
 # https://docs.docker.com/engine/reference/builder/
 
-### Installer ###
+### Node UPX ###
 
 # https://hub.docker.com/_/node
-FROM node:22.15.0-alpine3.21 AS installer
+FROM node:22.15.0-alpine3.21 AS nodeupx
 
 RUN apk --no-cache add upx=4.2.4-r0 && \
     upx /usr/local/bin/node
@@ -17,10 +17,10 @@ RUN apk --no-cache add upx=4.2.4-r0 && \
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
       de.sdavids.docker.type="builder"
 
-### Bundler ###
+### Builder ###
 
 # https://hub.docker.com/_/node
-FROM node:22.15.0-alpine3.21 AS bundler
+FROM node:22.15.0-alpine3.21 AS builder
 
 WORKDIR /node/
 
@@ -116,9 +116,10 @@ FROM hardened
 
 WORKDIR /node
 
-COPY --from=installer --chown=node:node /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
-COPY --from=installer --chown=node:node /usr/local/bin/node /usr/bin/
-COPY --from=bundler --chown=node:node /node/dist/server.cjs /node/dist/healthcheck.mjs ./
+COPY --from=nodeupx --chown=node:node /usr/local/bin/node /usr/bin/
+COPY --from=nodeupx --chown=node:node /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
+
+COPY --from=builder --chown=node:node /node/dist/server.cjs /node/dist/healthcheck.mjs ./
 
 ENV NODE_ENV=production
 ENV PORT=3000
