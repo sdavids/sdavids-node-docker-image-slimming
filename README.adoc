@@ -33,12 +33,13 @@ toc::[]
 
 This repository showcases several techniques for creating smaller Node.js Docker images:
 
-. .dockerignore file
+. _.dockerignore_ file
+. `npm ci`
+. clean `node_modules`
 . multi-stage build
 . smaller base image
 . image hardening
 . https://upx.github.io[UPX]
-. cleaning up `node_modules`
 . JavaScript bundling
 
 The link:Dockerfile[example] is an https://expressjs.com[Express]-based REST API packaged in a Docker image with a https://docs.docker.com/reference/dockerfile/#healthcheck[HEALTHCHECK].
@@ -46,7 +47,7 @@ The link:Dockerfile[example] is an https://expressjs.com[Express]-based REST API
 ****
 *TLDR*
 
-1950.0 MB => 93.4 MB (-95.21%)
+1770 MB => 105 MB (-94,07%)
 ****
 
 == Techniques
@@ -70,121 +71,114 @@ All branches besides `main` will be force-pushed to keep them aligned with the m
 
 |#
 |Branch
-| Layer Count
+|Layer Count
 |Image Size (MB)
 |node_modules Size (MB)
 |server.mjs Size (B)
 
 |0
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/000-base?tab=readme-ov-file#node-docker-image-slimming[000-base]
-|33
-|1950.0
-|140.0
-|2139
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/000-baseline/README-branch.adoc[000-baseline]
+|22
+|1770
+|44.0
+|2515
 
 |1
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/001-dockerignore?tab=readme-ov-file#node-docker-image-slimming[001-dockerignore]
-|35
-|1770.0
-|120.0
-|2139
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/001-dockerignore/README-branch.adoc[001-dockerignore]
+|24
+|1660
+|24.0
+|2515
 
 |2
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/002-alpine?tab=readme-ov-file#node-docker-image-slimming[002-alpine]
-|31
-|382.0
-|119.7
-|2139
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/002-npm-ci/README-branch.adoc[002-npm-ci]
+|24
+|1630
+|14.0
+|2515
 
 |3
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/003-alpine-npm-ci?tab=readme-ov-file#node-docker-image-slimming[003-alpine-npm-ci]
-|31
-|233.0
-|38.3
-|2139
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/003-clean-modules/README-branch.adoc[003-clean-modules]
+|24
+|1630
+|11.0
+|2515
 
 |4
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/004-alpine-clean-modules?tab=readme-ov-file#node-docker-image-slimming[004-alpine-clean-modules]
-|31
-|217.0
-|22.4
-|2139
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/004-alpine/README-branch.adoc[004-alpine]
+|21
+|243
+|10.9
+|2515
 
 |5
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/005-alpine-multi-stage-build?tab=readme-ov-file#node-docker-image-slimming[005-alpine-multi-stage-build]
-|29
-|216.0
-|22.4
-|2139
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/005-alpine-multi-stage-build/README-branch.adoc[005-alpine-multi-stage-build]
+|15
+|239
+|10.9
+|2515
 
 |6
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/006-alpine-alpine-final?tab=readme-ov-file#node-docker-image-slimming[006-alpine-alpine-final]
-|24
-|116.0
-|22.4
-|2139
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/006-alpine-alpine-final/README-branch.adoc[006-alpine-alpine-final]
+|15
+|201
+|10.9
+|2515
 
 |7
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/007-alpine-upx?tab=readme-ov-file#node-docker-image-slimming[007-alpine-upx]
-|26
-|114.0
-|22.4
-|2139
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/007-alpine-hardening/README-branch.adoc[007-alpine-hardening]
+|17
+|201
+|10.9
+|2515
 
 |8
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/008-alpine-hardening?tab=readme-ov-file#node-docker-image-slimming[008-alpine-hardening]
-|30
-|114.0
-|22.4
-|2139
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/008-alpine-upx/README-branch.adoc[008-alpine-upx]
+|17
+|117
+|10.9
+|2515
 
 |9
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/009-alpine-webpack?tab=readme-ov-file#node-docker-image-slimming[009-alpine-webpack]
-|30
-|114.0
-|22.4
-|1189
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/009-alpine-esbuild-external/README-branch.adoc[009-alpine-esbuild-external]
+|17
+|117
+|10.9
+|2003
 
-|9
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/009-alpine-esbuild-external?tab=readme-ov-file#node-docker-image-slimming[009-alpine-esbuild-external]
-|30
-|114.0
-|22.4
-|1136
-
-|9
-|https://github.com/sdavids/sdavids-node-docker-image-slimming/tree/009-alpine-esbuild?tab=readme-ov-file#node-docker-image-slimming[009-alpine-esbuild]
-|29
-|93.4
+|10
+|https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/010-alpine-esbuild/README-branch.adoc[010-alpine-esbuild]
+|16
+|105
 |0
-|4750597
+|1325646
 
 |===
 
 [start=0]
 . baseline with the default variant of the https://hub.docker.com/_/node/[official Node.js Docker image] for building the image and serving the example REST API with no optimizations
-. use a https://docs.docker.com/reference/dockerfile/#dockerignore-file[.dockerignore file] and specific `COPY` commands
+. uses a https://docs.docker.com/reference/dockerfile/#dockerignore-file[.dockerignore] file and specific `COPY` commands
 +
 [NOTE]
 ====
 The https://github.com/sdavids/sdavids-shell-misc?tab=readme-ov-file#212-ls_extensions[ls_extensions] and https://github.com/sdavids/sdavids-shell-misc?tab=readme-ov-file#ls_extensions_git[ls_extensions_git] functions might help fine-tuning your `.dockerignore` file.
 ====
-. use the `alpine` variant of the https://hub.docker.com/_/node/[official Node.js Docker image] for both building and running
-. use `npm ci --omit dev --omit optional --omit peer` instead of `npm i`
+. uses `npm ci --omit dev --omit optional --omit peer` instead of `npm i`
 +
 [NOTE]
 ====
 Depending on your project setup, you might not be able to omit the
 https://nodejs.org/en/blog/npm/peer-dependencies[peer dependencies].
 ====
-. use the https://www.npmjs.com/package/clean-modules[clean-modules] npm package to clean up the `node_modules` directory
+. uses the https://www.npmjs.com/package/clean-modules[clean-modules] npm package to clean up the `node_modules` directory
 +
 [NOTE]
 ====
 `clean-modules` will have more impact once there are more dependencies.
 ====
-. use a multi-stage build
-. use the https://hub.docker.com/_/alpine/[official Alpine Docker image] for serving the example REST API
+. uses the `alpine` variant of the https://hub.docker.com/_/node/[official Node.js Docker image] for both building and running
+. uses a multi-stage build
+. uses the https://hub.docker.com/_/alpine/[official Alpine Docker image] for serving the example REST API
 +
 [NOTE]
 ====
@@ -192,33 +186,30 @@ Depending on your project setup you might have to install more packages via `apk
 
 The dependencies of `docker run --rm alpine apk add nodejs` might be a starting point.
 ====
-. use https://upx.github.io[UPX] to compress the `node` binary
-. harden the final `alpine` image
+. hardens the final `alpine` image
 +
 [NOTE]
 ====
-Hardening does not only decrease the image size but also makes it significantly more secure.
+Hardening slightly decreases the image's size but makes it significantly more secure.
 ====
-. bundle the example REST API
+. uses https://upx.github.io[UPX] to compress the `node` binary
+. bundles the example REST API with https://esbuild.github.io[esbuild]: `esbuild --bundle --minify --packages=external`
 +
 [NOTE]
 ====
 Bundling will have more impact once there are more source files to bundle.
-====
-.. use https://webpack.js.org[webpack]
-.. use https://esbuild.github.io[esbuild]; `esbuild --bundle --minify --packages=external`
-+
-[NOTE]
-====
+
 `esbuild` only supports bundling to _ESM_ if the code and all of its dependencies are _ESM_ modules.
 Otherwise, it has to be bundled as _CommonJS_ and in that case top-level `await` is not supported.
 
 Also, minified JavaScript makes debugging production issues harder.
 ====
-.. use https://esbuild.github.io[esbuild]; `esbuild --bundle --minify`
+. bundles the example REST API with https://esbuild.github.io[esbuild]: `esbuild --bundle --minify`
 +
 [NOTE]
 ====
+Bundling will have more impact once there are more source files to bundle.
+
 `esbuild` only supports bundling to _ESM_ if the code and all of its dependencies are _ESM_ modules.
 Otherwise, it has to be bundled as _CommonJS_ and in that case top-level `await` is not supported.
 
