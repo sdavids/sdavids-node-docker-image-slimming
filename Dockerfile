@@ -6,10 +6,10 @@
 
 # https://docs.docker.com/engine/reference/builder/
 
-### Node UPX ###
+### Node ###
 
 # https://hub.docker.com/_/node
-FROM node:22.15.0-alpine3.21 AS nodeupx
+FROM node:22.15.0-alpine3.21 AS node
 
 RUN apk --no-cache add upx=4.2.4-r0 && \
     upx /usr/local/bin/node
@@ -27,14 +27,16 @@ WORKDIR /node
 COPY scripts/build.sh scripts/
 COPY package.json package-lock.json ./
 
-RUN npm ci --ignore-scripts --omit optional --omit peer --audit-level=high --silent && \
-    node node_modules/esbuild/install.js && \
-    npm cache clean --force
+RUN npm ci --ignore-scripts --omit dev --omit optional --omit peer --audit-level=high --silent
 
 COPY src/js src/js
 
 RUN node --run build && \
-    chmod 400 /node/dist/server.cjs /node/dist/healthcheck.mjs
+# keep only JavaScript/JSON files and harden permissions
+    find dist -type f ! \( -name '*.cjs' -o -name '*.js' -o -name '*.json' -o -name '*.mjs' \) -delete && \
+    find dist -type d -empty -delete && \
+    find dist -type d -exec chmod 500 {} + && \
+    find dist -type f -exec chmod 400 {} +
 
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
       de.sdavids.docker.type="builder"
@@ -114,12 +116,12 @@ ENV TMPDIR=/node/tmp
 
 FROM hardened
 
+COPY --from=node --chown=node:node /usr/local/bin/node /usr/bin/
+COPY --from=node --chown=node:node /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
+
 WORKDIR /node
 
-COPY --from=nodeupx --chown=node:node /usr/local/bin/node /usr/bin/
-COPY --from=nodeupx --chown=node:node /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
-
-COPY --from=builder --chown=node:node /node/dist/server.cjs /node/dist/healthcheck.mjs ./
+COPY --from=builder --chown=node:node /node/dist ./
 
 ENV NODE_ENV=production
 ENV PORT=3000
