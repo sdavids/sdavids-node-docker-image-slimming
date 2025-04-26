@@ -131,7 +131,7 @@ EXPOSE 3000
 CMD ["node", "server.cjs"]
 
 HEALTHCHECK --interval=5s --timeout=5s --start-period=5s \
-    CMD node --no-warnings /node/healthcheck.mjs
+    CMD node /node/healthcheck.mjs
 
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.licenses="Apache-2.0" \
