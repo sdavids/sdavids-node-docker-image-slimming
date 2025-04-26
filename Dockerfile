@@ -22,7 +22,7 @@ LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
 # https://hub.docker.com/_/node
 FROM node:22.15.0-alpine3.21 AS builder
 
-WORKDIR /node/
+WORKDIR /node
 
 COPY scripts/build.sh scripts/
 COPY package.json package-lock.json ./
