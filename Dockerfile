@@ -14,8 +14,6 @@ FROM node:22.15.0-alpine3.21 AS installer
 RUN apk --no-cache add upx=4.2.4-r0 && \
     upx /usr/local/bin/node
 
-WORKDIR /opt/app/
-
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
       de.sdavids.docker.type="builder"
 
@@ -24,7 +22,7 @@ LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
 # https://hub.docker.com/_/node
 FROM node:22.15.0-alpine3.21 AS bundler
 
-WORKDIR /opt/app/
+WORKDIR /node/
 
 COPY scripts/build.sh scripts/
 COPY package.json package-lock.json ./
@@ -36,7 +34,7 @@ RUN npm ci --ignore-scripts --omit optional --omit peer --audit-level=high --sil
 COPY src/js src/js
 
 RUN node --run build && \
-    chmod 400 /opt/app/dist/server.cjs /opt/app/dist/healthcheck.mjs
+    chmod 400 /node/dist/server.cjs /node/dist/healthcheck.mjs
 
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
       de.sdavids.docker.type="builder"
@@ -120,7 +118,7 @@ WORKDIR /node
 
 COPY --from=installer --chown=node:node /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 COPY --from=installer --chown=node:node /usr/local/bin/node /usr/bin/
-COPY --from=bundler --chown=node:node /opt/app/dist/server.cjs /opt/app/dist/healthcheck.mjs ./
+COPY --from=bundler --chown=node:node /node/dist/server.cjs /node/dist/healthcheck.mjs ./
 
 ENV NODE_ENV=production
 ENV PORT=3000
