@@ -6,10 +6,21 @@
 
 # https://docs.docker.com/engine/reference/builder/
 
-### node_modules ###
+### Node ###
 
 # https://hub.docker.com/_/node
 FROM node:24.12.0-alpine3.23 AS node
+
+RUN apk --no-cache add upx=5.0.2-r0 && \
+    upx /usr/local/bin/node
+
+LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
+      de.sdavids.docker.type="builder"
+
+### node_modules ###
+
+# https://hub.docker.com/_/node
+FROM node:24.12.0-alpine3.23 AS nodemodules
 
 WORKDIR /node
 
@@ -123,12 +134,12 @@ ENV TMPDIR=/node/tmp
 
 FROM hardened
 
-COPY --from=node /usr/local/bin/node /usr/bin/
-COPY --from=node /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
+COPY --from=node --chown=node:node /usr/local/bin/node /usr/bin/
+COPY --from=node --chown=node:node /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 
 WORKDIR /node
 
-COPY --from=node --chown=node:node /node/node_modules node_modules
+COPY --from=nodemodules --chown=node:node /node/node_modules node_modules
 COPY --from=builder --chown=node:node /node ./
 
 ENV NODE_ENV=production
