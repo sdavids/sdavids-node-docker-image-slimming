@@ -30,4 +30,3 @@ docker/
 docs/
 node_modules/
 scripts/
-!scripts/macos_node_modules_fix.sh
