@@ -9,7 +9,7 @@
 ### Final ###
 
 # https://hub.docker.com/_/node
-FROM node:22.15.0
+FROM node:22.15.0-alpine3.21
 
 WORKDIR /node
 
