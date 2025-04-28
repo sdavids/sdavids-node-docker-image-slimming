@@ -25,7 +25,6 @@ npx --yes --quiet \
   --bundle \
   --platform=node \
   --target="${node_target}" \
-  --packages=external \
   --minify \
   --legal-comments=none \
   --outdir="${dir}" \
@@ -36,7 +35,6 @@ npx --yes --quiet \
   --bundle \
   --platform=node \
   --target="${esbuild_target}" \
-  --packages=external \
   --format=esm \
   --minify \
   --legal-comments=none \

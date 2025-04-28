@@ -17,28 +17,6 @@ RUN apk --no-cache add upx=5.0.2-r0 && \
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
       de.sdavids.docker.type="builder"
 
-### node_modules ###
-
-# https://hub.docker.com/_/node
-FROM node:24.12.0-alpine3.23 AS nodemodules
-
-WORKDIR /node
-
-COPY --chown=node:node package.json package-lock.json ./
-
-RUN npm ci --ignore-scripts=true --omit=dev --omit=optional --omit=peer && \
-    npm i --global --ignore-scripts=true --omit=optional --omit=peer clean-modules@3.1.1 && \
-    clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json' && \
-    npm cache clean --force && \
-# harden permissions
-    chmod 500 node_modules && \
-    find node_modules -type d -exec chmod 500 {} + && \
-    find node_modules -type f -exec chmod 400 {} +
-
-# https://github.com/opencontainers/image-spec/blob/master/annotations.md
-LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
-      de.sdavids.docker.type="builder"
-
 ### Builder ###
 
 # https://hub.docker.com/_/node
@@ -145,7 +123,6 @@ COPY --from=node --chown=node:node /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.
 
 WORKDIR /node
 
-COPY --from=nodemodules --chown=node:node /node/node_modules node_modules
 COPY --from=builder --chown=node:node /node/dist ./
 
 ENV NODE_ENV=production
