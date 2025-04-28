@@ -13,10 +13,12 @@ FROM node:24.12.0
 
 WORKDIR /node
 
-COPY . ./
+COPY --chown=node:node package.json package-lock.json ./
 
 RUN npm i && \
     chown -R node:node .
+
+COPY --chown=node:node src/js ./
 
 ENV NODE_ENV=production
 ENV PORT=3000
@@ -25,10 +27,10 @@ USER node:node
 
 EXPOSE 3000
 
-CMD ["node", "src/js/server.mjs"]
+CMD ["node", "server.mjs"]
 
 HEALTHCHECK --interval=5s --timeout=5s --start-period=5s \
-    CMD node /node/src/js/healthcheck.mjs
+    CMD node /node/healthcheck.mjs
 
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.licenses="Apache-2.0" \
