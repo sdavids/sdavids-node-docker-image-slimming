@@ -15,7 +15,8 @@ WORKDIR /node
 
 COPY --chown=node:node package.json package-lock.json ./
 
-RUN npm i && \
+RUN npm ci --omit=dev --omit=optional --omit=peer && \
+    npm cache clean --force && \
     chown -R node:node .
 
 COPY --chown=node:node src/js ./
