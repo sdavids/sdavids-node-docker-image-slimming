@@ -1,0 +1,113 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Harden the Image
+
+Harden the final `alpine` image.
+
+[NOTE]
+====
+Hardening minimally decreases the image's size but makes it significantly more secure.
+====
+
+== Branch
+
+https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/007-alpine-hardening/[007-alpine-hardening]
+
+== Diff
+
+link:++https://github.com/sdavids/sdavids-node-docker-image-slimming/compare/006-alpine-alpine-final...007-alpine-hardening++[006-alpine-alpine-final...007-alpine-hardening]
+
+== Result
+
+[%header,cols=">1,^1m,>2m,>2m,>2m,>2m"]
+|===
+
+|
+|Image (MB)
+|Layer Count
+|node Binary (MB)
+|node_modules (MB)
+|Server (B)
+
+|Baseline
+|1780
+|22
+|116.0
+|44.0
+|2515
+
+|Previous
+|201
+|15
+|118.1
+|10.9
+|2515
+
+|Result
+|201
+|17
+|118.1
+|10.9
+|2515
+
+|===
+
+.Previous
+image::dive-006-alpine-alpine-final.png[]
+
+.Current
+image::dive-007-alpine-hardening.png[]
+
+[,console]
+----
+$ SOURCE_DATE_EPOCH=1 GITHUB_SHA="N/A" scripts/docker_build.sh -p linux/amd64 -t 007-alpine-hardening -n
+...
+
+$ docker images de.sdavids/sdavids-node-docker-image-slimming:007-alpine-hardening --format "{{.Repository}}\t{{.Tag}}\t{{.Size}}"
+de.sdavids/sdavids-node-docker-image-slimming  007-alpine-hardening   201MB
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:007-alpine-hardening du -hs /usr/bin/node
+118.1M  /usr/bin/node
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:007-alpine-hardening du -hs /node
+10.9M /node
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:007-alpine-hardening du -hs /node/node_modules
+10.9M /node/node_modules
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:007-alpine-hardening stat -c "%s" /node/server.mjs
+2515
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:007-alpine-hardening ls -A /node
+healthcheck.mjs
+node_modules
+server.mjs
+tmp
+
+$ docker image history --format "table {{.Size}}\t{{.CreatedBy}}" de.sdavids/sdavids-node-docker-image-slimming:007-alpine-hardening
+SIZE      CREATED BY
+0B        LABEL org.opencontainers.image.licenses=Apac…
+0B        HEALTHCHECK &{["CMD-SHELL" "node /node/healt…
+0B        CMD ["node" "server.mjs"]
+0B        EXPOSE map[3000/tcp:{}]
+0B        USER node:node
+0B        ENV PORT=3000
+0B        ENV NODE_ENV=production
+16.4kB    COPY --chown=node:node /node ./ # buildkit
+11.5MB    COPY --chown=node:node /node/node_modules no…
+4.1kB     WORKDIR /node
+2.96MB    COPY /usr/lib/libgcc_s.so.1 /usr/lib/libstdc…
+124MB     COPY /usr/local/bin/node /usr/bin/ # buildkit
+0B        ENV TMPDIR=/node/tmp
+1.43MB    RUN /bin/ash -eo pipefail -c echo "https://d…
+0B        SHELL [/bin/ash -eo pipefail -c]
+0B        CMD ["/bin/sh"]
+8.5MB     ADD alpine-minirootfs-3.21.3-x86_64.tar.gz /…
+
+$ printf 'Layer Count: %s\n' "$(docker history de.sdavids/sdavids-node-docker-image-slimming:007-alpine-hardening | tail -n +2 | wc -l | tr -d ' ')"
+Layer Count: 17
+----
+
+=== More Information
+
+* https://github.com/ironpeakservices/iron-alpine[iron-alpine]

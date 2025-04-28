@@ -1,0 +1,117 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Baseline
+
+The baseline with a `Dockerfile` similar to:
+
+[,docker]
+----
+FROM node
+
+COPY . ./
+
+RUN npm i
+
+CMD ["node", "src/js/server.mjs"]
+----
+
+It uses the default variant of the https://hub.docker.com/_/node/[official Node.js Docker image] for building the image and serving the example REST API with no optimizations.
+
+== Branch
+
+https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/000-baseline/[000-baseline]
+
+== Result
+
+[%header,cols=">1,^1m,>2m,>2m,>2m,>2m"]
+|===
+
+|
+|Image (MB)
+|Layer Count
+|node Binary (MB)
+|node_modules (MB)
+|Server (B)
+
+|Baseline
+|1780
+|22
+|116.0
+|44.0
+|2515
+
+|===
+
+[,console]
+----
+$ SOURCE_DATE_EPOCH=1 GITHUB_SHA="N/A" scripts/docker_build.sh -p linux/amd64 -t 000-baseline -n
+...
+
+$ docker images de.sdavids/sdavids-node-docker-image-slimming:000-baseline --format "{{.Repository}}\t{{.Tag}}\t{{.Size}}"
+de.sdavids/sdavids-node-docker-image-slimming   000-baseline    1.77GB
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:000-baseline du -hs /usr/local/bin/node
+116M  /usr/local/bin/node
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:000-baseline du -hs /node
+67M /node
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:000-baseline du -hs /node/node_modules
+44M /node/node_modules
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:000-baseline stat -c "%s" /node/src/js/server.mjs
+2515
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:000-baseline ls -A /node
+.editorconfig
+.git
+.gitattributes
+.github
+.gitignore
+.idea
+.npmrc
+.nvmrc
+Dockerfile
+LICENSES
+README.adoc
+REUSE.toml
+docker
+docs
+node_modules
+package-lock.json
+package.json
+scripts
+src
+
+$ docker image history --format "table {{.Size}}\t{{.CreatedBy}}" de.sdavids/sdavids-node-docker-image-slimming:000-baseline
+SIZE      CREATED BY
+0B        LABEL org.opencontainers.image.licenses=Apac…
+0B        HEALTHCHECK &{["CMD-SHELL" "node /node/src/j…
+0B        CMD ["node" "src/js/server.mjs"]
+0B        EXPOSE map[3000/tcp:{}]
+0B        USER node:node
+0B        ENV PORT=3000
+0B        ENV NODE_ENV=production
+77.1MB    RUN /bin/sh -c npm i &&     chown -R node:no…
+49MB      COPY . ./ # buildkit
+8.19kB    WORKDIR /node
+0B        CMD ["node"]
+0B        ENTRYPOINT ["docker-entrypoint.sh"]
+20.5kB    COPY docker-entrypoint.sh /usr/local/bin/ # …
+5.41MB    RUN /bin/sh -c set -ex   && export GNUPGHOME…
+0B        ENV YARN_VERSION=1.22.22
+202MB     RUN /bin/sh -c ARCH= && dpkgArch="$(dpkg --p…
+0B        ENV NODE_VERSION=22.15.0
+69.6kB    RUN /bin/sh -c groupadd --gid 1000 node   &&…
+619MB     RUN /bin/sh -c set -ex;  apt-get update;  ap…
+194MB     RUN /bin/sh -c set -eux;  apt-get update;  a…
+52.2MB    RUN /bin/sh -c set -eux;  apt-get update;  a…
+133MB     # debian.sh --arch 'amd64' out/ 'bookworm' '…
+
+$ printf 'Layer Count: %s\n' "$(docker history de.sdavids/sdavids-node-docker-image-slimming:000-baseline | tail -n +2 | wc -l | tr -d ' ')"
+Layer Count: 22
+----
+
+=== More Information
+
+* https://hub.docker.com/_/node/[Official Node.js Docker image]

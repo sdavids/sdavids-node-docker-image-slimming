@@ -1,0 +1,18 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Techniques
+
+Starting from a xref:000-baseline.adoc[baseline] (1780 MB) the xref:result.adoc[result] (105 MB) will be 94.10% smaller.
+
+The following techniques will be shown:
+
+. xref:001-dockerignore.adoc[a .dockerignore file]
+. xref:002-npm-ci.adoc[using npm ci]
+. xref:003-clean-modules.adoc[a cleaned node_modules directory]
+. xref:004-alpine.adoc[a smaller base image]
+. xref:005-alpine-multi-stage-build.adoc[a multi-stage build]
+. xref:006-alpine-alpine-final.adoc[a separate serving image]
+. xref:007-alpine-hardening.adoc[a hardened image]
+. xref:008-alpine-upx.adoc[a UPX-compressed Node binary]
+. xref:009-alpine-esbuild-external.adoc[bundled JavaScript with external packages]
+. xref:010-alpine-esbuild.adoc[bundled JavaScript without external packages]

@@ -16,3 +16,8 @@ SPDX-License-Identifier = "Apache-2.0"
 path = ".nvmrc"
 SPDX-FileCopyrightText = "© 2020 Sebastian Davids <sdavids@gmx.de>"
 SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = "docs/ui-bundle/**"
+SPDX-FileCopyrightText = "© 2017-2024 OpenDevise Inc. and the Antora Project; © 2024 Sebastian Davids <sdavids@gmx.de>"
+SPDX-License-Identifier = "MPL-2.0"

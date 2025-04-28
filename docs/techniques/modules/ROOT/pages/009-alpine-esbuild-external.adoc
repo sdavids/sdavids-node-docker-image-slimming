@@ -1,0 +1,116 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Bundle With External Packages
+
+Use https://esbuild.github.io[esbuild] with `--bundle --minify --packages=external`.
+
+[NOTE]
+====
+The more source files one has, the more impact bundling and minification will have.
+====
+
+[IMPORTANT]
+====
+`esbuild` only supports bundling to _ESM_ if the code and all of its dependencies are _ESM_ modules.
+Otherwise, it has to be bundled as _CommonJS_,
+and in that case top-level await is not supported.
+
+Also, minified JavaScript makes debugging production issues harder.
+====
+
+== Branch
+
+https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/009-alpine-esbuild-external/[009-alpine-esbuild-external]
+
+== Diff
+
+link:++https://github.com/sdavids/sdavids-node-docker-image-slimming/compare/008-alpine-upx...009-alpine-esbuild-external++[008-alpine-upx...009-alpine-esbuild-external]
+
+== Result
+
+[%header,cols=">1,^1m,>2m,>2m,>2m,>2m"]
+|===
+
+|
+|Image (MB)
+|Layer Count
+|node Binary (MB)
+|node_modules (MB)
+|Server (B)
+
+|Baseline
+|1780
+|22
+|116.0
+|44.0
+|2515
+
+|Previous
+|117
+|17
+|41.3
+|10.9
+|2515
+
+|Result
+|117
+|17
+|41.3
+|10.9
+|*2003*
+
+|===
+
+[,console]
+----
+$ SOURCE_DATE_EPOCH=1 GITHUB_SHA="N/A" scripts/docker_build.sh -p linux/amd64 -t 009-alpine-esbuild-external -n
+...
+
+$ docker images de.sdavids/sdavids-node-docker-image-slimming:009-alpine-esbuild-external --format "{{.Repository}}\t{{.Tag}}\t{{.Size}}"
+de.sdavids/sdavids-node-docker-image-slimming  009-alpine-esbuild-external   117MB
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:009-alpine-esbuild-external du -hs /usr/bin/node
+41.3M /usr/bin/node
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:009-alpine-esbuild-external du -hs /node
+10.9M /node
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:009-alpine-esbuild-external du -hs /node/node_modules
+10.9M /node/node_modules
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:009-alpine-esbuild-external stat -c "%s" /node/server.cjs
+2003
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:009-alpine-esbuild-external ls -A /node
+healthcheck.mjs
+node_modules
+server.cjs
+tmp
+
+$ docker image history --format "table {{.Size}}\t{{.CreatedBy}}" de.sdavids/sdavids-node-docker-image-slimming:009-alpine-esbuild-external
+SIZE      CREATED BY
+0B        LABEL org.opencontainers.image.licenses=Apac…
+0B        HEALTHCHECK &{["CMD-SHELL" "node /node/healt…
+0B        CMD ["node" "server.cjs"]
+0B        EXPOSE map[3000/tcp:{}]
+0B        USER node:node
+0B        ENV PORT=3000
+0B        ENV NODE_ENV=production
+16.4kB    COPY --chown=node:node /node/dist ./ # build…
+11.5MB    COPY --chown=node:node /node/node_modules no…
+4.1kB     WORKDIR /node
+2.96MB    COPY --chown=node:node /usr/lib/libgcc_s.so.…
+43.4MB    COPY --chown=node:node /usr/local/bin/node /…
+0B        ENV TMPDIR=/node/tmp
+1.43MB    RUN /bin/ash -eo pipefail -c echo "https://d…
+0B        SHELL [/bin/ash -eo pipefail -c]
+0B        CMD ["/bin/sh"]
+8.5MB     ADD alpine-minirootfs-3.21.3-x86_64.tar.gz /…
+
+$ printf 'Layer Count: %s\n' "$(docker history de.sdavids/sdavids-node-docker-image-slimming:009-alpine-esbuild-external | tail -n +2 | wc -l | tr -d ' ')"
+Layer Count: 17
+----
+
+=== More Information
+
+* https://esbuild.github.io/getting-started/#bundling-for-node[esbuild - Bundling for node]

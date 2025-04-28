@@ -1,0 +1,118 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= npm ci
+
+Use `npm ci --omit=dev --omit=optional --omit=peer` instead of `npm i`.
+
+[NOTE]
+====
+Depending on your project setup, you might not be able to omit the
+https://nodejs.org/en/blog/npm/peer-dependencies[peer], `dev`, or `optional` dependencies.
+====
+
+== Branch
+
+https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/002-npm-ci/[002-npm-ci]
+
+== Diff
+
+link:++https://github.com/sdavids/sdavids-node-docker-image-slimming/compare/001-dockerignore...002-npm-ci++[001-dockerignore...002-npm-ci]
+
+== Result
+
+[%header,cols=">1,^1m,>2m,>2m,>2m,>2m"]
+|===
+
+|
+|Image (MB)
+|Layer Count
+|node Binary (MB)
+|node_modules (MB)
+|Server (B)
+
+|Baseline
+|1780
+|22
+|116.0
+|44.0
+|2515
+
+|Previous
+|1660
+|24
+|116.0
+|24.0
+|2515
+
+|Result
+|1630
+|24
+|116.0
+|*14.0*
+|2515
+
+|===
+
+[,console]
+----
+$ SOURCE_DATE_EPOCH=1 GITHUB_SHA="N/A" scripts/docker_build.sh -p linux/amd64 -t 002-npm-ci -n
+...
+
+$ docker images de.sdavids/sdavids-node-docker-image-slimming:002-npm-ci --format "{{.Repository}}\t{{.Tag}}\t{{.Size}}"
+de.sdavids/sdavids-node-docker-image-slimming   002-npm-ci    1.63GB
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:002-npm-ci du -hs /usr/local/bin/node
+116M /usr/local/bin/node
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:002-npm-ci du -hs /node
+15M /node
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:002-npm-ci du -hs /node/node_modules
+14M /node/node_modules
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:002-npm-ci stat -c "%s" /node/server.mjs
+2515
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:002-npm-ci ls -A /node
+healthcheck.mjs
+node_modules
+package-lock.json
+package.json
+scripts
+server.mjs
+
+$ docker image history --format "table {{.Size}}\t{{.CreatedBy}}" de.sdavids/sdavids-node-docker-image-slimming:002-npm-ci
+SIZE      CREATED BY
+0B        LABEL org.opencontainers.image.licenses=Apac…
+0B        HEALTHCHECK &{["CMD-SHELL" "node /node/healt…
+0B        CMD ["node" "server.mjs"]
+0B        EXPOSE map[3000/tcp:{}]
+0B        USER node:node
+0B        ENV PORT=3000
+0B        ENV NODE_ENV=production
+16.4kB    COPY --chown=node:node src/js ./ # buildkit
+17.7MB    RUN /bin/sh -c npm ci --omit=dev --omit=opti…
+57.3kB    COPY --chown=node:node package.json package-…
+16.4kB    COPY --chown=node:node scripts/macos_node_mo…
+8.19kB    WORKDIR /node
+0B        CMD ["node"]
+0B        ENTRYPOINT ["docker-entrypoint.sh"]
+20.5kB    COPY docker-entrypoint.sh /usr/local/bin/ # …
+5.41MB    RUN /bin/sh -c set -ex   && export GNUPGHOME…
+0B        ENV YARN_VERSION=1.22.22
+202MB     RUN /bin/sh -c ARCH= && dpkgArch="$(dpkg --p…
+0B        ENV NODE_VERSION=22.15.0
+69.6kB    RUN /bin/sh -c groupadd --gid 1000 node   &&…
+619MB     RUN /bin/sh -c set -ex;  apt-get update;  ap…
+194MB     RUN /bin/sh -c set -eux;  apt-get update;  a…
+52.2MB    RUN /bin/sh -c set -eux;  apt-get update;  a…
+133MB     # debian.sh --arch 'amd64' out/ 'bookworm' '…
+
+$ printf 'Layer Count: %s\n' "$(docker history de.sdavids/sdavids-node-docker-image-slimming:002-npm-ci | tail -n +2 | wc -l | tr -d ' ')"
+Layer Count: 24
+----
+
+=== More Information
+
+* https://docs.npmjs.com/cli/v10/commands/npm-ci[npm-ci]
+* https://docs.npmjs.com/cli/v10/commands/npm-ci#omit[npm-ci --omit]

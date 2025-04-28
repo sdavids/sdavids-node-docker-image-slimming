@@ -24,8 +24,10 @@ Thumbs.db
 Dockerfile
 LICENSES/
 REUSE.toml
+build/
 dist/
 docker/
+docs/
 node_modules/
 scripts/
 !scripts/build.sh

@@ -19,7 +19,7 @@ max_line_length = 80
 [*.adoc]
 max_line_length = 80
 
-[*.yaml]
+[*.{yaml,yml}]
 max_line_length = 80
 
 [*.mjs]

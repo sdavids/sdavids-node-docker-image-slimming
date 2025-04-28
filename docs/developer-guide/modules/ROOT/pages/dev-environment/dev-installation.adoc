@@ -1,0 +1,110 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Installation
+:docker-install-url: https://docs.docker.com/install/
+:easyrsa-install-url: https://easy-rsa.readthedocs.io/en/latest/#obtaining-and-using-easy-rsa
+:fnm-install-url: https://github.com/Schniz/fnm#installation
+:gh-cli-install-url: https://github.com/cli/cli#linux--bsd
+:hadolint-install-url: https://github.com/hadolint/hadolint?tab=readme-ov-file#install
+:nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
+:oxipng-install-url: https://github.com/shssoichiro/oxipng/issues/69
+
+[IMPORTANT]
+====
+After cloning this repository, you need to install the Git hooks via:
+
+[,console]
+----
+$ git config set core.hooksPath .githooks
+----
+====
+
+== Docker
+
+Install {docker-install-url}[Docker].
+
+== EasyRSA
+
+[IMPORTANT]
+====
+Ensure that you install version `3.1.7` and not `3.2.x`!
+====
+
+=== Linux
+
+Install {easyrsa-install-url}[EasyRSA].
+
+=== Mac
+
+[WARNING]
+====
+Unfortunately, _homebrew_ provides `easy-rsa` version `3.2.x`.
+====
+
+[,console]
+----
+$ curl -L https://github.com/OpenVPN/easy-rsa/releases/download/v3.1.7/EasyRSA-3.1.7.tgz -o ~/Downloads/easy-rsa.tgz
+$ tar -xzf ~/Downloads/easy-rsa.tgz -C ~/.local/share
+$ mv  ~/.local/share/EasyRSA-3.1.7 ~/.local/share/easyrsa
+$ ln -s ~/.local/share/easyrsa/easyrsa ~/.local/bin/easyrsa
+$ rm ~/Downloads/easy-rsa.tgz
+----
+
+== Node Version Manager
+
+Install {fnm-install-url}[fnm] or {nvm-install-url}[NVM].
+
+=== fnm
+
+.~/.zprofile
+[,zsh]
+----
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env --use-on-cd)"
+fi
+----
+
+=== nvm
+
+.~/.zshrc
+[,zsh]
+----
+export NVM_DIR="${HOME}/.nvm"
+
+[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
+[ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
+
+if command -v nvm >/dev/null 2>&1; then
+  autoload -U add-zsh-hook
+  load-nvmrc() {
+    local nvmrc_path="$(nvm_find_nvmrc)"
+    if [ -n "${nvmrc_path}" ]; then
+      local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+      if [ "${nvmrc_node_version}" = "N/A" ]; then
+        nvm install
+      elif [ "${nvmrc_node_version}" != "$(nvm version)" ]; then
+        nvm use
+      fi
+    elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+      echo 'Reverting to nvm default version'
+      nvm use default
+    fi
+  }
+
+  add-zsh-hook chpwd load-nvmrc
+  load-nvmrc
+fi
+----
+
+== OpenSSL
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install openssl
+----
+
+=== Mac
+
+`openssl` is part of the standard macOS installation.

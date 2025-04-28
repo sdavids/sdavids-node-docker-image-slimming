@@ -1,0 +1,28 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Recommendations
+
+The following should always be done:
+
+* xref:001-dockerignore.adoc[.dockerignore file]
+* xref:002-npm-ci.adoc[npm ci]
+* xref:004-alpine.adoc[smaller base image]
+* xref:005-alpine-multi-stage-build.adoc[multi-stage build]
+* xref:006-alpine-alpine-final.adoc[separate serving image]
+
+Cleaning the `node_modules` folder should always be done unless you bundle your sources without external dependencies:
+
+* xref:003-clean-modules.adoc[clean-modules]
+
+Hardening the base image should always be considered, even if it does not significantly lower the image's size:
+
+* xref:007-alpine-hardening.adoc[hardened image]
+
+Compressing the `node` binary is also worthwhile (118.1MB => 41.3MB):
+
+* xref:008-alpine-upx.adoc[UPX compressed Node binary]
+
+Bundling and minifying your source files is a good idea if the decreased debugging experience is acceptable:
+
+* xref:009-alpine-esbuild-external.adoc[bundled JavaScript with external packages]
+* xref:010-alpine-esbuild.adoc[bundled JavaScript without external packages]

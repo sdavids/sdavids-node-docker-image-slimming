@@ -1,0 +1,116 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Smaller Base Image
+
+Use the `alpine` variant of the https://hub.docker.com/_/node/[official Node.js Docker image] for building the image and serving the example REST API.
+
+[NOTE]
+====
+Other options for a smaller base image:
+
+* https://github.com/GoogleContainerTools/distroless/blob/main/nodejs/README.md[gcr.io/distroless/nodejs]
+* https://hub.docker.com/_/debian[Debian Slim]
+====
+
+== Branch
+
+https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/004-alpine/[004-alpine]
+
+== Diff
+
+link:++https://github.com/sdavids/sdavids-node-docker-image-slimming/compare/003-clean-modules...004-alpine++[003-clean-modules...004-alpine]
+
+== Result
+
+[%header,cols=">1,^1m,>2m,>2m,>2m,>2m"]
+|===
+
+|
+|Image (MB)
+|Layer Count
+|node Binary (MB)
+|node_modules (MB)
+|Server (B)
+
+|Baseline
+|1780
+|22
+|116.0
+|44.0
+|2515
+
+|Previous
+|1630
+|24
+|116.0
+|11.0
+|2515
+
+|Result
+|243
+|*21*
+|*118.1*
+|*10.9*
+|2515
+
+|===
+
+[,console]
+----
+$ SOURCE_DATE_EPOCH=1 GITHUB_SHA="N/A" scripts/docker_build.sh -p linux/amd64 -t 004-alpine -n
+...
+
+$ docker images de.sdavids/sdavids-node-docker-image-slimming:004-alpine --format "{{.Repository}}\t{{.Tag}}\t{{.Size}}"
+de.sdavids/sdavids-node-docker-image-slimming  004-alpine   243MB
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:004-alpine du -hs /usr/local/bin/node
+118.1M  /usr/local/bin/node
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:004-alpine du -hs /node
+11.0M /node
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:004-alpine du -hs /node/node_modules
+10.9M /node/node_modules
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:004-alpine stat -c "%s" /node/server.mjs
+2515
+
+$ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:004-alpine ls -A /node
+healthcheck.mjs
+node_modules
+package-lock.json
+package.json
+scripts
+server.mjs
+
+$ docker image history --format "table {{.Size}}\t{{.CreatedBy}}" de.sdavids/sdavids-node-docker-image-slimming:004-alpine
+SIZE      CREATED BY
+0B        LABEL org.opencontainers.image.licenses=Apac…
+0B        HEALTHCHECK &{["CMD-SHELL" "node /node/healt…
+0B        CMD ["node" "server.mjs"]
+0B        EXPOSE map[3000/tcp:{}]
+0B        USER node:node
+0B        ENV PORT=3000
+0B        ENV NODE_ENV=production
+16.4kB    COPY --chown=node:node src/js ./ # buildkit
+15.5MB    RUN /bin/sh -c npm ci --omit=dev --omit=opti…
+57.3kB    COPY --chown=node:node package.json package-…
+16.4kB    COPY --chown=node:node scripts/macos_node_mo…
+8.19kB    WORKDIR /node
+0B        CMD ["node"]
+0B        ENTRYPOINT ["docker-entrypoint.sh"]
+20.5kB    COPY docker-entrypoint.sh /usr/local/bin/ # …
+5.47MB    RUN /bin/sh -c apk add --no-cache --virtual …
+0B        ENV YARN_VERSION=1.22.22
+156MB     RUN /bin/sh -c addgroup -g 1000 node     && …
+0B        ENV NODE_VERSION=22.15.0
+0B        CMD ["/bin/sh"]
+8.5MB     ADD alpine-minirootfs-3.21.3-x86_64.tar.gz /…
+
+$ printf 'Layer Count: %s\n' "$(docker history de.sdavids/sdavids-node-docker-image-slimming:004-alpine | tail -n +2 | wc -l | tr -d ' ')"
+Layer Count: 21
+----
+
+=== More Information
+
+* https://hub.docker.com/_/node[node:<version>-alpine]

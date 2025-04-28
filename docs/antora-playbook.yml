@@ -1,0 +1,32 @@
+---
+# SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# https://docs.antora.org/antora/latest/playbook/
+
+site:
+  title: Node Docker Image Slimming
+  url: https://sdavids.github.io/sdavids-node-docker-image-slimming
+  start_page: techniques::index.adoc
+content:
+  sources:
+    - url: ./..
+      start_path: docs/techniques
+    - url: ./..
+      start_path: docs/developer-guide
+ui:
+  bundle:
+    url: ./ui-bundle
+    snapshot: true
+  supplemental_files:
+    - path: ui.yml
+      contents: |
+        static_files:
+        - .nojekyll
+    - path: .nojekyll
+asciidoc:
+  attributes:
+    page-pagination: ""
+    experimental: ""
+    idprefix: ""
+    idseparator: "-"

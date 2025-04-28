@@ -34,6 +34,7 @@
     "docker:start": "scripts/docker_start.sh",
     "docker:start:secure": "scripts/docker_start_secure.sh",
     "docker:stop": "scripts/docker_stop.sh",
+    "docs:build": "scripts/antora_build.sh",
     "start": "NODE_ENV=production node src/js/server.mjs",
     "start:build": "NODE_ENV=production node dist/server.cjs",
     "start:dev": "NODE_ENV=development node --watch-path=./src/js src/js/server.mjs"

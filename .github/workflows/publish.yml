@@ -1,0 +1,66 @@
+---
+# SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+
+name: gh-pages
+on: # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        # https://github.com/actions/checkout/releases
+        uses: actions/checkout@v4.2.2
+      - name: Classify changes
+        # https://github.com/dorny/paths-filter/releases
+        uses: dorny/paths-filter@v3.0.2
+        id: changes
+        with:
+          filters: |
+            docs:
+              - 'docs/**'
+      - if: steps.changes.outputs.docs == 'true'
+        name: Configure Pages
+        # https://github.com/actions/configure-pages
+        uses: actions/configure-pages@v5.0.0
+      - if: steps.changes.outputs.docs == 'true'
+        name: Setup Node.js
+        # https://github.com/actions/setup-node/releases
+        uses: actions/setup-node@v4.4.0
+        with:
+          # https://nodejs.org/en/about/previous-releases#looking-for-the-latest-release-of-a-version-branch
+          node-version: 22.15.0
+      - if: steps.changes.outputs.docs == 'true'
+        name: Install Antora
+        # https://docs.antora.org/antora/latest/whats-new/
+        run: npm i antora@3.1.10
+      - if: steps.changes.outputs.docs == 'true'
+        name: Generate Site
+        run: npx antora docs/antora-playbook.yml
+      - if: steps.changes.outputs.docs == 'true'
+        name: Upload Artifacts
+        # https://github.com/actions/upload-pages-artifact
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          path: docs/build/site
+      - if: steps.changes.outputs.docs == 'true'
+        name: Deploy to GitHub Pages
+        id: deployment
+        # https://github.com/actions/deploy-pages
+        uses: actions/deploy-pages@v4.0.5

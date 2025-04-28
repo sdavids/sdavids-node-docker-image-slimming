@@ -1,0 +1,24 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Overview
+
+The result with all techniques applied can be found in the `main` branch:
+
+* https://github.com/sdavids/sdavids-node-docker-image-slimmin/Dockerfile[Dockerfile]
+* https://github.com/sdavids/sdavids-node-docker-image-slimming/scripts/docker_build.sh[docker_build.sh]
+
+The other branches showcase a single technique each--the last commit of the branch contains the changes for the specific technique.
+
+[WARNING]
+====
+All branches besides `main` will be force-pushed to keep them aligned with the `main` branch.
+====
+
+== Start Auto-Reloading Dev Server
+
+[,console]
+----
+$ node --run start:dev
+----
+
+⇒ http://localhost:3000

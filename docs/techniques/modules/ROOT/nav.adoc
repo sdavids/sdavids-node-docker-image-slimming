@@ -1,0 +1,28 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+
+// https://docs.antora.org/antora/latest/navigation/files-and-lists/
+
+* xref:index.adoc[Overview]
+* xref:000-baseline.adoc[]
+
+.Techniques
+* xref:001-dockerignore.adoc[]
+* xref:002-npm-ci.adoc[]
+* xref:003-clean-modules.adoc[]
+* xref:004-alpine.adoc[]
+* xref:005-alpine-multi-stage-build.adoc[]
+* xref:006-alpine-alpine-final.adoc[]
+* xref:007-alpine-hardening.adoc[]
+* xref:008-alpine-upx.adoc[]
+* xref:009-alpine-esbuild-external.adoc[]
+* xref:010-alpine-esbuild.adoc[]
+
+//-
+
+* xref:result.adoc[]
+* xref:recommendations.adoc[]
+
+//-
+
+* xref:run-example.adoc[]
