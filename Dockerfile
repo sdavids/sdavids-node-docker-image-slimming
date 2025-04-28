@@ -27,8 +27,15 @@ LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
 
 ### Final ###
 
-# https://hub.docker.com/_/node
-FROM node:22.15.0-alpine3.21
+# https://hub.docker.com/_/alpine
+FROM alpine:3.21.3
+
+RUN addgroup -g 1001 node && \
+    adduser -g node -u 1001 -G node -s /sbin/nologin -S -D -h /node node && \
+    apk add --no-cache ca-certificates
+
+COPY --from=node /usr/local/bin/node /usr/bin/
+COPY --from=node /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.6 /usr/lib/
 
 WORKDIR /node
 
