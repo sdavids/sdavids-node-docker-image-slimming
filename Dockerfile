@@ -6,10 +6,10 @@
 
 # https://docs.docker.com/engine/reference/builder/
 
-### Final ###
+### node_modules ###
 
 # https://hub.docker.com/_/node
-FROM node:22.15.0-alpine3.21
+FROM node:22.15.0-alpine3.21 AS node
 
 WORKDIR /node
 
@@ -19,8 +19,20 @@ COPY --chown=node:node package.json package-lock.json ./
 RUN npm ci --omit=dev --omit=optional --omit=peer && \
     npm i --global --omit=optional --omit=peer clean-modules@3.1.1 && \
     clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json' && \
-    npm cache clean --force && \
-    chown -R node:node .
+    npm cache clean --force
+
+# https://github.com/opencontainers/image-spec/blob/master/annotations.md
+LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
+      de.sdavids.docker.type="builder"
+
+### Final ###
+
+# https://hub.docker.com/_/node
+FROM node:22.15.0-alpine3.21
+
+WORKDIR /node
+
+COPY --from=node --chown=node:node /node/node_modules node_modules
 
 COPY --chown=node:node src/js ./
 
