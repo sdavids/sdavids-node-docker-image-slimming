@@ -23,7 +23,7 @@ if [ "${base_dir}" != "$PWD" ] && [ "${base_dir}" != '.' ]; then
 fi
 
 if [ ! -d 'node_modules' ]; then
-  npm ci --ignore-scripts="${ignore_scripts}" --fund=false
+  npm ci --ignore-scripts="${ignore_scripts}" --fund=false --audit=false
 fi
 
 npm outdated --long

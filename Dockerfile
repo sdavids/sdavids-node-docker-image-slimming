@@ -27,7 +27,7 @@ WORKDIR /node
 COPY scripts/build.sh scripts/
 COPY package.json package-lock.json ./
 
-RUN npm ci --ignore-scripts --omit dev --omit optional --omit peer --audit-level=high --silent
+RUN npm ci --ignore-scripts=true --omit dev --omit optional --omit peer --audit-level=high --silent
 
 COPY src/js src/js
 
