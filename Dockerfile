@@ -41,18 +41,24 @@ LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
 
 ### Builder ###
 
-# https://hub.docker.com/_/alpine
-FROM alpine:3.23.2 AS builder
+# https://hub.docker.com/_/node
+FROM node:24.12.0-alpine3.23 AS builder
 
 WORKDIR /node
 
-COPY src/js .
+COPY scripts/build.sh scripts/
+COPY package.json package-lock.json ./
 
+RUN npm ci --ignore-scripts=true --omit=dev --omit=optional --omit=peer
+
+COPY src/js src/js
+
+RUN node --run build && \
 # keep only JavaScript/JSON files and harden permissions
-RUN find . -type f ! \( -name '*.cjs' -o -name '*.js' -o -name '*.json' -o -name '*.mjs' \) -delete && \
-    find . -type d -empty -delete && \
-    find . -type d -exec chmod 500 {} + && \
-    find . -type f -exec chmod 400 {} +
+    find dist -type f ! \( -name '*.cjs' -o -name '*.js' -o -name '*.json' -o -name '*.mjs' \) -delete && \
+    find dist -type d -empty -delete && \
+    find dist -type d -exec chmod 500 {} + && \
+    find dist -type f -exec chmod 400 {} +
 
 LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
       de.sdavids.docker.type="builder"
@@ -140,7 +146,7 @@ COPY --from=node --chown=node:node /usr/lib/libgcc_s.so.1 /usr/lib/libstdc++.so.
 WORKDIR /node
 
 COPY --from=nodemodules --chown=node:node /node/node_modules node_modules
-COPY --from=builder --chown=node:node /node ./
+COPY --from=builder --chown=node:node /node/dist ./
 
 ENV NODE_ENV=production
 ENV PORT=3000
@@ -149,7 +155,7 @@ USER node:node
 
 EXPOSE 3000
 
-CMD ["node", "server.mjs"]
+CMD ["node", "server.cjs"]
 
 HEALTHCHECK --interval=5s --timeout=5s --start-period=5s \
     CMD node /node/healthcheck.mjs

@@ -6,4 +6,5 @@
 *
 !package-lock.json
 !package.json
+!scripts/build.sh
 !src

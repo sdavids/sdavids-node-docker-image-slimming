@@ -17,10 +17,12 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "scripts/build.sh",
     "cert:create": "scripts/create_self_signed_cert.sh -d docker/certs",
     "cert:delete": "scripts/delete_self_signed_cert.sh -d docker/certs",
     "cert:renew": "scripts/renew_self_signed_cert.sh -d docker/certs",
     "cert:verify": "scripts/verify_self_signed_cert.sh -d docker/certs",
+    "clean": "scripts/clean.sh",
     "clean:node": "scripts/clean_node.sh",
     "dependency:updates": "scripts/dependency_check_npm.sh",
     "docker:build": "scripts/docker_build.sh",
@@ -33,6 +35,7 @@
     "docker:stop": "scripts/docker_stop.sh",
     "docs:build": "scripts/antora_build.sh",
     "start": "NODE_ENV=production node src/js/server.mjs",
+    "start:build": "NODE_ENV=production node dist/server.cjs",
     "start:dev": "NODE_ENV=development node --watch-path=./src/js src/js/server.mjs"
   },
   "dependencies": {

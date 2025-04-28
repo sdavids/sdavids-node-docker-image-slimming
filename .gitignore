@@ -48,5 +48,8 @@ node_modules/
 ### pnpm ###
 .pnpm-store/
 
+### Build ###
+dist/
+
 ### Doc Build ###
 build/
