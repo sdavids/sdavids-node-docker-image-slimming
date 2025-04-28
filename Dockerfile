@@ -16,6 +16,8 @@ WORKDIR /node
 COPY --chown=node:node package.json package-lock.json ./
 
 RUN npm ci --omit=dev --omit=optional --omit=peer && \
+    npm i --global --omit=optional --omit=peer clean-modules@3.1.1 && \
+    clean-modules --yes '**/*.d.ts' '**/@types/**' 'tsconfig.json' && \
     npm cache clean --force && \
     chown -R node:node .
 
