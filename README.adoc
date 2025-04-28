@@ -163,7 +163,7 @@ All branches besides `main` will be force-pushed to keep them aligned with the m
 ====
 The https://sdavids.github.io/sdavids-shell-misc/user-guide/functions/general/ls-extensions.html[ls_extensions] and https://sdavids.github.io/sdavids-shell-misc/user-guide/functions/git/ls-extensions-git.html[ls_extensions_git] functions might help fine-tuning your `.dockerignore` file.
 ====
-. uses `npm ci --omit dev --omit optional --omit peer` instead of `npm i`
+. uses `npm ci --omit=dev --omit=optional --omit=peer` instead of `npm i`
 +
 [NOTE]
 ====
