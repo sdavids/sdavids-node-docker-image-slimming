@@ -31,12 +31,18 @@ Install and enable the following extensions:
 
 * https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode[AsciiDoc]
 * https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker[Docker]
+* https://marketplace.visualstudio.com/items/?itemName=EditorConfig.EditorConfig[EditorConfig]
 * https://marketplace.visualstudio.com/items?itemName=timonwong.shellcheck[ShellCheck]
 * https://marketplace.visualstudio.com/items?itemName=mkhl.shfmt[shfmt]
+* https://marketplace.visualstudio.com/items/?itemName=ms-vscode-remote.vscode-remote-extensionpack[Remote Development]
 
-=== https://code.visualstudio.com/docs/getstarted/settings[User and Workspace Settings]
+=== User and Workspace Settings
 
 Set text file encoding to `utf8` and line delimiters to `\n`:
 
 * `files.encoding`
 * `files.eol`
+
+More information:
+https://code.visualstudio.com/docs/getstarted/settings[VSCode -
+User and Workspace Settings]
