@@ -5,7 +5,39 @@
 
 set -eu
 
-readonly base_dir="${1:-$PWD}"
+while getopts ':c:d:v:' opt; do
+  case "${opt}" in
+    c)
+      common_name="${OPTARG}"
+      ;;
+    d)
+      base_dir="${OPTARG}"
+      ;;
+    v)
+      days="${OPTARG}"
+      ;;
+    ?)
+      echo "Usage: $0 [-c <common_name>] [-d <dir>] [-v <days; 1..24855>]" >&2
+      exit 1
+      ;;
+  esac
+done
+
+readonly base_dir="${base_dir:-$PWD}"
+
+if [ -n "${common_name+x}" ]; then
+  common_name=" -c ${common_name}"
+else
+  common_name=''
+fi
+readonly common_name
+
+if [ -n "${days+x}" ]; then
+  days=" -v ${days}"
+else
+  days=''
+fi
+readonly days
 
 readonly key_path="${base_dir}/key.pem"
 readonly cert_path="${base_dir}/cert.pem"
@@ -53,20 +85,5 @@ if [ ! -f "${delete_script_path}" ]; then
   exit 14
 fi
 
-if [ -n "${1+x}" ]; then
-  if [ -n "${2+x}" ]; then
-    if [ -n "${3+x}" ]; then
-      $delete_script_path "$1" "$3"
-      $create_script_path "$1" "$2" "$3"
-    else
-      $delete_script_path "$1"
-      $create_script_path "$1" "$2"
-    fi
-  else
-    $delete_script_path "$1"
-    $create_script_path "$1"
-  fi
-else
-  $delete_script_path
-  $create_script_path
-fi
+$delete_script_path -d "${base_dir}${common_name}"
+$create_script_path -d "${base_dir}${common_name}${days}"

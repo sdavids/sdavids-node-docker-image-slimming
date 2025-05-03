@@ -5,9 +5,23 @@
 
 set -eu
 
-readonly base_dir="${1:-$PWD}"
+while getopts ':c:d:' opt; do
+  case "${opt}" in
+    c)
+      common_name="${OPTARG}"
+      ;;
+    d)
+      base_dir="${OPTARG}"
+      ;;
+    ?)
+      echo "Usage: $0 [-c <common_name>] [-d <dir>]" >&2
+      exit 1
+      ;;
+  esac
+done
 
-readonly host_name="${2:-localhost}"
+readonly base_dir="${base_dir:-$PWD}"
+readonly common_name="${common_name:-localhost}"
 
 readonly key_path="${base_dir}/key.pem"
 readonly cert_path="${base_dir}/cert.pem"
@@ -15,7 +29,7 @@ readonly cert_path="${base_dir}/cert.pem"
 if [ "$(uname)" = 'Darwin' ]; then
   set +e
   # https://ss64.com/mac/security-find-cert.html
-  security find-certificate -c "${host_name}" 1>/dev/null 2>/dev/null
+  security find-certificate -c "${common_name}" 1>/dev/null 2>/dev/null
   found=$?
   set -e
 
@@ -23,10 +37,10 @@ if [ "$(uname)" = 'Darwin' ]; then
     login_keychain="$(security login-keychain | xargs)"
     readonly login_keychain
 
-    echo "Removing '${host_name}' certificate from keychain ${login_keychain} ..."
+    echo "Removing '${common_name}' certificate from keychain ${login_keychain} ..."
 
     # https://ss64.com/mac/security-delete-cert.html
-    security delete-certificate -c "${host_name}" -t "${login_keychain}"
+    security delete-certificate -c "${common_name}" -t "${login_keychain}"
   fi
 fi
 

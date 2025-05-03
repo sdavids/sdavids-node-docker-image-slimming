@@ -23,59 +23,86 @@ command -v realpath >/dev/null 2>&1 || realpath() {
   fi
 }
 
-readonly out_dir="${1:-$PWD}"
-
-if [ -n "${2+x}" ]; then # $2 defined
-  case $2 in
-    '' | *[!0-9]*) # $2 is not a positive integer or 0
-      echo "'$2' is not a positive integer" >&2
+while getopts ':c:d:v:xy' opt; do
+  case "${opt}" in
+    c)
+      common_name="${OPTARG}"
+      ;;
+    d)
+      base_dir="${OPTARG}"
+      ;;
+    v)
+      days="${OPTARG}"
+      ;;
+    x)
+      allow_existing='true'
+      ;;
+    y)
+      yes='true'
+      ;;
+    ?)
+      echo "Usage: $0 [-c <common_name>] [-d <dir>] [-v <days; 1..24855>] [-x] [-y]" >&2
       exit 1
       ;;
-    *) # $2 is a positive integer or 0
-      days="$2"
+  esac
+done
+
+readonly base_dir="${base_dir:-$PWD}"
+readonly common_name="${common_name:-localhost}"
+readonly allow_existing="${allow_existing:-false}"
+readonly yes="${yes:-false}"
+
+if [ -n "${days+x}" ]; then # $days defined
+  case ${days} in
+    '' | *[!0-9]*) # $days is not a positive integer or 0
+      echo "'${days}' is not a positive integer" >&2
+      exit 2
+      ;;
+    *) # $days is a positive integer or 0
       if [ "${days}" -lt 1 ]; then
-        echo "'$2' is not a positive integer" >&2
-        exit 2
-      fi
-      if [ "${days}" -gt 24855 ]; then
-        echo "'$2' is too big; range: [1, 24855]" >&2
+        echo "'${days}' is not a positive integer" >&2
         exit 3
       fi
+      if [ "${days}" -gt 24855 ]; then
+        echo "'${days}' is outside of the range 1..24855" >&2
+        exit 4
+      fi
       if [ "${days}" -gt 180 ]; then
-        printf "ATTENTION: '%s' exceeds 180 days, the certificate will not be accepted by Apple platforms or Safari; see https://support.apple.com/en-us/103214 for more information.\n\n" "$2"
+        printf "ATTENTION: '%s' exceeds 180 days, the certificate will not be accepted by Apple platforms or Safari; see https://support.apple.com/en-us/103214 for more information.\n\n" "${days}"
+      fi
+      if [ "${days}" -gt 47 ]; then
+        printf "ATTENTION: '%s' exceeds 47 days, the certificate will not be accepted by browsers after March 14, 2029; see https://www.digicert.com/blog/tls-certificate-lifetimes-will-officially-reduce-to-47-days for more information.\n\n" "${days}"
       fi
       ;;
   esac
-else # $2 undefined
+else # $days undefined
   days=30
 fi
 readonly days
 
-readonly host_name="${3:-localhost}"
-
 script_path="$(realpath "$0")"
 readonly script_path
 
-readonly key_path="${out_dir}/key.pem"
-readonly cert_path="${out_dir}/cert.pem"
+readonly key_path="${base_dir}/key.pem"
+readonly cert_path="${base_dir}/cert.pem"
 
 if [ "$(uname)" = 'Darwin' ]; then
   set +e
   # https://ss64.com/mac/security-find-cert.html
-  security find-certificate -c "${host_name}" 1>/dev/null 2>/dev/null
+  security find-certificate -c "${common_name}" 1>/dev/null 2>/dev/null
   found=$?
   set -e
 
   login_keychain="$(security login-keychain | xargs)"
   readonly login_keychain
 
-  if [ "${found}" = 0 ]; then
-    printf "Keychain %s already has a certificate for '%s'. You can delete the existing certificate via:\n\n\tsecurity delete-certificate -c %s -t %s\n" "${login_keychain}" "${host_name}" "${host_name}" "${login_keychain}" >&2
-    exit 4
+  if [ "${allow_existing}" = 'false' ] && [ "${found}" = 0 ]; then
+    printf "Keychain %s already has a certificate for '%s'. You can delete the existing certificate via:\n\n\tsecurity delete-certificate -c %s -t %s\n" "${login_keychain}" "${common_name}" "${common_name}" "${login_keychain}" >&2
+    exit 5
   fi
 fi
 
-if [ -e "${key_path}" ]; then
+if [ "${allow_existing}" = 'false' ] && [ -e "${key_path}" ]; then
   printf "The key '%s' already exists.\n" "${key_path}" >&2
   if command -v pbcopy >/dev/null 2>&1; then
     printf '%s' "${key_path}" | pbcopy
@@ -87,10 +114,10 @@ if [ -e "${key_path}" ]; then
     printf '%s' "${key_path}" | wl-copy
     printf 'The path has been copied to the clipboard.\n' >&2
   fi
-  exit 5
+  exit 6
 fi
 
-if [ -e "${cert_path}" ]; then
+if [ "${allow_existing}" = 'false' ] && [ -e "${cert_path}" ]; then
   printf "The certificate '%s' already exists.\n" "${cert_path}" >&2
   if command -v pbcopy >/dev/null 2>&1; then
     printf '%s' "${cert_path}" | pbcopy
@@ -102,51 +129,79 @@ if [ -e "${cert_path}" ]; then
     printf '%s' "${cert_path}" | wl-copy
     printf 'The path has been copied to the clipboard.\n' >&2
   fi
-  exit 6
+  exit 7
 fi
 
-# https://www.ibm.com/docs/en/ibm-mq/9.3?topic=certificates-distinguished-names
-readonly subj="/CN=${host_name}"
+if [ "${allow_existing}" = 'true' ] && [ ! -e "${key_path}" ] && [ -e "${cert_path}" ]; then
+  if [ "$(uname)" = 'Darwin' ]; then
+    printf "The key '%s' does not exist.\n\nDelete the certificate '%s' and remove the certificate from the login keychain via:\n\n\tsecurity delete-certificate -c %s -t %s\n" "${key_path}" "${cert_path}" "${common_name}" "${login_keychain}" >&2
+  else
+    printf "The key '%s' does not exist.\n\nDelete the certificate '%s' and execute this script again.\n" "${key_path}" "${cert_path}" >&2
+  fi
+  exit 8
+fi
 
-mkdir -p "${out_dir}"
+if [ "${allow_existing}" = 'true' ] && [ -e "${key_path}" ] && [ ! -e "${cert_path}" ]; then
+  if [ "$(uname)" = 'Darwin' ]; then
+    printf "The certificate '%s' does not exist.\n\nDelete the key '%s' and remove the certificate from the login keychain via:\n\n\tsecurity delete-certificate -c %s -t %s\n" "${cert_path}" "${key_path}" "${common_name}" "${login_keychain}" >&2
+  else
+    printf "The certificate '%s' does not exist.\n\nDelete the key '%s' and execute this script again.\n" "${cert_path}" "${key_path}" >&2
+  fi
+  exit 9
+fi
 
-# https://developer.chrome.com/blog/chrome-58-deprecations/#remove_support_for_commonname_matching_in_certificates
-# https://www.openssl.org/docs/manmaster/man5/x509v3_config.html
-openssl req \
-  -newkey rsa:2048 \
-  -x509 \
-  -nodes \
-  -keyout "${key_path}" \
-  -new \
-  -out "${cert_path}" \
-  -subj "${subj}" \
-  -addext "subjectAltName=DNS:${host_name}" \
-  -addext 'keyUsage=digitalSignature' \
-  -addext 'extendedKeyUsage=serverAuth' \
-  -addext "nsComment=This certificate was locally generated by ${script_path}" \
-  -sha256 \
-  -days "${days}" 2>/dev/null
+if [ ! -e "${key_path}" ] && [ ! -e "${cert_path}" ]; then
+  # https://www.ibm.com/docs/en/ibm-mq/9.3?topic=certificates-distinguished-names
+  readonly subj="/CN=${common_name}"
 
-chmod 600 "${key_path}" "${cert_path}"
+  mkdir -p "${base_dir}"
+
+  # https://developer.chrome.com/blog/chrome-58-deprecations/#remove_support_for_commonname_matching_in_certificates
+  # https://www.openssl.org/docs/manmaster/man5/x509v3_config.html
+  openssl req \
+    -newkey rsa:2048 \
+    -x509 \
+    -nodes \
+    -keyout "${key_path}" \
+    -new \
+    -out "${cert_path}" \
+    -subj "${subj}" \
+    -addext "subjectAltName=DNS:${common_name}" \
+    -addext 'keyUsage=digitalSignature' \
+    -addext 'extendedKeyUsage=serverAuth' \
+    -addext "nsComment=This certificate was locally generated by ${script_path}" \
+    -sha256 \
+    -days "${days}" 2>/dev/null
+
+  chmod 600 "${key_path}" "${cert_path}"
+fi
 
 if [ "$(uname)" = 'Darwin' ]; then
   # https://ss64.com/mac/security-cert-verify.html
   security verify-cert -q -n -L -r "${cert_path}"
 
-  expires_on="$(date -Idate -v +"${days}"d)"
-  readonly expires_on
+  set +e
+  # https://ss64.com/mac/security-find-cert.html
+  security find-certificate -c "${common_name}" 1>/dev/null 2>/dev/null
+  found=$?
+  set -e
 
-  printf "Adding '%s' certificate (expires on: %s) to keychain %s ...\n" "${host_name}" "${expires_on}" "${login_keychain}"
+  if [ "${found}" != 0 ]; then
+    expires_on="$(date -Idate -v +"${days}"d)"
+    readonly expires_on
 
-  # https://ss64.com/mac/security-cert.html
-  security add-trusted-cert -p ssl -k "${login_keychain}" "${cert_path}"
+    printf "Adding '%s' certificate (expires on: %s) to keychain %s ...\n" "${common_name}" "${expires_on}" "${login_keychain}"
+
+    # https://ss64.com/mac/security-cert.html
+    security add-trusted-cert -p ssl -k "${login_keychain}" "${cert_path}"
+  fi
 fi
 
 (
-  cd "${out_dir}"
+  cd "${base_dir}"
 
   if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != 'true' ]; then
-    exit 0 # ${out_dir} not a git repository
+    exit 0 # ${base_dir} not a git repository
   fi
 
   set +e
@@ -157,7 +212,7 @@ fi
   cert_ignored=$?
   set -e
 
-  if [ $key_ignored -ne 0 ] || [ $cert_ignored -ne 0 ]; then
+  if [ "${yes}" = 'false' ] && [ $key_ignored -ne 0 ] || [ $cert_ignored -ne 0 ]; then
     printf "\nWARNING: key.pem and/or cert.pem is not ignored in '%s'\n\n" "$PWD/.gitignore"
     read -p 'Do you want me to modify your .gitignore file (Y/N)? ' -n 1 -r should_modify
 
@@ -186,14 +241,23 @@ fi
   git status
 )
 
-if [ "${host_name}" = 'localhost' ]; then
+if [ "${common_name}" = 'localhost' ]; then
   # https://man.archlinux.org/man/grep.1
   if [ "$(grep -E -i -c '127\.0\.0\.1\s+localhost' /etc/hosts)" -eq 0 ]; then
     printf "\nWARNING: /etc/hosts does not have an entry for '127.0.0.1 localhost'\n" >&2
   fi
 else
   # https://man.archlinux.org/man/grep.1
-  if [ "$(grep -E -i -c "127\.0\.0\.1\s+localhost.+${host_name//\./\.}" /etc/hosts)" -eq 0 ]; then
-    printf "\nWARNING: /etc/hosts does not have an entry for '127.0.0.1 localhost %s'\n" "${host_name}" >&2
+  if [ "$(grep -E -i -c "127\.0\.0\.1.+${common_name//\./\.}" /etc/hosts)" -eq 0 ]; then
+    printf "\nWARNING: /etc/hosts does not have an entry for '127.0.0.1 %s'\n" "${common_name}" >&2
+  fi
+fi
+
+# https://github.com/devcontainers/features/tree/main/src/docker-outside-of-docker#1-use-the-localworkspacefolder-as-environment-variable-in-your-code
+if [ -n "${LOCAL_WORKSPACE_FOLDER+x}" ]; then
+  if [ "${base_dir}" = "${base_dir#/}" ]; then
+    printf "The following certificate has been created on your host:\n\n\t%s\n\nExecute the following command on your host to add it to your host's trust store:\n\n\tcd %s && %s -x\n" "${LOCAL_WORKSPACE_FOLDER}/${cert_path}" "${LOCAL_WORKSPACE_FOLDER}" "$0 $*"
+  else
+    printf "The following certificate has been created in your Development Container:\n\n\t%s\n\nCopy it to your host and add it to your host's trust store.\n" "$(realpath "${cert_path}")"
   fi
 fi
