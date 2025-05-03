@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 = Installation
 :docker-install-url: https://docs.docker.com/install/
-:easyrsa-install-url: https://easy-rsa.readthedocs.io/en/latest/#obtaining-and-using-easy-rsa
 :fnm-install-url: https://github.com/Schniz/fnm#installation
 :gh-cli-install-url: https://github.com/cli/cli#linux--bsd
 :hadolint-install-url: https://github.com/hadolint/hadolint?tab=readme-ov-file#install
@@ -22,33 +21,6 @@ $ git config set core.hooksPath .githooks
 == Docker
 
 Install {docker-install-url}[Docker].
-
-== EasyRSA
-
-[IMPORTANT]
-====
-Ensure that you install version `3.1.7` and not `3.2.x`!
-====
-
-=== Linux
-
-Install {easyrsa-install-url}[EasyRSA].
-
-=== Mac
-
-[WARNING]
-====
-Unfortunately, _homebrew_ provides `easy-rsa` version `3.2.x`.
-====
-
-[,console]
-----
-$ curl -L https://github.com/OpenVPN/easy-rsa/releases/download/v3.1.7/EasyRSA-3.1.7.tgz -o ~/Downloads/easy-rsa.tgz
-$ tar -xzf ~/Downloads/easy-rsa.tgz -C ~/.local/share
-$ mv  ~/.local/share/EasyRSA-3.1.7 ~/.local/share/easyrsa
-$ ln -s ~/.local/share/easyrsa/easyrsa ~/.local/bin/easyrsa
-$ rm ~/Downloads/easy-rsa.tgz
-----
 
 == Node Version Manager
 
