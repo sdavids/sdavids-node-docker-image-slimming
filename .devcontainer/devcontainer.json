@@ -1,0 +1,55 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+{
+  "name": "sdavids-node-docker-image-slimming",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "./.devcontainer/post_create.sh",
+  "features": {
+    // https://github.com/devcontainers/features/pkgs/container/features%2Fdocker-outside-of-docker
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1.6.2": {
+      "installDockerComposeSwitch": false
+    }
+  },
+  "remoteUser": "node",
+  "remoteEnv": {
+    // https://github.com/devcontainers/features/tree/main/src/docker-outside-of-docker#1-use-the-localworkspacefolder-as-environment-variable-in-your-code
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+  },
+  "customizations": {
+    "jetbrains": {
+      "backend": "WebStorm",
+      "plugins": [
+        "ski.chrzanow.foldableprojectview",
+        "org.asciidoctor.intellij.asciidoc",
+        "intellij.prettierJS",
+        "mobi.hsz.idea.gitignore"
+      ],
+      "settings": {
+        "com.intellij:app:EditorSettings.is_ensure_newline_at_eof": true,
+        "com.intellij:app:EditorSettings.remove_trailing_blank_lines": true
+      }
+    },
+    "vscode": {
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "ms-azuretools.vscode-docker",
+        "asciidoctor.asciidoctor-vscode",
+        "redhat.vscode-yaml",
+        "tamasfe.even-better-toml",
+        "timonwong.shellcheck",
+        "foxundermoon.shell-format"
+      ],
+      "settings": {
+        "files.encoding": "utf8",
+        "files.eol": "\n",
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+        "files.trimTrailingWhitespace": true,
+        "shellformat.path": "/usr/bin/shfmt",
+        "shellformat.flag": "--indent 2 --case-indent --binary-next-line --simplify"
+      }
+    }
+  }
+}

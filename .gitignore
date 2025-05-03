@@ -45,6 +45,9 @@ jffi*.dylib
 ### NodeJS ###
 node_modules/
 
+### pnpm ###
+.pnpm-store/
+
 ### Build ###
 dist/
 
