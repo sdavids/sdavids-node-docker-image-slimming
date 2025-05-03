@@ -25,7 +25,18 @@ readonly host_name='localhost'
 
 readonly network_name="${repository}"
 
-readonly secrets_dir="$PWD/docker/certs"
+secrets_dir="$PWD/docker/certs"
+
+if [ ! -d "${secrets_dir}" ]; then
+  printf "secrets directory '%s' does not exist\n\nExecute 'scripts/create_self_signed_cert.sh' then execute this script again.\n" "${secrets_dir}" >&2
+  exit 1
+fi
+
+# https://github.com/devcontainers/features/tree/main/src/docker-outside-of-docker#1-use-the-localworkspacefolder-as-environment-variable-in-your-code
+if [ -n "${LOCAL_WORKSPACE_FOLDER+x}" ]; then
+  secrets_dir="${LOCAL_WORKSPACE_FOLDER}/docker/certs"
+fi
+readonly secrets_dir
 
 docker network inspect "${network_name}" >/dev/null 2>&1 \
   || docker network create \
