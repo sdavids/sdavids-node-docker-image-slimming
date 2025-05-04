@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 = Result
 
-Starting from a xref:000-baseline.adoc[baseline image] (1780 MB) the xref:result.adoc[resulting image] (105 MB) is 94.10% smaller.
+Starting from a xref:000-baseline.adoc[baseline image] (1740 MB) the xref:result.adoc[resulting image] (105 MB) is 93.97% smaller.
 
 [%header,cols=">1,3,^1m,>2m,>2m,>2m,>2m"]
 |===
@@ -17,10 +17,10 @@ Starting from a xref:000-baseline.adoc[baseline image] (1780 MB) the xref:result
 
 |0
 |xref:000-baseline.adoc[]
-|1780
+|1740
 |22
 |116.0
-|44.0
+|51.0
 |2515
 
 |1

@@ -19,7 +19,7 @@ Techniques for creating smaller Node.js Docker images.
 ****
 *TLDR*
 
-1780 MB => 105 MB (-94.10%)
+1740 MB => 105 MB (-93.97%)
 ****
 
 
