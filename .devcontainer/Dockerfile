@@ -6,6 +6,7 @@
 
 # https://docs.docker.com/engine/reference/builder/
 
+# https://hub.docker.com/_/debian
 FROM debian:12.10-slim
 
 # hadolint ignore=DL3008
