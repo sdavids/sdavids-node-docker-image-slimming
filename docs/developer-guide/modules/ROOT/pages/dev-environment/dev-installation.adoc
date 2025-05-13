@@ -10,11 +10,12 @@
 
 [IMPORTANT]
 ====
-After cloning this repository, you need to install the Git hooks via:
+After cloning this repository, you need to install the Git hooks and configure the https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile[ignore-revs-file]:
 
 [,console]
 ----
 $ git config set core.hooksPath .githooks
+$ git config set blame.ignoreRevsFile .git-blame-ignore-revs
 ----
 ====
 
