@@ -1,20 +1,20 @@
 // SPDX-FileCopyrightText: © 2020 Sebastian Davids <sdavids@gmx.de>
 // SPDX-License-Identifier: Apache-2.0
 
-import process from 'node:process';
+import process from "node:process";
 
-['uncaughtException', 'unhandledRejection'].forEach((s) =>
+["uncaughtException", "unhandledRejection"].forEach((s) =>
   process.once(s, (err) => {
     console.error(err);
     process.exit(70); // EX_SOFTWARE
   }),
 );
-['SIGINT', 'SIGTERM'].forEach((signal) =>
+["SIGINT", "SIGTERM"].forEach((signal) =>
   process.on(signal, () => process.exit(0)),
 );
 
 const url =
-  process.env['HEALTHCHECK_URL'] ?? 'http://localhost:3000/-/health/liveness';
+  process.env["HEALTHCHECK_URL"] ?? "http://localhost:3000/-/health/liveness";
 
 try {
   new URL(url);
@@ -23,13 +23,13 @@ try {
   process.exit(64); // EX_USAGE
 }
 
-const httpClient = await import('node:http');
+const httpClient = await import("node:http");
 
 let httpsClient;
 try {
-  httpsClient = await import('node:https');
+  httpsClient = await import("node:https");
 } catch {
-  console.error('https support is disabled');
+  console.error("https support is disabled");
   process.exit(78); // EX_CONFIG
 }
 
@@ -46,7 +46,7 @@ const call = (location, count) => {
     );
     process.exit(69); // EX_UNAVAILABLE
   }
-  const client = location.startsWith('https:') ? httpsClient : httpClient;
+  const client = location.startsWith("https:") ? httpsClient : httpClient;
   client
     .request(
       location,
@@ -56,11 +56,11 @@ const call = (location, count) => {
       (res) => {
         const { statusCode } = res;
         if (statusCode === 301 || statusCode === 307) {
-          let redirect = res.headers?.location ?? '';
-          if (redirect === '') {
+          let redirect = res.headers?.location ?? "";
+          if (redirect === "") {
             process.exit(100);
           }
-          if (redirect.startsWith('/')) {
+          if (redirect.startsWith("/")) {
             try {
               redirect = new URL(location).origin + redirect;
             } catch {
@@ -73,11 +73,11 @@ const call = (location, count) => {
         }
       },
     )
-    .on('error', (e) => {
-      if (e.code === 'DEPTH_ZERO_SELF_SIGNED_CERT') {
+    .on("error", (e) => {
+      if (e.code === "DEPTH_ZERO_SELF_SIGNED_CERT") {
         console.error(`'${location}' uses a self-signed-certificate`);
         process.exit(76); // EX_PROTOCOL
-      } else if (e.code === 'UNABLE_TO_VERIFY_LEAF_SIGNATURE') {
+      } else if (e.code === "UNABLE_TO_VERIFY_LEAF_SIGNATURE") {
         console.error(
           `'${location}' uses a certificate with an invalid certificate chain`,
         );

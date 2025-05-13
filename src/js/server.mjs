@@ -1,30 +1,30 @@
 // SPDX-FileCopyrightText: © 2020 Sebastian Davids <sdavids@gmx.de>
 // SPDX-License-Identifier: Apache-2.0
 
-import { existsSync, readFileSync } from 'node:fs';
-import http from 'node:http';
-import https from 'node:https';
-import process from 'node:process';
-import express from 'express';
-import { faker } from '@faker-js/faker';
+import { existsSync, readFileSync } from "node:fs";
+import http from "node:http";
+import https from "node:https";
+import process from "node:process";
+import express from "express";
+import { faker } from "@faker-js/faker";
 
-['uncaughtException', 'unhandledRejection'].forEach((signal) =>
+["uncaughtException", "unhandledRejection"].forEach((signal) =>
   process.on(signal, (err) => {
     console.error(err);
     process.exit(70); // EX_SOFTWARE
   }),
 );
-['SIGINT', 'SIGTERM'].forEach((signal) =>
+["SIGINT", "SIGTERM"].forEach((signal) =>
   process.on(signal, () => process.exit(0)),
 );
 
-const port = Number(process.env['PORT'] ?? 3000);
+const port = Number(process.env["PORT"] ?? 3000);
 if (isNaN(port) || port < 1 || port > 65535) {
   console.error(`port must be between 1 and 65535: ${port}`);
   process.exit(64); // EX_USAGE
 }
-const certPath = process.env['CERT_PATH'];
-const keyPath = process.env['KEY_PATH'];
+const certPath = process.env["CERT_PATH"];
+const keyPath = process.env["KEY_PATH"];
 
 let secure = keyPath && certPath;
 if (secure) {
@@ -32,12 +32,12 @@ if (secure) {
 }
 
 const app = express();
-app.set('port', port);
+app.set("port", port);
 
 // https://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
-app.disable('x-powered-by');
+app.disable("x-powered-by");
 
-app.get('/', (_, res) =>
+app.get("/", (_, res) =>
   res.json({
     userId: faker.string.uuid(),
     username: faker.internet.username(),
@@ -45,7 +45,7 @@ app.get('/', (_, res) =>
   }),
 );
 
-app.get('/-/health/liveness', (_, res) => res.json({ status: 'ok' }));
+app.get("/-/health/liveness", (_, res) => res.json({ status: "ok" }));
 
 const options = {};
 
@@ -75,22 +75,22 @@ server.requestTimeout = 10000;
 server.timeout = 15000;
 
 server.listen(port, () =>
-  console.log(`Listen local: http${secure ? 's' : ''}://localhost:${port}`),
+  console.log(`Listen local: http${secure ? "s" : ""}://localhost:${port}`),
 );
 
-server.on('timeout', (socket) => {
+server.on("timeout", (socket) => {
   socket.destroy();
 });
 
-server.on('error', (err) => {
-  if (err.syscall === 'listen') {
+server.on("error", (err) => {
+  if (err.syscall === "listen") {
     switch (err.code) {
-      case 'EACCES':
-        console.error('Port requires elevated privileges');
+      case "EACCES":
+        console.error("Port requires elevated privileges");
         process.exit(77); // EX_NOPERM
         break;
-      case 'EADDRINUSE':
-        console.error('Port is already in use');
+      case "EADDRINUSE":
+        console.error("Port is already in use");
         process.exit(75); // EX_TEMPFAIL
         break;
       default:
