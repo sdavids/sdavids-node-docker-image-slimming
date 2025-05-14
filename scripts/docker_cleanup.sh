@@ -5,6 +5,8 @@
 
 set -eu
 
+# https://docs.docker.com/reference/cli/docker/image/tag/#description
+readonly namespace='de.sdavids'
 readonly repository='sdavids-node-docker-image-slimming'
 
 readonly label_group='de.sdavids.docker.group'
@@ -17,4 +19,4 @@ docker volume prune --force --filter="label=${label}"
 
 docker image prune --force --filter="label=${label}" --all
 
-docker network prune --force --filter="label=${label}"
+docker network prune --force --filter="label=${label_group}=${namespace}"
