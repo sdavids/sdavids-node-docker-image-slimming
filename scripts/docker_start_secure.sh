@@ -23,7 +23,7 @@ readonly container_name='sdavids-node-docker-image-slimming'
 
 readonly host_name='localhost'
 
-readonly network_name="${repository}"
+readonly network_name='sdavids_node_docker_image_slimming'
 
 secrets_dir="$PWD/docker/certs"
 
