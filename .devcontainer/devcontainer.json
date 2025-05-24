@@ -8,7 +8,8 @@
   "postCreateCommand": "./.devcontainer/post_create.sh",
   "features": {
     // https://github.com/devcontainers/features/pkgs/container/features%2Fdocker-outside-of-docker
-    "ghcr.io/devcontainers/features/docker-outside-of-docker:1.6.2": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1.6.5": {
+      "moby": false,
       "installDockerComposeSwitch": false
     }
   },
@@ -34,6 +35,7 @@
     "vscode": {
       "extensions": [
         "EditorConfig.EditorConfig",
+        "esbenp.prettier-vscode",
         "ms-azuretools.vscode-docker",
         "asciidoctor.asciidoctor-vscode",
         "redhat.vscode-yaml",
@@ -42,13 +44,26 @@
         "foxundermoon.shell-format"
       ],
       "settings": {
+        "telemetry.telemetryLevel": "off",
         "files.encoding": "utf8",
         "files.eol": "\n",
         "files.insertFinalNewline": true,
         "files.trimFinalNewlines": true,
         "files.trimTrailingWhitespace": true,
         "shellformat.path": "/usr/bin/shfmt",
-        "shellformat.flag": "--indent 2 --case-indent --binary-next-line --simplify"
+        "shellformat.flag": "--indent 2 --case-indent --binary-next-line --simplify",
+        "[html]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[css]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
       }
     }
   }
