@@ -7,7 +7,9 @@
 # https://docs.docker.com/engine/reference/builder/
 
 # https://hub.docker.com/_/debian
-FROM debian:12.10-slim
+FROM debian:12.11-slim
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=DL3008
 RUN apt-get update \
@@ -25,6 +27,7 @@ RUN apt-get update \
     openssh-client \
     curl \
     git \
+    jq \
     shfmt \
     shellcheck \
     yamllint \
@@ -42,3 +45,5 @@ RUN apt-get update \
   && useradd -u 1000 -g node -s /bin/bash -m node \
   && echo node ALL=\(root\) NOPASSWD:ALL >/etc/sudoers.d/node \
   && chmod 0440 /etc/sudoers.d/node
+
+ENV SHELL /bin/bash

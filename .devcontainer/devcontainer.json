@@ -42,6 +42,7 @@
         "foxundermoon.shell-format"
       ],
       "settings": {
+        "telemetry.telemetryLevel": "off",
         "files.encoding": "utf8",
         "files.eol": "\n",
         "files.insertFinalNewline": true,
