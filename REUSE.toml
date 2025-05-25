@@ -21,3 +21,16 @@ SPDX-License-Identifier = "Apache-2.0"
 path = "docs/ui-bundle/**"
 SPDX-FileCopyrightText = "© 2017-2024 OpenDevise Inc. and the Antora Project; © 2024 Sebastian Davids <sdavids@gmx.de>"
 SPDX-License-Identifier = "MPL-2.0"
+
+[[annotations]]
+path = ".devcontainer/devcontainer-lock.json"
+SPDX-FileCopyrightText = "© 2025 Sebastian Davids <sdavids@gmx.de>"
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = [
+  "docs/techniques/modules/ROOT/images/dive-006-alpine-alpine-final.png",
+  "docs/techniques/modules/ROOT/images/dive-007-alpine-hardening.png",
+]
+SPDX-FileCopyrightText = "© 2020 Sebastian Davids <sdavids@gmx.de>"
+SPDX-License-Identifier = "Apache-2.0"
