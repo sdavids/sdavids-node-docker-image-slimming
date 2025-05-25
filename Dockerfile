@@ -51,8 +51,8 @@ SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
 # use apk repositories over HTTPS only
 # hadolint ignore=DL3018
-RUN echo "https://dl-cdn.alpinelinux.org/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/main" > /etc/apk/repositories && \
-    echo "https://dl-cdn.alpinelinux.org/alpine/v$(cut -d . -f 1,2 < /etc/alpine-release)/community" >> /etc/apk/repositories && \
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/v$(cut -d . -f 1,2 </etc/alpine-release)/main" >/etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v$(cut -d . -f 1,2 </etc/alpine-release)/community" >>/etc/apk/repositories && \
 # add root certificates
     apk add --no-cache ca-certificates && \
 # add the app user and the working directory
@@ -67,7 +67,7 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/v$(cut -d . -f 1,2 < /etc/alpine
 # remove interactive login shell for everybody
     sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd && \
 # disable password login for everybody
-   while IFS=: read -r username _; do passwd -l "${username}"; done < /etc/passwd || true && \
+   while IFS=: read -r username _; do passwd -l "${username}"; done </etc/passwd || true && \
 # remove account-related temp files
    find /bin /etc /lib /sbin /usr -xdev -type f -regex '.*-$' -exec rm -f {} + && \
 # remove admin commands
