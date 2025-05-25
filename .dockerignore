@@ -3,32 +3,8 @@
 
 # https://docs.docker.com/build/building/context/#dockerignore-files
 
-*~
-*.orig
-*.sw[a-p]
-*.tmp
-.DS_Store
-[Dd]esktop.ini
-Thumbs.db
-
-*.adoc
-.dockerignore
-.editorconfig
-.fleet/
-.git/
-.gitattributes
-.github/
-.gitignore
-.idea/
-.pnpm-store/
-.vscode/
-Dockerfile
-LICENSES/
-REUSE.toml
-build/
-dist/
-docker/
-docs/
-node_modules/
-scripts/
+*
+!package-lock.json
+!package.json
 !scripts/build.sh
+!src
