@@ -1,7 +1,7 @@
 {
   "name": "sdavids-node-docker-image-slimming",
   "description": "Techniques for creating a smaller Node.js Docker image.",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "license": "Apache-2.0",
   "contributors": [
     "Sebastian Davids <sdavids@gmx.de>"
