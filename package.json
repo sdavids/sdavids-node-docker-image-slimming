@@ -25,7 +25,7 @@
     "cert:verify": "scripts/verify_self_signed_cert.sh -d docker/certs",
     "clean": "scripts/clean.sh",
     "clean:node": "scripts/clean_node.sh",
-    "dependency:updates": "scripts/dependency_check_node.sh",
+    "dependency:updates": "scripts/dependency_check_npm.sh",
     "docker:build": "scripts/docker_build.sh",
     "docker:cleanup": "scripts/docker_cleanup.sh",
     "docker:health": "scripts/docker_health.sh",
