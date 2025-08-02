@@ -9,7 +9,7 @@
 ### Node ###
 
 # https://hub.docker.com/_/node
-FROM node:22.16.0-alpine3.22 AS node
+FROM node:24.12.0-alpine3.22 AS node
 
 RUN apk --no-cache add upx=5.0.2-r0 && \
     upx /usr/local/bin/node
@@ -20,7 +20,7 @@ LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
 ### Builder ###
 
 # https://hub.docker.com/_/node
-FROM node:22.16.0-alpine3.22 AS builder
+FROM node:24.12.0-alpine3.22 AS builder
 
 WORKDIR /node
 
