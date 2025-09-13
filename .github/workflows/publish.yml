@@ -42,7 +42,7 @@ jobs:
       - if: steps.changes.outputs.docs == 'true'
         name: Setup Node.js
         # https://github.com/actions/setup-node/releases
-        uses: actions/setup-node@v4.4.0
+        uses: actions/setup-node@v6.1.0
         with:
           node-version-file: .nvmrc
           cache-dependency-path: package-lock.json
