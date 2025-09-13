@@ -50,7 +50,7 @@ jobs:
       - if: steps.changes.outputs.docs == 'true'
         name: Install Antora
         # https://docs.antora.org/antora/latest/whats-new/
-        run: npm i antora@3.1.10
+        run: npm i antora@3.1.14
       - if: steps.changes.outputs.docs == 'true'
         name: Generate Site
         run: npx antora docs/antora-playbook.yml
