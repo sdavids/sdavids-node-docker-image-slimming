@@ -57,6 +57,7 @@ jobs:
       - if: steps.changes.outputs.docs == 'true'
         name: Upload Artifacts
         # https://github.com/actions/upload-pages-artifact
+        # do not update to 4.0.0; see https://github.com/actions/upload-pages-artifact/issues/129#issuecomment-3288349111
         uses: actions/upload-pages-artifact@v3.0.1
         with:
           path: docs/build/site
