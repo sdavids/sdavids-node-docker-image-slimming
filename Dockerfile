@@ -9,7 +9,7 @@
 ### Node ###
 
 # https://hub.docker.com/_/node
-FROM node:24.12.0-alpine3.22 AS node
+FROM node:24.12.0-alpine3.23 AS node
 
 RUN apk --no-cache add upx=5.0.2-r0 && \
     upx /usr/local/bin/node
@@ -20,7 +20,7 @@ LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
 ### Builder ###
 
 # https://hub.docker.com/_/node
-FROM node:24.12.0-alpine3.22 AS builder
+FROM node:24.12.0-alpine3.23 AS builder
 
 WORKDIR /node
 
@@ -44,7 +44,7 @@ LABEL de.sdavids.docker.group="sdavids-node-docker-image-slimming" \
 ### Harden ###
 
 # https://hub.docker.com/_/alpine
-FROM alpine:3.22.1 AS hardened
+FROM alpine:3.23.2 AS hardened
 
 # https://github.com/hadolint/hadolint/wiki/DL4006
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
