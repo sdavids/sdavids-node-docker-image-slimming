@@ -34,10 +34,10 @@ https://github.com/sdavids/sdavids-node-docker-image-slimming/blob/000-baseline/
 |Server (B)
 
 |Baseline
-|1740
+|1710
 |22
 |116.0
-|51.0
+|20.0
 |2515
 
 |===
@@ -48,16 +48,16 @@ $ SOURCE_DATE_EPOCH=1 GITHUB_SHA="N/A" scripts/docker_build.sh -p linux/amd64 -t
 ...
 
 $ docker images de.sdavids/sdavids-node-docker-image-slimming:000-baseline --format "{{.Repository}}\t{{.Tag}}\t{{.Size}}"
-de.sdavids/sdavids-node-docker-image-slimming   000-baseline    1.74GB
+de.sdavids/sdavids-node-docker-image-slimming   000-baseline    1.71GB
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:000-baseline du -hs /usr/local/bin/node
 116M  /usr/local/bin/node
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:000-baseline du -hs /node
-67M /node
+25M /node
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:000-baseline du -hs /node/node_modules
-51M /node/node_modules
+20M /node/node_modules
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:000-baseline stat -c "%s" /node/src/js/server.mjs
 2515
@@ -66,6 +66,7 @@ $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:000-baseline ls 
 .devcontainer
 .editorconfig
 .git
+.git-blame-ignore-revs
 .gitattributes
 .github
 .gitignore
@@ -89,20 +90,20 @@ SIZE      CREATED BY
 0B        LABEL org.opencontainers.image.licenses=Apac…
 0B        HEALTHCHECK &{["CMD-SHELL" "node /node/src/j…
 0B        CMD ["node" "src/js/server.mjs"]
-0B        EXPOSE map[3000/tcp:{}]
+0B        EXPOSE [3000/tcp]
 0B        USER node:node
 0B        ENV PORT=3000
 0B        ENV NODE_ENV=production
-60.6MB    RUN /bin/sh -c npm i &&     chown -R node:no…
-32.5MB    COPY . ./ # buildkit
+33MB      RUN /bin/sh -c npm i &&     chown -R node:no…
+25.6MB    COPY . ./ # buildkit
 8.19kB    WORKDIR /node
 0B        CMD ["node"]
 0B        ENTRYPOINT ["docker-entrypoint.sh"]
 20.5kB    COPY docker-entrypoint.sh /usr/local/bin/ # …
 5.41MB    RUN /bin/sh -c set -ex   && export GNUPGHOME…
 0B        ENV YARN_VERSION=1.22.22
-202MB     RUN /bin/sh -c ARCH= && dpkgArch="$(dpkg --p…
-0B        ENV NODE_VERSION=22.15.0
+212MB     RUN /bin/sh -c ARCH= && dpkgArch="$(dpkg --p…
+0B        ENV NODE_VERSION=24.12.0
 69.6kB    RUN /bin/sh -c groupadd --gid 1000 node   &&…
 619MB     RUN /bin/sh -c set -ex;  apt-get update;  ap…
 194MB     RUN /bin/sh -c set -eux;  apt-get update;  a…

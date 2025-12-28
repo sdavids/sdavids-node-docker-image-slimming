@@ -18,7 +18,7 @@ Hardening the base image should always be considered, even if it does not signif
 
 * xref:007-alpine-hardening.adoc[hardened image]
 
-Compressing the `node` binary is also worthwhile (118.1MB => 41.3MB):
+Compressing the `node` binary is also worthwhile (118.0MB => 41.6MB):
 
 * xref:008-alpine-upx.adoc[UPX compressed Node binary]
 

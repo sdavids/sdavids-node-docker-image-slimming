@@ -30,24 +30,24 @@ link:++https://github.com/sdavids/sdavids-node-docker-image-slimming/compare/002
 |Server (B)
 
 |Baseline
-|1740
+|1710
 |22
 |116.0
-|51.0
+|20.0
 |2515
 
 |Previous
-|1630
-|24
+|1640
+|23
 |116.0
-|14.0
+|9.1
 |2515
 
 |Result
 |1630
-|24
+|23
 |116.0
-|*11.0*
+|*6.3*
 |2515
 
 |===
@@ -64,10 +64,10 @@ $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:003-clean-module
 116M /usr/local/bin/node
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:003-clean-modules du -hs /node
-11M /node
+6.3M /node
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:003-clean-modules du -hs /node/node_modules
-11M /node/node_modules
+6.3M /node/node_modules
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:003-clean-modules stat -c "%s" /node/server.mjs
 2515
@@ -77,7 +77,6 @@ healthcheck.mjs
 node_modules
 package-lock.json
 package.json
-scripts
 server.mjs
 
 $ docker image history --format "table {{.Size}}\t{{.CreatedBy}}" de.sdavids/sdavids-node-docker-image-slimming:003-clean-modules
@@ -85,22 +84,21 @@ SIZE      CREATED BY
 0B        LABEL org.opencontainers.image.licenses=Apac…
 0B        HEALTHCHECK &{["CMD-SHELL" "node /node/healt…
 0B        CMD ["node" "server.mjs"]
-0B        EXPOSE map[3000/tcp:{}]
+0B        EXPOSE [3000/tcp]
 0B        USER node:node
 0B        ENV PORT=3000
 0B        ENV NODE_ENV=production
 16.4kB    COPY --chown=node:node src/js ./ # buildkit
-15.5MB    RUN /bin/sh -c npm ci --omit=dev --omit=opti…
+10.5MB    RUN /bin/sh -c npm ci --omit=dev --omit=opti…
 57.3kB    COPY --chown=node:node package.json package-…
-16.4kB    COPY --chown=node:node scripts/macos_node_mo…
 8.19kB    WORKDIR /node
 0B        CMD ["node"]
 0B        ENTRYPOINT ["docker-entrypoint.sh"]
 20.5kB    COPY docker-entrypoint.sh /usr/local/bin/ # …
 5.41MB    RUN /bin/sh -c set -ex   && export GNUPGHOME…
 0B        ENV YARN_VERSION=1.22.22
-202MB     RUN /bin/sh -c ARCH= && dpkgArch="$(dpkg --p…
-0B        ENV NODE_VERSION=22.15.0
+212MB     RUN /bin/sh -c ARCH= && dpkgArch="$(dpkg --p…
+0B        ENV NODE_VERSION=24.12.0
 69.6kB    RUN /bin/sh -c groupadd --gid 1000 node   &&…
 619MB     RUN /bin/sh -c set -ex;  apt-get update;  ap…
 194MB     RUN /bin/sh -c set -eux;  apt-get update;  a…
@@ -108,7 +106,7 @@ SIZE      CREATED BY
 133MB     # debian.sh --arch 'amd64' out/ 'bookworm' '…
 
 $ printf 'Layer Count: %s\n' "$(docker history de.sdavids/sdavids-node-docker-image-slimming:003-clean-modules | tail -n +2 | wc -l | tr -d ' ')"
-Layer Count: 24
+Layer Count: 23
 ----
 
 === More Information

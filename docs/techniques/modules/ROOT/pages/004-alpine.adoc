@@ -48,24 +48,24 @@ link:++https://github.com/sdavids/sdavids-node-docker-image-slimming/compare/003
 |Server (B)
 
 |Baseline
-|1740
+|1710
 |22
 |116.0
-|51.0
+|20.0
 |2515
 
 |Previous
 |1630
-|24
+|23
 |116.0
-|11.0
+|6.3
 |2515
 
 |Result
-|243
-|*21*
-|*118.1*
-|*10.9*
+|239
+|*20*
+|*118.0*
+|*6.2*
 |2515
 
 |===
@@ -76,16 +76,16 @@ $ SOURCE_DATE_EPOCH=1 GITHUB_SHA="N/A" scripts/docker_build.sh -p linux/amd64 -t
 ...
 
 $ docker images de.sdavids/sdavids-node-docker-image-slimming:004-alpine --format "{{.Repository}}\t{{.Tag}}\t{{.Size}}"
-de.sdavids/sdavids-node-docker-image-slimming  004-alpine   243MB
+de.sdavids/sdavids-node-docker-image-slimming  004-alpine   239MB
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:004-alpine du -hs /usr/local/bin/node
-118.1M  /usr/local/bin/node
+118.0M /usr/local/bin/node
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:004-alpine du -hs /node
-11.0M /node
+6.3M /node
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:004-alpine du -hs /node/node_modules
-10.9M /node/node_modules
+6.2M /node/node_modules
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:004-alpine stat -c "%s" /node/server.mjs
 2515
@@ -95,7 +95,6 @@ healthcheck.mjs
 node_modules
 package-lock.json
 package.json
-scripts
 server.mjs
 
 $ docker image history --format "table {{.Size}}\t{{.CreatedBy}}" de.sdavids/sdavids-node-docker-image-slimming:004-alpine
@@ -103,27 +102,26 @@ SIZE      CREATED BY
 0B        LABEL org.opencontainers.image.licenses=Apac…
 0B        HEALTHCHECK &{["CMD-SHELL" "node /node/healt…
 0B        CMD ["node" "server.mjs"]
-0B        EXPOSE map[3000/tcp:{}]
+0B        EXPOSE [3000/tcp]
 0B        USER node:node
 0B        ENV PORT=3000
 0B        ENV NODE_ENV=production
 16.4kB    COPY --chown=node:node src/js ./ # buildkit
-15.5MB    RUN /bin/sh -c npm ci --omit=dev --omit=opti…
+10.5MB    RUN /bin/sh -c npm ci --omit=dev --omit=opti…
 57.3kB    COPY --chown=node:node package.json package-…
-16.4kB    COPY --chown=node:node scripts/macos_node_mo…
 8.19kB    WORKDIR /node
 0B        CMD ["node"]
 0B        ENTRYPOINT ["docker-entrypoint.sh"]
 20.5kB    COPY docker-entrypoint.sh /usr/local/bin/ # …
-5.47MB    RUN /bin/sh -c apk add --no-cache --virtual …
+5.48MB    RUN /bin/sh -c apk add --no-cache --virtual …
 0B        ENV YARN_VERSION=1.22.22
-156MB     RUN /bin/sh -c addgroup -g 1000 node     && …
-0B        ENV NODE_VERSION=22.15.0
+155MB     RUN /bin/sh -c addgroup -g 1000 node     && …
+0B        ENV NODE_VERSION=24.12.0
 0B        CMD ["/bin/sh"]
-8.5MB     ADD alpine-minirootfs-3.21.3-x86_64.tar.gz /…
+9.11MB    ADD alpine-minirootfs-3.23.2-x86_64.tar.gz /…
 
 $ printf 'Layer Count: %s\n' "$(docker history de.sdavids/sdavids-node-docker-image-slimming:004-alpine | tail -n +2 | wc -l | tr -d ' ')"
-Layer Count: 21
+Layer Count: 20
 ----
 
 === More Information

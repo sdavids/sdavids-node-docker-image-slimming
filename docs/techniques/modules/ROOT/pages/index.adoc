@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 = Techniques
 
-Starting from a xref:000-baseline.adoc[baseline] (1740 MB) the xref:result.adoc[result] (105 MB) will be 93.97% smaller.
+Starting from a xref:000-baseline.adoc[baseline] (1710 MB) the xref:result.adoc[result] (106 MB) will be 93.80% smaller.
 
 The following techniques will be shown:
 

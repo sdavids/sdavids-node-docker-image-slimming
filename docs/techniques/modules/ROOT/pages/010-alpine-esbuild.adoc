@@ -40,25 +40,25 @@ link:++https://github.com/sdavids/sdavids-node-docker-image-slimming/compare/009
 |Server (B)
 
 |Baseline
-|1740
+|1710
 |22
 |116.0
-|51.0
+|20.0
 |2515
 
 |Previous
-|117
+|113
 |17
-|41.3
-|10.9
+|41.6
+|6.2
 |2003
 
 |Result
-|105
+|106
 |*16*
-|41.3
+|41.6
 |*0*
-|*1325646*
+|*1287240*
 
 |===
 
@@ -68,16 +68,16 @@ $ SOURCE_DATE_EPOCH=1 GITHUB_SHA="N/A" scripts/docker_build.sh -p linux/amd64 -t
 ...
 
 $ docker images de.sdavids/sdavids-node-docker-image-slimming:010-alpine-esbuild --format "{{.Repository}}\t{{.Tag}}\t{{.Size}}"
-de.sdavids/sdavids-node-docker-image-slimming  010-alpine-esbuild   105MB
+de.sdavids/sdavids-node-docker-image-slimming  010-alpine-esbuild   106MB
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:010-alpine-esbuild du -hs /usr/bin/node
-41.3M /usr/bin/node
+41.6M /usr/bin/node
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:010-alpine-esbuild du -hs /node
-1.3M /node
+1.2M /node
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:010-alpine-esbuild stat -c "%s" /node/server.cjs
-1325646
+1287240
 
 $ docker run --rm de.sdavids/sdavids-node-docker-image-slimming:010-alpine-esbuild ls -A /node
 healthcheck.mjs
@@ -89,19 +89,19 @@ SIZE      CREATED BY
 0B        LABEL org.opencontainers.image.licenses=Apac…
 0B        HEALTHCHECK &{["CMD-SHELL" "node /node/healt…
 0B        CMD ["node" "server.cjs"]
-0B        EXPOSE map[3000/tcp:{}]
+0B        EXPOSE [3000/tcp]
 0B        USER node:node
 0B        ENV PORT=3000
 0B        ENV NODE_ENV=production
-1.34MB    COPY --chown=node:node /node/dist ./ # build…
+1.3MB     COPY --chown=node:node /node/dist ./ # build…
 4.1kB     WORKDIR /node
-2.96MB    COPY --chown=node:node /usr/lib/libgcc_s.so.…
-43.4MB    COPY --chown=node:node /usr/local/bin/node /…
+2.99MB    COPY --chown=node:node /usr/lib/libgcc_s.so.…
+43.6MB    COPY --chown=node:node /usr/local/bin/node /…
 0B        ENV TMPDIR=/node/tmp
-1.44MB    RUN /bin/ash -eo pipefail -c echo "https://d…
+1.45MB    RUN /bin/ash -eo pipefail -c echo "https://d…
 0B        SHELL [/bin/ash -eo pipefail -c]
 0B        CMD ["/bin/sh"]
-8.5MB     ADD alpine-minirootfs-3.21.3-x86_64.tar.gz /…
+9.11MB    ADD alpine-minirootfs-3.23.2-x86_64.tar.gz /…
 
 $ printf 'Layer Count: %s\n' "$(docker history de.sdavids/sdavids-node-docker-image-slimming:010-alpine-esbuild | tail -n +2 | wc -l | tr -d ' ')"
 Layer Count: 16
