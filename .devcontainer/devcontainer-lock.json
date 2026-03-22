@@ -10,10 +10,10 @@
       "resolved": "ghcr.io/devcontainers-extra/features/yamllint@sha256:c3ed260f8e4f026d2ae93ae61581d9a8c28d64950a4e801ac33b968566e6c16e",
       "integrity": "sha256:c3ed260f8e4f026d2ae93ae61581d9a8c28d64950a4e801ac33b968566e6c16e"
     },
-    "ghcr.io/devcontainers/features/docker-outside-of-docker:1.6.5": {
-      "version": "1.6.5",
-      "resolved": "ghcr.io/devcontainers/features/docker-outside-of-docker@sha256:5c0af58d6acc6d81e38b5a6130724330f2eb4f703120dea0016a35da4ad30861",
-      "integrity": "sha256:5c0af58d6acc6d81e38b5a6130724330f2eb4f703120dea0016a35da4ad30861"
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1.9.0": {
+      "version": "1.9.0",
+      "resolved": "ghcr.io/devcontainers/features/docker-outside-of-docker@sha256:c5eaf82e4f6af2ac7ed82f569447b79a70a572d5a378eced1d389db158dc9a67",
+      "integrity": "sha256:c5eaf82e4f6af2ac7ed82f569447b79a70a572d5a378eced1d389db158dc9a67"
     },
     "ghcr.io/dhoeric/features/hadolint:1.0.0": {
       "version": "1.0.0",
