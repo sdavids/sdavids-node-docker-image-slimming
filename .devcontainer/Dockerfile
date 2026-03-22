@@ -32,8 +32,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get --yes autoremove \
   && apt-get --yes clean \
   && rm -rf /var/lib/apt/lists/* \
-# ensure en_US.UTF-8 locale is available
-  && echo 'en_US.UTF-8 UTF-8' >>/etc/locale.gen \
+# ensure en_US.UTF-8 && de_DE.UTF-8 locales are available
+  && printf 'en_US.UTF-8 UTF-8\nde_DE.UTF-8 UTF-8\n' >>/etc/locale.gen \
   && locale-gen \
 # create node user/group as sudoer
   && groupadd --gid 1000 node \
