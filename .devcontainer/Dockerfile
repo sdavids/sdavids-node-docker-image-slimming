@@ -25,7 +25,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     jq \
     reuse \
     shellcheck \
-    yamllint \
     neovim \
 # clean up
   && apt-get --yes autoremove \
