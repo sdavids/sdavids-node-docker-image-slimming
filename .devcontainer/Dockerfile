@@ -24,7 +24,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     git \
     jq \
     reuse \
-    shfmt \
     shellcheck \
     yamllint \
     neovim \

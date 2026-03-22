@@ -11,6 +11,11 @@
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1.6.5": {
       "moby": false,
       "installDockerComposeSwitch": false
+    },
+    // https://github.com/devcontainers-extra/features/pkgs/container/features%2Fshfmt
+    "ghcr.io/devcontainers-extra/features/shfmt:1.0.2": {
+      // https://github.com/mvdan/sh/releases
+      "version": "3.13.0"
     }
   },
   "remoteUser": "node",
