@@ -21,7 +21,6 @@
 Thumbs.db
 
 ### Jetbrains ###
-.fleet/
 .idea/
 jffi*.dylib
 

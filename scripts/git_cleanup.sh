@@ -43,7 +43,6 @@ fi
   # shellcheck disable=SC2086
   git clean -fdx \
     ${dry_run} \
-    -e .fleet \
     -e .idea \
     -e .vscode \
     -e docker/certs/cert.pem \
