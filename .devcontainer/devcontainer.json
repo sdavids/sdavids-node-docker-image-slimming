@@ -12,6 +12,11 @@
       "moby": false,
       "installDockerComposeSwitch": false
     },
+    // https://github.com/dhoeric/features/pkgs/container/features%2Fhadolint
+    "ghcr.io/dhoeric/features/hadolint:1.0.0": {
+      // https://github.com/hadolint/hadolint/releases
+      "version": "2.14.0"
+    },
     // https://github.com/devcontainers-extra/features/pkgs/container/features%2Fshfmt
     "ghcr.io/devcontainers-extra/features/shfmt:1.0.2": {
       // https://github.com/mvdan/sh/releases
